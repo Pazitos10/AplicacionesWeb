@@ -1,0 +1,100 @@
+body{
+    background-color: rgba(0,0,0,.8);
+    background-image: url("../img/black-linen.png");
+}
+
+.nav{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.nav .navbar .navbar-form .search-input{
+    width:460px;
+    margin: 0 auto;
+}
+
+.list-wrapper{
+    display: flex;
+    margin: 0 150px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+@media screen and (max-width: 1220px){
+    .list-wrapper{
+        margin: 0 100px;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .list-wrapper{
+        margin: 0 20px;
+    }
+    .nav .navbar .navbar-form{
+        margin: 0;
+        padding: 0;
+        border:none;
+        box-shadow: none;
+        -webkit-box-shadow: none;
+        -moz-box-shadow:none;
+    }
+    .nav .navbar .navbar-form .input-group {
+        display: flex;
+        margin-top: 5px;
+    }
+    .nav .navbar .navbar-form .search-input{
+        width: auto;
+        margin: 0;
+    }
+
+}
+
+@media screen and (max-width: 375px){
+    .list-wrapper{
+        margin: 0 5px;
+    }
+}
+
+.item-pelicula{
+    margin: 0 20px;
+    text-align: center;
+    line-height: .9;
+}
+
+.item-pelicula .titulo{
+    margin-top: 15px;
+    color: white;
+    font-weight: 100;
+}
+
+.item-pelicula .portada{
+    border-radius: 3px;
+    box-shadow: 3px 2px 8px rgba(0,0,0,.52);
+}
+
+.item-pelicula .titulo,
+.item-pelicula .puntaje {
+    text-shadow: 3px 2px 8px rgba(0,0,0,.52);
+}
+
+/* Efecto estrellas */
+.animated {
+    -webkit-transition: height 0.2s;
+    -moz-transition: height 0.2s;
+    transition: height 0.2s;
+}
+
+.stars
+{
+    margin-bottom: 20px;
+    font-size: 20px;
+    text-align: center;
+    color: rgba(255,215,0,.8);
+}
+
+.btn-cargar-mas{
+    display: flex;
+    justify-content: center;
+    margin: 40px auto;
+}
