@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <title>Listado</title>
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
@@ -11,23 +11,27 @@
     <script type="text/javascript" src="static/js/rating.js"></script>
 </head>
 <body>
-    <section class="nav">
-        <nav class="navbar">
-            <form class="navbar-form" role="search">
-                <div class="input-group">
-                    <input type="text" class="form-control search-input" placeholder="Search Movie" name="search">
-                    <span class="input-group-btn">
-                        <button class="btn btn-info" type="button">
-                          <span class=" glyphicon glyphicon-search"></span>
-                        </button>
-                    </span>
+    <section class="container-fluid nav-section">
+        <div class="row nav-container">
+            <nav class="navbar navbar-default navbar-custom">
+                <div class="col-xs-10 col-sm-12">
+                    <form class="navbar-form" role="search">
+                        <div class="input-group">
+                            <input type="text" class="form-control search-input" placeholder="Search Movie" name="search">
+                            <span class="input-group-btn">
+                                <button class="btn btn-info" type="button">
+                                  <span class=" glyphicon glyphicon-search"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </nav>
+            </nav>
+        </div>
     </section>
-    <section class="list clearfix">
-        <div class="list-wrapper clearfix">
-            <div class="item-pelicula">
+    <section class="container-fluid list">
+        <div class="row list-wrapper">
+            <div class="col-md-2 col-lg-2 item-pelicula">
                 <!-- http://placehold.it/140x209 -->
                 <img class="portada" src="http://fillmurray.com/140/209" alt="" />
                 <p class="titulo">Pelicula X</p>
@@ -38,7 +42,7 @@
                     </div>
                 </div>
             </div>
-            <div class="item-pelicula">
+            <div class="col-md-2 col-lg-2 item-pelicula">
                 <img class="portada" src="http://fillmurray.com/140/209" alt="" />
                 <p class="titulo">Pelicula X</p>
                 <div class="puntaje">
@@ -48,7 +52,7 @@
                     </div>
                 </div>
             </div>
-            <div class="item-pelicula">
+            <div class="col-md-2 col-lg-2 item-pelicula">
                 <img class="portada" src="http://fillmurray.com/140/209" alt="" />
                 <p class="titulo">Pelicula X</p>
                 <div class="puntaje">
@@ -58,7 +62,7 @@
                     </div>
                 </div>
             </div>
-            <div class="item-pelicula">
+            <div class="col-md-2 col-lg-2 item-pelicula">
                 <img class="portada" src="http://fillmurray.com/140/209" alt="" />
                 <p class="titulo">Pelicula X</p>
                 <div class="puntaje">
@@ -69,7 +73,7 @@
                 </div>
             </div>
 
-            <div class="item-pelicula">
+            <div class="col-md-2 col-lg-2 item-pelicula">
                 <img class="portada" src="http://fillmurray.com/140/209" alt="" />
                 <p class="titulo">Pelicula X</p>
                 <div class="puntaje">
@@ -79,7 +83,7 @@
                     </div>
                 </div>
             </div>
-            <div class="item-pelicula">
+            <div class="col-md-2 col-lg-2 item-pelicula">
                 <img class="portada" src="http://fillmurray.com/140/209" alt="" />
                 <p class="titulo">Pelicula X</p>
                 <div class="puntaje">
@@ -89,7 +93,7 @@
                     </div>
                 </div>
             </div>
-            <div class="item-pelicula">
+            <div class="col-md-2 col-lg-2 item-pelicula">
                 <img class="portada" src="http://fillmurray.com/140/209" alt="" />
                 <p class="titulo">Pelicula X</p>
                 <div class="puntaje">
@@ -99,40 +103,39 @@
                     </div>
                 </div>
             </div>
-            <div class="item-pelicula">
+            <div class="col-md-2 col-lg-2 item-pelicula">
                 <img class="portada" src="http://fillmurray.com/140/209" alt="" />
                 <p class="titulo">Pelicula X</p>
                 <div class="puntaje">
                     <input id="ratings-hidden" name="rating" type="hidden">
                     <div class="text-right">
-                        <div class="stars starrr" data-rating="0"></div>
+                        <div class="stars starrr" data-rating="3"></div>
                     </div>
                 </div>
-            </div>
-
-            <div class="item-pelicula">
+            </div><div class="col-md-2 col-lg-2 item-pelicula">
                 <img class="portada" src="http://fillmurray.com/140/209" alt="" />
                 <p class="titulo">Pelicula X</p>
                 <div class="puntaje">
                     <input id="ratings-hidden" name="rating" type="hidden">
                     <div class="text-right">
-                        <div class="stars starrr" data-rating="0"></div>
+                        <div class="stars starrr" data-rating="3"></div>
                     </div>
                 </div>
-            </div>
-            <div class="item-pelicula">
+            </div><div class="col-md-2 col-lg-2 item-pelicula">
                 <img class="portada" src="http://fillmurray.com/140/209" alt="" />
                 <p class="titulo">Pelicula X</p>
                 <div class="puntaje">
                     <input id="ratings-hidden" name="rating" type="hidden">
                     <div class="text-right">
-                        <div class="stars starrr" data-rating="0"></div>
+                        <div class="stars starrr" data-rating="3"></div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="btn-cargar-mas">
-            <a href="#" class="btn btn-info"><span class="glyphicon glyphicon-refresh"></span> Cargar Más</a>
+        <div class="row list-wrapper">
+            <div class="col-xs-8 col-sm-12 btn-cargar-mas">
+                <a href="#" class="btn btn-info"><span class="glyphicon glyphicon-refresh"></span> Cargar Más</a>
+            </div>
         </div>
     </section>
 </body>
