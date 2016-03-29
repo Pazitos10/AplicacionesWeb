@@ -113,11 +113,11 @@
             if($this->get_request_method() != "GET"){
                 $this->response('',406);
             }
-            $id = isset($this->_request['id']) ? $this->_request['id'] : Null;
+            $term = isset($this->_request['term']) ? $this->_request['term'] : Null;
 
             //$this->db->exec('INSERT INTO movies (id, title, genre, year, rating) VALUES ("tt0075148","Rocky","drama",1976,8.1)');
-            if (isset($id)) {
-                $result = $this->db->query("SELECT id, title, genre, year, rating FROM movies where id='$id'" );
+            if (isset($term)) {
+                $result = $this->db->query("SELECT id, title, genre, year, rating FROM movies where id='$term' OR title LIKE '%$term%'" );
             } else {
                 $result = $this->db->query('SELECT id, title, genre, year, rating FROM movies');
             }
@@ -135,20 +135,6 @@
             }
 
         }
-		
-		private function deleteUser(){
-			// Cross validation if the request method is DELETE else it will return "Not Acceptable" status
-			if($this->get_request_method() != "DELETE"){
-				$this->response('',406);
-			}
-			$id = (int)$this->_request['id'];
-			if($id > 0){				
-				mysql_query("DELETE FROM users WHERE user_id = $id");
-				$success = array('status' => "Success", "msg" => "Successfully one record deleted.");
-				$this->response($this->json($success),200);
-			}else
-				$this->response('',204);	// If no records "No Content" status
-		}
 		
 		/*
 		 *	Encode array into JSON
