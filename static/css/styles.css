@@ -64,8 +64,27 @@ body{
     color: rgba(255,215,0,.8);
 }
 
-.btn-cargar-mas{
+.btn-centered{
     display: flex;
     justify-content: center;
+}
+
+.btn-cargar-mas{
     margin: 40px auto;
+}
+
+.panel-form{
+    margin-top: 20px;
+    width: auto;
+}
+
+.form-header-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.save-movie-section{
+    display: flex;
+    justify-content: center;
 }
