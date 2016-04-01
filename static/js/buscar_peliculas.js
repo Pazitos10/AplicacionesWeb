@@ -70,6 +70,55 @@ $(document).ready(function () {
             });
     }
 
+
+    /**
+    * Devuelve la URL con la imagen de poster de la pelicula
+    * @param String imdb_id Id de IMDB
+    * @param String img_id Id del objeto IMG
+    */
+    function buscar_info_pelicula(imdb_id){
+        var API_KEY = "53eb1914f7a9090c92553339f74280ce";
+        $.ajax({
+            url: "https://api.themoviedb.org/3/movie/" + imdb_id + "?api_key=" + API_KEY,
+            method: "GET"
+            })
+            .done(function( data ) {
+                console.log(data);
+                //poster
+                $("#portada-id").attr("src", "http://image.tmdb.org/t/p/w150" + data.poster_path);
+
+                //titulo
+                $("#title-display").text(data.original_title);
+                $("#title").attr("value",data.original_title);
+
+                //Genero
+                var genres = '';
+                for (var i in data.genres) {
+                    if (genres !== ''){
+                        genres += $("#genre-display").val() + " | " +data.genres[i].name;
+                    }else {
+                        genres += data.genres[i].name;
+                    }
+                }
+                console.log(genres);
+                $("#genre-display").text(genres);
+                $("#genre").attr('value', genres);
+
+                //Año
+                var anio = new Date(String(data.release_date)).getFullYear();
+                $("#year-display").text(anio);
+                $("#year").attr("value", anio);
+
+                //Rating
+                var rating = data.vote_average;
+                if(rating > 5.0){
+                    rating = 5.0;
+                }
+                $('#rating').rating('rate', rating);
+
+            });
+    }
+
     $("#search").click(function () {
         var search_term = $("#search_term").val();
         if (search_term.length != 0) {
@@ -93,5 +142,15 @@ $(document).ready(function () {
         if (value.length >= 3 ) {
             buscar_peliculas(value);
         }
+    });
+
+    function autocompletar_form(){
+        buscar_info_pelicula($('#id').val(), 'portada-id');
+    }
+
+
+    $('.form-alta #id').change(function () {
+        if ($(this).val() !== '') {
+            autocompletar_form()}
     });
 });

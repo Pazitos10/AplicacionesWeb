@@ -9,58 +9,54 @@
     <link rel="stylesheet" href="static/css/styles.css">
     <script type="text/javascript" src="static/js/jquery-1.12.0.min.js"></script>
     <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap-rating.min.js"></script>
+    <script src="static/js/buscar_peliculas.js" charset="utf-8"></script>
 </head>
 <body>
     <section class="container-fluid list-wrapper">
         <div class="row col-md-8 col-xs-12 col-sm-10">
             <div class="panel panel-default panel-form ">
                 <div class="panel-heading form-header-container">
-                    <div class="form-header-left"><a class="btn btn-info btn-volver" href="/">&laquo; Volver</a></div>
-                    <div class="form-header-center"><h4 class="form-title"> Alta de Pelicula </h4></div>
+                    <div class="form-header-left"><a class="btn-volver glyphicon glyphicon-chevron-left" href="/"></a></div>
+                    <div class="form-header-center"><h4 class="form-title"> Nueva Pelicula </h4></div>
                     <div class="form-header-right"></div>
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal form-alta" method="post" action="/api.php/movies">
-                        <div class="form-group">
-                            <label for="id" class="col-sm-2 control-label">Id de IMDB: </label>
-                            <div class="col-sm-10">
-                                <input type="Text" id="id" name="id" class="form-control" placeholder="Ingrese el Id de la Pelicula"/>
-                            </div>
+                    <div class="col-xs-12">
+                        <div class="form-alta-container">
+                            <form class="form-horizontal form-alta" method="post" action="/api.php/movies">
+                                <div class="form-group">
+                                    <label for="id" class="col-sm-2 control-label">IMDB Id: </label>
+                                    <div class="col-sm-10">
+                                        <input type="Text" id="id" name="id" class="form-control" placeholder="Ingrese el Id de la Pelicula"/>
+                                    </div>
+                                    <input type="hidden" id="title" name="title"/>
+                                    <input type="hidden" id="genre" name="genre">
+                                    <input type="hidden" id="year" name="year"/>
+                                </div>
+                                <div class="form-group info-pelicula">
+                                    <div class="portada-container">
+                                        <img class="portada" id="portada-id" src="http://fillmurray.com/140/209" alt="">
+                                    </div>
+                                    <div class="puntaje puntaje-form">
+                                        <input id="ratings-hidden" name="rating" type="hidden">
+                                        <input id="rating" type="hidden" class="rating"
+                                        data-filled="glyphicon glyphicon-star"
+                                        data-empty="glyphicon glyphicon-star-empty"
+                                        data-fractions="2"/>
+                                    </div>
+                                    <p id="title-display"></p>
+                                    <p id="genre-display"></p>
+                                    <p id="year-display"></p>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="btn-guardar">
+                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        <div class="form-group">
-                            <label for="title" class="col-sm-2 control-label">Título: </label>
-                            <div class="col-sm-10">
-                                <input type="Text" id="title" name="title" class="form-control" placeholder="Ingrese título de la Pelicula"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="genre" class="col-sm-2 control-label">Género: </label>
-                            <div class="col-sm-10">
-                                <Select id="genre" name="genre" class="form-control">
-                                    <option>Drama</option>
-                                    <option>Comedia</option>
-                                    <option>Acción</option>
-                                </Select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="year" class="col-sm-2 control-label">Año: </label>
-                            <div class="col-sm-10">
-                                <input type="Text" id="year" name="year" class="form-control" placeholder="Ingrese Año de la Pelicula"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="rating" class="col-sm-2 control-label">Puntuación: </label>
-                            <div class="col-sm-10">
-                                <input type="Text" id="rating" name="rating" class="form-control" placeholder="Ingrese puntuación de la Pelicula"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary">Guardar</button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

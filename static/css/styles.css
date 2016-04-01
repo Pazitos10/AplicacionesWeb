@@ -39,7 +39,7 @@ body{
     font-weight: 100;
 }
 
-.item-pelicula .portada{
+.item-pelicula .portada, .portada{
     border-radius: 3px;
     box-shadow: 3px 2px 8px rgba(0,0,0,.52);
 }
@@ -49,19 +49,15 @@ body{
     text-shadow: 3px 2px 8px rgba(0,0,0,.52);
 }
 
-/* Efecto estrellas */
-.animated {
-    -webkit-transition: height 0.2s;
-    -moz-transition: height 0.2s;
-    transition: height 0.2s;
+.glyphicon-star,
+.glyphicon-star-empty{
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: rgba(255,215,0,.8);
 }
 
-.stars
-{
-    margin-bottom: 20px;
-    font-size: 20px;
+.stars{
     text-align: center;
-    color: rgba(255,215,0,.8);
 }
 
 .btn-centered{
@@ -74,7 +70,7 @@ body{
 }
 
 .panel-form{
-    margin-top: 20px;
+    margin-top: 10px;
     width: auto;
 }
 
@@ -83,8 +79,42 @@ body{
     justify-content: space-between;
 }
 
+.form-header-left{
+    margin: 10px 0px;
+}
+.form-header-left a{
+    color: #999;
+}
+
+.form-header-left a:hover{
+    color: black;
+    text-decoration: none;
+}
+
 
 .save-movie-section{
     display: flex;
     justify-content: center;
+}
+
+.portada-container{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-alta{
+    width: 100%;
+    text-align: center;
+}
+
+.btn-guardar{
+    text-align: center;
+}
+
+
+.puntaje-form{
+    text-align: center
+}
+.info-pelicul #title-display{
+    font-weight: 700;
 }
