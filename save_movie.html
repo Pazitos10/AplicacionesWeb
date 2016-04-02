@@ -22,25 +22,18 @@
                     <div class="form-header-right"></div>
                 </div>
                 <div class="panel-body">
-                    <div class="col-xs-12">
-                        <div class="form-alta-container">
-                            <form class="form-horizontal form-alta" method="post" action="/api.php/movies">
-                                <div class="form-group" id="form-inputs">
-                                    <label for="id" class="col-sm-2 control-label">IMDB Id: </label>
-                                    <div class="col-sm-10">
-                                        <input type="Text" id="id" name="id" class="form-control" placeholder="Ingrese el Id de la Pelicula"/>
-                                    </div>
-                                    <input type="hidden" id="title" name="title"/>
-                                    <input type="hidden" id="genre" name="genre">
-                                    <input type="hidden" id="year" name="year"/>
+                    <div class="form-alta-container">
+                        <form class="form-horizontal form-alta" method="post" action="/api.php/movies">
+                            <div class="form-group" id="form-input">
+                                <label for="id" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-8">
+                                    <input type="Text" id="id" name="id" class="form-control" placeholder="Ingrese el Id o Titulo de la Pelicula"/>
                                 </div>
-                                <div class="col-sm-12">
-                                    <div class="btn-guardar">
-                                        <button type="submit" class="btn btn-primary">Guardar</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                                <input type="hidden" id="title" name="title"/>
+                                <input type="hidden" id="genre" name="genre">
+                                <input type="hidden" id="year" name="year"/>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

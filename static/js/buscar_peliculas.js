@@ -1,4 +1,25 @@
+var genres_list;
+
+function get_genres_list(){
+    var API_KEY = "53eb1914f7a9090c92553339f74280ce";
+    var url =  'https://api.themoviedb.org/3/genre/movie/list?api_key='+ API_KEY;
+    return $.ajax({
+        url: url,
+        method: "GET"
+    }).done(function(data){
+        if (!genres_list){
+            genres_list = data.genres;
+        }else{
+            genres_list = [];
+        }
+    });
+}
+
+get_genres_list();
+
+
 $(document).ready(function () {
+
     function buscar_peliculas(search_term) {
         //alert("Busco " + "api.php/movies?term=" + search_term);
         $.ajax({
@@ -65,9 +86,18 @@ $(document).ready(function () {
             method: "GET"
             })
             .done(function( data ) {
-                //console.log("http://image.tmdb.org/t/p/w150" + data.poster_path);
                 $("#" + img_id).attr("src", "http://image.tmdb.org/t/p/w150" + data.poster_path);
             });
+    }
+
+    function get_genre_name_by_id(id){
+        var name = '';
+        for (var i in genres_list) {
+            if (genres_list[i].id === id){
+                name = genres_list[i].name;
+                return name;
+            }
+        }
     }
 
     /**
@@ -76,32 +106,29 @@ $(document).ready(function () {
     */
     function get_genres_name(genres_array){
         var genres = '';
-        for (var i in genres_array) {
-            if (genres !== ''){
-                genres += " | " +genres_array[i].name;
-            }else {
-                genres += genres_array[i].name;
+        if (!genres_array.some(isNaN)){
+            //solo contiene ids
+            for (var i in genres_array){
+                if(genres != ''){
+                    genres += " | "+ get_genre_name_by_id(genres_array[i]);
+                }else{
+                    genres += get_genre_name_by_id(genres_array[i]);
+                }
+            }
+        }else {
+            for (var i in genres_array) {
+                if (genres !== ''){
+                    genres += " | " +genres_array[i].name;
+                }else {
+                    genres += genres_array[i].name;
+                }
             }
         }
         return genres;
     }
 
 
-    function autocomplete_succeed(data){
-        limpiar_form();
-        if (data.hasOwnProperty('total_results')){
-            if (data.total_results > 0){
-                data = data.results[0];
-            }else{
-                autocomplete_failed();
-                return false;
-            }
-        }
-        var form_inputs = $('#form-inputs');
-        var titulo = data.original_title;
-        //TODO: Verificar cuando viene por titulo, genres no existe -> genres_ids existe y hay que buscar los nombres a mano
-        var generos = get_genres_name(data.genres);
-        var anio = new Date(String(data.release_date)).getFullYear();
+    function autocomplete_by_id(data){
         var poster_url = "http://placehold.it/150x200?text=Sin+Imagen";
         if (data.poster_path !== null ){
             poster_url = "http://image.tmdb.org/t/p/w150" + data.poster_path;
@@ -110,25 +137,89 @@ $(document).ready(function () {
         if(rating > 5.0){
             rating = 5.0;
         }
-        var info_pelicula = "<div class='form-group info-pelicula'>"+
-            "<div class='portada-container'>"+
-                "<img class='portada' id='portada-id' src='"+poster_url+"' alt=''>"+
-            "</div>"+
-            "<div class='puntaje puntaje-form'>"+
-                "<input id='ratings-hidden' name='rating' type='hidden'>"+
-                "<input id='rating' type='hidden' class='rating' data-filled='glyphicon glyphicon-star' data-empty='glyphicon glyphicon-star-empty' data-fractions='2' />"+
-            "</div>"+
-            "<p id='title-display'>"+titulo+"</p>"+
-            "<p id='genre-display'>"+generos+"</p>"+
-            "<p id='year-display'>"+anio+"</p>"+
-        "</div>";
-        form_inputs.after(info_pelicula);
+        pelicula = {
+            titulo: data.original_title,
+            generos: get_genres_name(data.genres),
+            anio: new Date(String(data.release_date)).getFullYear(),
+            poster_url: poster_url,
+            rating: rating
+        };
+        return pelicula;
+    }
 
-        // Datos para enviar con el form
-        $("#title").attr("value", titulo);
-        $("#genre").attr('value', generos);
-        $("#year").attr("value", anio);
-        $('#rating').rating('rate', rating);
+
+    function show_results(data){
+        $('#search-results').remove(); //Limpiamos resultados anteriores
+        var resultados = "<div class='form-results' id='search-results'>"+
+                        "<p><strong>"+data.total_results+"</strong> Resultados para '"+$('#id').val()+"'</p>";
+        var max_substr = 550;
+        //console.log(data);
+        for (var i in data.results){
+            var imdb_id = data.results[i].id;
+            var poster_url = "http://placehold.it/92x138?text=Sin+Imagen";
+            if (data.results[i].poster_path !== null ){
+                poster_url = "http://image.tmdb.org/t/p/w92" + data.results[i].poster_path;
+            }
+            var titulo = data.results[i].original_title;
+            var anio = new Date(data.results[i].release_date).getFullYear();
+            if (isNaN(anio)){
+                anio = 'unknown'
+            }
+            var resultado_item = "<div class='col-xs-6 col-sm-6 col-md-2 col-lg-2 search-result-item'>"+
+                                    "<div class='item-pelicula'>"+
+                                        "<img imdb-id="+imdb_id+" class='portada portada-search-result' src='"+poster_url+"' alt='"+titulo+"'/>"+
+                                        "<p class='titulo-result dont-break-out'>"+titulo+"</p>"+
+                                        "<p class='year-result'> ("+anio+") </p>"+
+                                    "</div>"+
+                                "</div>";
+            resultados+= resultado_item;
+        }
+        resultados += "<hr></div>";
+        $('.form-alta-container').append(resultados);
+        $('.portada-search-result').on("click", function (e) {
+            e.preventDefault();
+            var target = $( e.target );
+            autocompletar_form(target.attr('imdb-id'));
+        });
+    }
+
+    function autocomplete_succeed(data){
+        limpiar_form();
+        var form_input = $('#form-input');
+        pelicula = {};
+        if (data.hasOwnProperty('total_results')){
+            //Search by title
+            if (data.total_results > 0){
+                show_results(data);
+            } else{
+                autocomplete_failed();
+            }
+        }else{
+            //Search by Id
+            pelicula = autocomplete_by_id(data);
+            var info_pelicula = "<div class='form-group info-pelicula'>"+
+                "<div class='portada-container'>"+
+                    "<img class='portada' id='portada-id' src='"+pelicula.poster_url+"' alt=''>"+
+                "</div>"+
+                "<div class='puntaje puntaje-form'>"+
+                    "<input id='ratings-hidden' name='rating' type='hidden'>"+
+                    "<input id='rating' type='hidden' class='rating' data-filled='glyphicon glyphicon-star' data-empty='glyphicon glyphicon-star-empty' data-fractions='2' />"+
+                "</div>"+
+                "<p id='title-display'>"+pelicula.titulo+"</p>"+
+                "<p id='genre-display'>"+pelicula.generos+"</p>"+
+                "<p id='year-display'>"+pelicula.anio+"</p>"+
+            "</div>"+
+            "<div class='col-sm-12' id='btn-guardar'>"+
+                "<button type='submit' class='btn btn-primary'>Guardar</button>"+
+            "</div>";
+            form_input.after(info_pelicula);
+
+            // Datos para enviar con el form
+            $("#title").attr("value", pelicula.titulo);
+            $("#genre").attr('value', pelicula.generos);
+            $("#year").attr("value", pelicula.anio);
+            $('#rating').rating('rate', pelicula.rating);
+        }
     }
 
 
@@ -148,10 +239,12 @@ $(document).ready(function () {
     * @param String imdb_id Id de IMDB
     */
     function autocompletar_form(imdb_id){
+        limpiar_form();
         var API_KEY = "53eb1914f7a9090c92553339f74280ce";
-        if(imdb_id.startsWith('tt')){
+        if(isFinite(imdb_id)  || imdb_id.startsWith('tt')){
             //buscamos por id
             var url = "https://api.themoviedb.org/3/movie/" + imdb_id + "?api_key=" + API_KEY;
+            //console.log(url);
         }else{
             var titulo = encodeURI(imdb_id);
             var url  = "http://api.themoviedb.org/3/search/movie?api_key="+ API_KEY+ "&query="+ titulo;
@@ -194,12 +287,15 @@ $(document).ready(function () {
     function limpiar_form(){
         $('.form-alta #id').value = '';
         $('.form-alta .info-pelicula').remove();
+        $('.form-alta #btn-guardar').remove();
+        $('.form-alta-container #search-results').remove(); //Limpiamos resultados anteriores
     }
 
     $('.form-alta #id').change(function () {
-        limpiar_form();
         if ($(this).val() !== '') {
             autocompletar_form($(this).val())
+        }else{
+            limpiar_form();
         }
     });
 });
