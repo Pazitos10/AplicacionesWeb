@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-    <title>Guardar Pelicula</title>
+    <title>Nueva Pelicula</title>
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/css/styles.css">
@@ -25,7 +25,7 @@
                     <div class="col-xs-12">
                         <div class="form-alta-container">
                             <form class="form-horizontal form-alta" method="post" action="/api.php/movies">
-                                <div class="form-group">
+                                <div class="form-group" id="form-inputs">
                                     <label for="id" class="col-sm-2 control-label">IMDB Id: </label>
                                     <div class="col-sm-10">
                                         <input type="Text" id="id" name="id" class="form-control" placeholder="Ingrese el Id de la Pelicula"/>
@@ -33,21 +33,6 @@
                                     <input type="hidden" id="title" name="title"/>
                                     <input type="hidden" id="genre" name="genre">
                                     <input type="hidden" id="year" name="year"/>
-                                </div>
-                                <div class="form-group info-pelicula">
-                                    <div class="portada-container">
-                                        <img class="portada" id="portada-id" src="http://fillmurray.com/140/209" alt="">
-                                    </div>
-                                    <div class="puntaje puntaje-form">
-                                        <input id="ratings-hidden" name="rating" type="hidden">
-                                        <input id="rating" type="hidden" class="rating"
-                                        data-filled="glyphicon glyphicon-star"
-                                        data-empty="glyphicon glyphicon-star-empty"
-                                        data-fractions="2"/>
-                                    </div>
-                                    <p id="title-display"></p>
-                                    <p id="genre-display"></p>
-                                    <p id="year-display"></p>
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="btn-guardar">
