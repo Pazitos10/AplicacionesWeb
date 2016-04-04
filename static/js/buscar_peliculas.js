@@ -225,13 +225,15 @@ $(document).ready(function () {
 
     function autocomplete_failed(){
         limpiar_form();
-        var form_inputs = $('#form-inputs');
-        var poster_url = "http://i.imgur.com/WCeJfRi.webm";
-        var info_pelicula = "<div class='form-group info-pelicula'>"+
-            "<div class='portada-container'>"+
-                "<video class='portada portada-404' id='portada-id' src='"+poster_url+"' alt='' autoplay loop type='video/webm'>"+
-            "</div>"+"</div>";
-        form_inputs.after(info_pelicula);
+        var form_input = $('#form-input');
+        var poster_url = "static/img/404-movie-not-found.gif";
+        var info_pelicula = "<div class='info-pelicula'>"+
+                                "<div class='portada-container-404'>"+
+                                    "<p><strong>'"+$('#id').val()+"'</strong> No produjo resultados.</p>"+
+                                    "<img class='portada portada-404' src='"+poster_url+"' alt='404-movie-not-found'>"+
+                                "</div>"+
+                            "</div>";
+        form_input.after(info_pelicula);
     }
 
     /**
@@ -268,6 +270,7 @@ $(document).ready(function () {
                 priority: "error"
             });
             $("#search_term").focus();
+            setInterval(function () {$(document).trigger("clear-alerts");}, 4500);
         }
 
     });
@@ -275,11 +278,12 @@ $(document).ready(function () {
 
     //Funcion de autocomplete
     $("#search_term").keyup(function () {
+        console.log('hola');
         var that = this,
             value = $(this).val();
 
         if (value.length >= 3 ) {
-            buscar_peliculas(value);
+            procesar_busqueda(value);
         }
     });
 
@@ -293,6 +297,7 @@ $(document).ready(function () {
 
     $('.form-alta #id').change(function () {
         if ($(this).val() !== '') {
+            console.log($(this).val());
             autocompletar_form($(this).val())
         }else{
             limpiar_form();

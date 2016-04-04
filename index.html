@@ -6,6 +6,7 @@
     <title>Listado</title>
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/paper/bootstrap.min.css" rel="stylesheet" integrity="sha384-2mX2PSpkRSXLQzmNzH3gwK6srb06+OfbDlYjbog8LQuALYJjuQ3+Yzy2JIWNV9rW" crossorigin="anonymous">
     <link rel="stylesheet" href="static/css/bootstrap-rating.css">
     <link rel="stylesheet" href="static/css/styles.css">
     <script type="text/javascript" src="static/js/jquery-1.12.0.min.js"></script>
@@ -15,26 +16,33 @@
     <script type="text/javascript" src="static/js/buscar_peliculas.js"></script>
 </head>
 <body>
-    <section class="container-fluid nav-section">
-        <div class="row nav-container">
-            <nav class="navbar navbar-default navbar-custom">
-                <div class="col-xs-10 col-sm-12">
-                    <form class="navbar-form" role="search">
-                        <div class="input-group">
-                            <input type="text" id="search_term" class="form-control search-input" placeholder="Ingrese término de búsqueda" name="search">
-                            <span class="input-group-btn">
-                                <button id="search" class="btn btn-info" type="button">
-                                  <span class=" glyphicon glyphicon-search"></span>
-                                </button>
-                            </span>
-                        </div>
-                        <a href="save_movie.html" class="btn btn-default">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nueva Pelicula
-                        </a>
-                    </form>
+    <section class="container-fluid">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Listado General</a>
                 </div>
-            </nav>
-        </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a  href="save_movie.html"> Nueva pelicula </a></li>
+                        <li><div class="search-input navbar-form">
+                                <input type="text" id="search_term" class="form-control search-input" placeholder="Buscar" name="search">
+                                <span id="search" class="glyphicon glyphicon-search"></span>
+                            </div>
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
     </section>
     <section class="container-fluid">
         <div data-alerts="alerts"></div>

@@ -1,24 +1,21 @@
 body{
     background-color: rgba(0,0,0,.8);
     background-image: url("../img/black-linen.png");
+    padding-top: 80px;
 }
 
-.nav-section{
-    display: flex;
-    justify-content: center;
-}
+.search-input{display: table;padding-left: 30px; width: 100%}
 
-.navbar-custom{
-    display: flex;
-    justify-content: center;
-    background-color: transparent;
-    border:none;
-    padding: 0;
+#search_term{
+    width: 95%;
+    display: table-cell;
+    vertical-align: center
 }
-
-.navbar-custom .navbar-form{
-    box-shadow: none;
-    border:none;
+#search{
+    width: 5%;
+    display: table-cell;
+    text-align: center;
+    vertical-align: center
 }
 
 .list-wrapper{
@@ -30,13 +27,12 @@ body{
 .item-pelicula{
     margin: 0 5px;
     text-align: center;
-    line-height: .9;
+    line-height: 0.2;
 }
 
 .item-pelicula .titulo{
     margin-top: 15px;
     color: white;
-    font-weight: 100;
 }
 
 .item-pelicula .portada, .portada{
@@ -123,6 +119,8 @@ body{
 .info-pelicula .portada-404{
     width: 100%;
     height: auto;
+    box-shadow: none;
+    border-radius: 5px;
 }
 
 .item-pelicula .portada-search-result{
@@ -171,4 +169,8 @@ body{
 
 .item-pelicula .portada-search-result:hover {
     box-shadow: 1px 1px 5px rgba(0,0,0,.82);
+}
+
+.item-pelicula .portada-container-404{
+    text-align: center;
 }
