@@ -41,7 +41,6 @@
 		 *
 		 */
 		public function processApi(){
-			return $func = $this->movies();
 			$func = strtolower(trim(str_replace("/","", $_SERVER['PATH_INFO'])));
 			if((int)method_exists($this,$func) > 0)
 				$this->$func();

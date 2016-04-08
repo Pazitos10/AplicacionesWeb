@@ -63,7 +63,7 @@ $(document).ready(function () {
             var pelicula_portada_id = "portada-" + pelicula['id'];
             var pelicula_item = $([
                 "<div class='col-md-2 col-lg-2 item-pelicula'>",
-                "   <img id='" + pelicula_portada_id + "' class='portada' src='http://fillmurray.com/140/209' alt='' />",
+                "   <a href='compare_movie.php?id="+pelicula['id']+"' title='Comparar puntuaciones'><img id='" + pelicula_portada_id + "' class='portada' src='http://fillmurray.com/140/209' alt='' /></a>",
                 "   <p class='titulo'>" + pelicula['title'] + "</p>",
                 "   <div class='puntaje puntaje-form'>",
                 "    <input type='hidden' ",
@@ -166,19 +166,42 @@ $(document).ready(function () {
             "<div class='puntaje puntaje-form'>"+
             "<input id='rating' type='hidden' name='rating' class='rating' data-filled='glyphicon glyphicon-star' data-empty='glyphicon glyphicon-star-empty' data-fractions='2' />"+
             "</div>"+
-            "<p id='title-display'>"+pelicula.titulo+"</p>"+
-            "<p id='genre-display'>"+pelicula.generos+"</p>"+
-            "<p id='year-display'>"+pelicula.anio+"</p>"+
+            "<p id='title-display'>"+pelicula.title+"</p>"+
+            "<p id='genre-display'>"+pelicula.genre+"</p>"+
+            "<p id='year-display'>"+pelicula.year+"</p>"+
             "</div>"+
             "</div>";
             form_input.after(info_pelicula);
 
             // Datos para enviar con el form
             $("#id").val(pelicula.id);
-            $("#title").val(pelicula.titulo);
-            $("#genre").val(pelicula.generos);
-            $("#year").val(pelicula.anio);
+            $("#title").val(pelicula.title);
+            $("#genre").val(pelicula.genre);
+            $("#year").val(pelicula.year);
             $('#rating').rating('rate', pelicula.rating);
+            $('#rating').change(function(){
+                pelicula.rating = $(this).val();
+                console.log(pelicula.rating);
+                $.ajax({
+                    url: "api.php/movies",
+                    method: "POST",
+                    data: pelicula
+                }).done(function(data){
+                    console.log(data);
+                    $(document).trigger("add-alerts", {
+                        message: "Pelicula guardada con éxito!",
+                        priority: "success"
+                    });
+                    setInterval(function () {$(document).trigger("clear-alerts");}, 4500);
+                }).fail(function(data){
+                    console.log(data.responseText["msg"]);
+                    $(document).trigger("add-alerts", {
+                        message: "Error al guardar ",
+                        priority: "error"
+                    });
+                    setInterval(function () {$(document).trigger("clear-alerts");}, 4500);
+                });
+            });
         }
     }
     function autocomplete_failed(){
@@ -244,9 +267,9 @@ $(document).ready(function () {
         }
         pelicula = {
             id: data.id,
-            titulo: data.original_title,
-            generos: get_genres_name(data.genres),
-            anio: new Date(String(data.release_date)).getFullYear(),
+            title: data.original_title,
+            genre: get_genres_name(data.genres),
+            year: new Date(String(data.release_date)).getFullYear(),
             poster_url: poster_url,
             rating: rating
         };
@@ -288,7 +311,6 @@ $(document).ready(function () {
             limpiar_form();
         }
     });
-
     buscar_peliculas("*");
 
 });

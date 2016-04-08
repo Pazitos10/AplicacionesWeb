@@ -1,3 +1,4 @@
+<?php require_once('api.php'); ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -20,11 +21,12 @@
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Nueva Pelicula</a>
+                    <a class="navbar-brand" href="#">Comparar Puntuaciones</a>
                     <ul class="nav navbar-nav">
                         <li>
                             <a href="/">Listado general</a>
                         </li>
+                        <li><a href="/save_movie.html"> Nueva pelicula </a></li>
                     </ul>
                 </div>
             </div><!-- /.container-fluid -->
@@ -34,27 +36,12 @@
         <div data-alerts="alerts"></div>
     </section>
     <section class="container-fluid list-wrapper">
-        <div class="row col-md-8 col-xs-12 col-sm-10 bs-component panel custom-panel">
-            <div class="panel-body">
-                <div class="form-alta-container">
-                    <div class="col-xs-12 search-input search-input-alta">
-                            <input type="text" id="search-term-input" class="form-control" placeholder="Ingrese el Id o Titulo de la Pelicula"/>
-                            <span id="search-term-button" class="glyphicon glyphicon-search"></span>
-                    </div>
-                    <div class="result-pages text-center bs-component"></div>
-                    <form class="form-horizontal form-alta" method="post" action="/api.php/movies">
-                        <div class="form-group" id="form-input">
-                            <input type="hidden" id="id" name="id"/>
-                            <input type="hidden" id="title" name="title"/>
-                            <input type="hidden" id="genre" name="genre">
-                            <input type="hidden" id="year" name="year"/>
-                        </div>
-                    </form>
-                    <div class="results-container"></div>
-                    <div class="result-pages text-center bs-component result-pages-bottom"></div>
-                </div>
-            </div>
-        </div>
+        <?php
+                if(isset($_GET['id'])){
+
+                    echo '<p>'.$_GET['id'].'</p>';
+                }
+        ?>
     </section>
 </body>
 </html>
