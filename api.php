@@ -1,22 +1,22 @@
 <?php
 	require_once("Rest.inc.php");
-	
+
 	class API extends REST {
-	
+
 		public $data = "";
 
         /**
          * @var SQLite3 $db
          */
         private $db = NULL;
-	
+
 		public function __construct(){
 			parent::__construct();
             $this->dbConnect();	 //Conecto a la base de datos
 		}
-		
+
 		/*
-		 *  Database connection 
+		 *  Database connection
 		*/
 		private function dbConnect(){
 
@@ -34,33 +34,36 @@
             */
 			$this->db = $db;
 		}
-		
+
 		/*
 		 * Metodo Publico de acceso a la API
 		 * Se llama automaticamente basandose en el query string
 		 *
 		 */
 		public function processApi(){
-			$func = strtolower(trim(str_replace("/","",$_SERVER['PATH_INFO'])));
+			return $func = $this->movies();
+			$func = strtolower(trim(str_replace("/","", $_SERVER['PATH_INFO'])));
 			if((int)method_exists($this,$func) > 0)
 				$this->$func();
 			else
 				$this->response('',404); // Método noexiste
+
 		}
-		
-		/* 
+
+
+		/*
 		 *	Simple login API
 		 *  Login must be POST method
 		 *  email : <USER EMAIL>
 		 *  pwd : <USER PASSWORD>
 		 */
-		
+
 		private function saveMovie(){
 			// Cross validation
 			if($this->get_request_method() != "POST"){
 				$this->response('',406);
 			}
-			
+
 			$id = isset($this->_request['id']) ? $this->_request['id'] : Null;
 			$title = isset($this->_request['title']) ? $this->_request['title'] : Null;
             $genre = isset($this->_request['genre']) ? $this->_request['genre'] : Null;
@@ -96,7 +99,7 @@
             $result = array('status' => 'Ok');
             $this->response($this->json($result), 200);
 		}
-		
+
 		private function movies(){
 			if($this->get_request_method() == "GET"){
                 $this->listMovies();
@@ -135,7 +138,7 @@
             }
 
         }
-		
+
 		/*
 		 *	Encode array into JSON
 		*/
@@ -145,9 +148,9 @@
 			}
 		}
 	}
-	
+
 	// Initiiate Library
 
     $api = new API;
-	$api->processApi();
+	$peliculas = $api->processApi();
 ?>

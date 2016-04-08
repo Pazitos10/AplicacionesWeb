@@ -4,18 +4,19 @@ body{
     padding-top: 80px;
 }
 
-.search-input{display: table;padding-left: 30px; width: 100%}
+.search-input, .search-input-alta{display: table;padding-left: 30px; width: 100%}
 
-#search_term{
-    width: 95%;
+#search-term-input{
+    width: 98%;
     display: table-cell;
     vertical-align: center
 }
-#search{
+#search-term-button{
     width: 5%;
     display: table-cell;
-    text-align: center;
-    vertical-align: center
+    /*text-align: center;*/
+    /*vertical-align: center*/
+    top: 3px;
 }
 
 .list-wrapper{
@@ -173,4 +174,9 @@ body{
 
 .item-pelicula .portada-container-404{
     text-align: center;
+}
+
+
+.result-pages-bottom{
+    clear:both;
 }

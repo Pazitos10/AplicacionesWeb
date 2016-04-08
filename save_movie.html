@@ -14,27 +14,38 @@
 </head>
 <body>
     <section class="container-fluid list-wrapper">
-        <div class="row col-md-8 col-xs-12 col-sm-10">
-            <div class="panel panel-default panel-form ">
-                <div class="panel-heading form-header-container">
-                    <div class="form-header-left"><a class="btn-volver glyphicon glyphicon-chevron-left" href="/"></a></div>
-                    <div class="form-header-center"><h4 class="form-title"> Nueva Pelicula </h4></div>
-                    <div class="form-header-right"></div>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Nueva Pelicula</a>
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="/">Listado general</a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="panel-body">
-                    <div class="form-alta-container">
-                        <form class="form-horizontal form-alta" method="post" action="/api.php/movies">
-                            <div class="form-group" id="form-input">
-                                <label for="id" class="col-sm-2 control-label"></label>
-                                <div class="col-sm-8">
-                                    <input type="Text" id="id" name="id" class="form-control" placeholder="Ingrese el Id o Titulo de la Pelicula"/>
-                                </div>
-                                <input type="hidden" id="title" name="title"/>
-                                <input type="hidden" id="genre" name="genre">
-                                <input type="hidden" id="year" name="year"/>
-                            </div>
-                        </form>
+            </div><!-- /.container-fluid -->
+        </nav>
+
+        <div class="row col-md-8 col-xs-12 col-sm-10 bs-component panel custom-panel">
+            <div class="panel-body">
+                <div class="form-alta-container">
+                    <div class="col-xs-12 search-input search-input-alta">
+                            <input type="text" id="search-term-input" class="form-control" placeholder="Ingrese el Id o Titulo de la Pelicula"/>
+                            <span id="search-term-button" class="glyphicon glyphicon-search"></span>
                     </div>
+                    <div class="result-pages text-center bs-component"></div>
+                    <form class="form-horizontal form-alta" method="post" action="/api.php/movies">
+                        <div class="form-group" id="form-input">
+                            <input type="hidden" id="id" name="id"/>
+                            <input type="hidden" id="title" name="title"/>
+                            <input type="hidden" id="genre" name="genre">
+                            <input type="hidden" id="year" name="year"/>
+                        </div>
+                    </form>
+                    <div class="results-container"></div>
+                    <div class="result-pages text-center bs-component result-pages-bottom"></div>
                 </div>
             </div>
         </div>

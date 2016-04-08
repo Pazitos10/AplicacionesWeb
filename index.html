@@ -34,8 +34,8 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li><a  href="save_movie.html"> Nueva pelicula </a></li>
                         <li><div class="search-input navbar-form">
-                                <input type="text" id="search_term" class="form-control search-input" placeholder="Buscar" name="search">
-                                <span id="search" class="glyphicon glyphicon-search"></span>
+                                <input type="text" id="search-term-input" class="form-control search-input" placeholder="Buscar" name="search">
+                                <span id="search-term-button" class="glyphicon glyphicon-search"></span>
                             </div>
                         </li>
                     </ul>
@@ -48,116 +48,9 @@
     </section>
     <section class="container-fluid list">
         <div id="lista_peliculas" class="row list-wrapper">
-            <div class="col-md-2 col-lg-2 item-pelicula">
-                <!-- http://placehold.it/140x209 -->
-                <img class="portada" src="http://fillmurray.com/140/209" alt="" />
-                <p class="titulo">Pelicula X</p>
-                <div class="puntaje">
-                    <input type="hidden" class="rating"
-                        data-filled="glyphicon glyphicon-star"
-                        data-empty="glyphicon glyphicon-star-empty"
-                        data-fractions="2"/>
-                </div>
-            </div>
-            <div class="col-md-2 col-lg-2 item-pelicula">
-                <!-- http://placehold.it/140x209 -->
-                <img class="portada" src="http://fillmurray.com/140/209" alt="" />
-                <p class="titulo">Pelicula X</p>
-                <div class="puntaje">
-                    <input type="hidden" class="rating"
-                        data-filled="glyphicon glyphicon-star"
-                        data-empty="glyphicon glyphicon-star-empty"
-                        data-fractions="2"/>
-                </div>
-            </div>
-            <div class="col-md-2 col-lg-2 item-pelicula">
-                <!-- http://placehold.it/140x209 -->
-                <img class="portada" src="http://fillmurray.com/140/209" alt="" />
-                <p class="titulo">Pelicula X</p>
-                <div class="puntaje">
-                    <input type="hidden" class="rating"
-                        data-filled="glyphicon glyphicon-star"
-                        data-empty="glyphicon glyphicon-star-empty"
-                        data-fractions="2"/>
-                </div>
-            </div>
-            <div class="col-md-2 col-lg-2 item-pelicula">
-                <!-- http://placehold.it/140x209 -->
-                <img class="portada" src="http://fillmurray.com/140/209" alt="" />
-                <p class="titulo">Pelicula X</p>
-                <div class="puntaje">
-                    <input type="hidden" class="rating"
-                        data-filled="glyphicon glyphicon-star"
-                        data-empty="glyphicon glyphicon-star-empty"
-                        data-fractions="2"/>
-                </div>
-            </div>
-            <div class="col-md-2 col-lg-2 item-pelicula">
-                <!-- http://placehold.it/140x209 -->
-                <img class="portada" src="http://fillmurray.com/140/209" alt="" />
-                <p class="titulo">Pelicula X</p>
-                <div class="puntaje">
-                    <input type="hidden" class="rating"
-                        data-filled="glyphicon glyphicon-star"
-                        data-empty="glyphicon glyphicon-star-empty"
-                        data-fractions="2"/>
-                </div>
-            </div>
-
-            <div class="col-md-2 col-lg-2 item-pelicula">
-                <!-- http://placehold.it/140x209 -->
-                <img class="portada" src="http://fillmurray.com/140/209" alt="" />
-                <p class="titulo">Pelicula X</p>
-                <div class="puntaje">
-                    <input type="hidden" class="rating"
-                        data-filled="glyphicon glyphicon-star"
-                        data-empty="glyphicon glyphicon-star-empty"
-                        data-fractions="2"/>
-                </div>
-            </div>
-            <div class="col-md-2 col-lg-2 item-pelicula">
-                <!-- http://placehold.it/140x209 -->
-                <img class="portada" src="http://fillmurray.com/140/209" alt="" />
-                <p class="titulo">Pelicula X</p>
-                <div class="puntaje">
-                    <input type="hidden" class="rating"
-                        data-filled="glyphicon glyphicon-star"
-                        data-empty="glyphicon glyphicon-star-empty"
-                        data-fractions="2"/>
-                </div>
-            </div>
-            <div class="col-md-2 col-lg-2 item-pelicula">
-                <!-- http://placehold.it/140x209 -->
-                <img class="portada" src="http://fillmurray.com/140/209" alt="" />
-                <p class="titulo">Pelicula X</p>
-                <div class="puntaje">
-                    <input id="rating" type="hidden" class="rating"
-                        data-filled="glyphicon glyphicon-star"
-                        data-empty="glyphicon glyphicon-star-empty"
-                        data-fractions="2"/>
-                </div>
-            </div>
-            <div class="col-md-2 col-lg-2 item-pelicula">
-                <!-- http://placehold.it/140x209 -->
-                <img class="portada" src="http://fillmurray.com/140/209" alt="" />
-                <p class="titulo">Pelicula X</p>
-                <div class="puntaje">
-                    <input type="hidden" class="rating"
-                        data-filled="glyphicon glyphicon-star"
-                        data-empty="glyphicon glyphicon-star-empty"
-                        data-fractions="2"/>
-                </div>
-            </div>
-            <div class="col-md-2 col-lg-2 item-pelicula">
-                <!-- http://placehold.it/140x209 -->
-                <img class="portada" src="http://fillmurray.com/140/209" alt="" />
-                <p class="titulo">Pelicula X</p>
-                <div class="puntaje">
-                    <input type="hidden" class="rating"
-                        data-filled="glyphicon glyphicon-star"
-                        data-empty="glyphicon glyphicon-star-empty"
-                        data-fractions="2"/>
-                </div>
+            <div class="text-center">
+                <h3>No se encontraron películas en la base de datos.</h3>
+                <h5>Para comenzar, hacé click en 'Nueva película' y agregá tus películas favoritas.</h5>
             </div>
         </div>
     </section>
