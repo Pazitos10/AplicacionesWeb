@@ -58,14 +58,15 @@
 		 *  pwd : <USER PASSWORD>
 		 */
 
-		private function saveMovie(){
-			// Cross validation
-			if($this->get_request_method() != "POST"){
-				$this->response('',406);
-			}
+		private function saveMovie()
+        {
+            // Cross validation
+            if ($this->get_request_method() != "POST") {
+                $this->response('', 406);
+            }
 
-			$id = isset($this->_request['id']) ? $this->_request['id'] : Null;
-			$title = isset($this->_request['title']) ? $this->_request['title'] : Null;
+            $id = isset($this->_request['id']) ? $this->_request['id'] : Null;
+            $title = isset($this->_request['title']) ? $this->_request['title'] : Null;
             $genre = isset($this->_request['genre']) ? $this->_request['genre'] : Null;
             $year = isset($this->_request['year']) ? $this->_request['year'] : Null;
             $rating = isset($this->_request['rating']) ? $this->_request['rating'] : Null;
@@ -92,9 +93,17 @@
                 $error = array('status' => "Failed", "msg" => $ex->getMessage());
                 $this->response($this->json($error), 400);
             }
-			// Input validations
+            // Input validations
 
-            $this->db->exec("INSERT INTO movies (id, title, genre, year, rating) VALUES ('$id', '$title', '$genre', $year, $rating)");
+            //Me fijo si ya existe en la Base de Datos
+            $result = $this->db->query("SELECT id FROM movies where id='$id'");
+            if ($movie = $result->fetchArray(SQLITE3_ASSOC)) {
+                //Existe. La actualizo
+                $this->db->exec("UPDATE movies SET title = '$title', genre='$genre', year=$year, rating=$rating WHERE id='$id'");
+            } else {
+                //No existe. La guardo
+                $this->db->exec("INSERT INTO movies (id, title, genre, year, rating) VALUES ('$id', '$title', '$genre', $year, $rating)");
+            }
                 // If success everythig is good send header as "OK" and user details
             $result = array('status' => 'Ok');
             $this->response($this->json($result), 200);
