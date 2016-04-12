@@ -1,3 +1,7 @@
+$(document).load (function () {
+
+});
+
 $(document).ready(function () {
     /**
     * Devuelve la URL con la imagen de poster de la pelicula
@@ -70,11 +74,16 @@ $(document).ready(function () {
                 "    name='rating' id='rating' class='rating' data-filled='glyphicon glyphicon-star' data-pelicula-id=" + pelicula["id"],
                 "    data-empty='glyphicon glyphicon-star-empty' data-fractions='2' value='"+pelicula["rating"]+"'/>",
                 "   </div>",
+                //"   <button class='btn btn-xs compare-movie' data-pelicula-id=" + pelicula['id'] + " onclick='javascript:comparar(" + pelicula['id'] + ");'>Comparar</button>",
+                "   <button class='btn btn-xs compare-movie' id='compare-movie-" + pelicula['id'] + "' data-pelicula-id='" + pelicula['id'] + "'>Comparar</button>",
                 "</div>"
             ].join("\n"));
             buscar_poster(pelicula['id'], pelicula_portada_id);
             lista_peliculas.append(pelicula_item);
             $('.rating').rating();
+            $('#compare-movie-' + pelicula['id']).bind("click", function() {
+                comparar($(this).data('pelicula-id'));
+            });
         }
     }
 
@@ -338,14 +347,18 @@ $(document).ready(function () {
         }
     });
 
+    /*
+     * Logica para la comparacion de peliculas
+     */
+    function comparar(id) {
+        //alert("Comparo " + id);
+        $('#myModal').modal('show');
+    }
+
     if (getUrlParameter("term")) {
         autocompletar_form(getUrlParameter("term"));
     } else {
         buscar_peliculas("*");
 
     }
-
-
-
-
 });
