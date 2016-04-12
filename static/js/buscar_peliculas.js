@@ -43,7 +43,7 @@ $(document).ready(function () {
             //Habria que distinguir si no se encontraron de verdad o bien, no existen peliculas en la db
             if (search_term.length > 0){
                 $(document).trigger("add-alerts", {
-                    message: "No se encontraron Peliculas con Id o Titulo ' " + search_term +" '",
+                    message: "No se encontraron Peliculas con Id o Titulo ' " + search_term +" '. <a href='save_movie.html?term=" + search_term + "'>Buscarla en IMDB</a>",
                     priority: "warning"
                 });
             }
@@ -67,7 +67,7 @@ $(document).ready(function () {
                 "   <p class='titulo'>" + pelicula['title'] + "</p>",
                 "   <div class='puntaje puntaje-form'>",
                 "    <input type='hidden' ",
-                "    name='rating' class='rating' data-filled='glyphicon glyphicon-star' ",
+                "    name='rating' id='rating' class='rating' data-filled='glyphicon glyphicon-star' data-pelicula-id=" + pelicula["id"],
                 "    data-empty='glyphicon glyphicon-star-empty' data-fractions='2' value='"+pelicula["rating"]+"'/>",
                 "   </div>",
                 "</div>"
@@ -97,6 +97,24 @@ $(document).ready(function () {
             });
         }
     }
+
+
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+        }
+    };
+
+
     /**
     * Devuelve los generos de una pelicula con un formato legible
     * @param Array genres
@@ -164,7 +182,7 @@ $(document).ready(function () {
             "<img class='portada' id='portada-id' src='"+pelicula.poster_url+"' alt=''>"+
             "</div>"+
             "<div class='puntaje puntaje-form'>"+
-            "<input id='rating' type='hidden' name='rating' class='rating' data-filled='glyphicon glyphicon-star' data-empty='glyphicon glyphicon-star-empty' data-fractions='2' />"+
+            "<input type='hidden' name='rating' id='rating' class='rating' data-filled='glyphicon glyphicon-star' data-empty='glyphicon glyphicon-star-empty' data-fractions='2' />"+
             "</div>"+
             "<p id='title-display'>"+pelicula.title+"</p>"+
             "<p id='genre-display'>"+pelicula.genre+"</p>"+
@@ -179,7 +197,8 @@ $(document).ready(function () {
             $("#genre").val(pelicula.genre);
             $("#year").val(pelicula.year);
             $('#rating').rating('rate', pelicula.rating);
-            $('#rating').change(function(){
+            $('.rating').change(function(){
+                alert("Me cambiaron el rating");
                 pelicula.rating = $(this).val();
                 console.log(pelicula.rating);
                 $.ajax({
@@ -288,6 +307,13 @@ $(document).ready(function () {
 
 
     /* Event handling */
+
+    $("#search-term-input").keypress(function( event ) {
+        if ( event.which == 13 ) {
+            $('.search-input #search-term-button').click();
+        }
+    });
+
     $(".navbar-form #search-term-button").click(function () {
         var search_term = $("#search-term-input").val();
         if (search_term.length != 0) {
@@ -311,6 +337,15 @@ $(document).ready(function () {
             limpiar_form();
         }
     });
-    buscar_peliculas("*");
+
+    if (getUrlParameter("term")) {
+        autocompletar_form(getUrlParameter("term"));
+    } else {
+        buscar_peliculas("*");
+
+    }
+
+
+
 
 });
