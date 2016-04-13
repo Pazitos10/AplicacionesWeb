@@ -67,21 +67,21 @@ $(document).ready(function () {
             var pelicula_portada_id = "portada-" + pelicula['id'];
             var pelicula_item = $([
                 "<div class='col-md-2 col-lg-2 item-pelicula'>",
-                "   <a href='compare_movie.php?id="+pelicula['id']+"' title='Comparar puntuaciones'><img id='" + pelicula_portada_id + "' class='portada' src='http://fillmurray.com/140/209' alt='' /></a>",
+                "   <span class='overlay' id='overlay-portada-"+  pelicula['id'] +"' data-pelicula-id='" + pelicula['id'] +"' ></span>",
+                "   <img id='" + pelicula_portada_id + "' class='portada' src='http://fillmurray.com/140/209' alt='' />",
                 "   <p class='titulo'>" + pelicula['title'] + "</p>",
                 "   <div class='puntaje puntaje-form'>",
                 "    <input type='hidden' ",
                 "    name='rating' id='rating' class='rating' data-filled='glyphicon glyphicon-star' data-pelicula-id=" + pelicula["id"],
                 "    data-empty='glyphicon glyphicon-star-empty' data-fractions='2' value='"+pelicula["rating"]+"'/>",
                 "   </div>",
-                //"   <button class='btn btn-xs compare-movie' data-pelicula-id=" + pelicula['id'] + " onclick='javascript:comparar(" + pelicula['id'] + ");'>Comparar</button>",
-                "   <button class='btn btn-xs compare-movie' id='compare-movie-" + pelicula['id'] + "' data-pelicula-id='" + pelicula['id'] + "'>Comparar</button>",
+                // "   <button class='btn btn-xs compare-movie' id='compare-movie-" + pelicula['id'] + "' data-pelicula-id='" + pelicula['id'] + "'>Comparar</button>",
                 "</div>"
             ].join("\n"));
             buscar_poster(pelicula['id'], pelicula_portada_id);
             lista_peliculas.append(pelicula_item);
             $('.rating').rating();
-            $('#compare-movie-' + pelicula['id']).bind("click", function() {
+            $('#overlay-portada-' + pelicula['id']).bind("click", function() {
                 comparar($(this).data('pelicula-id'));
             });
         }

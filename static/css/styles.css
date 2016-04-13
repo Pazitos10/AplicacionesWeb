@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body{
     background-color: rgba(0,0,0,.8);
     background-image: url("../img/black-linen.png");
@@ -180,4 +181,33 @@ body{
 
 .result-pages-bottom{
     clear:both;
+}
+
+span.overlay {
+	/*background: center center no-repeat rgba(0,0,0,.75);*/
+    background: center center no-repeat rgba(0,0,0,.60);
+    border-radius: 3px;
+	height: 225px;
+	position: absolute;
+	width: 150px;
+	z-index: 10;
+	-webkit-box-shadow: 0px 0px 4px #000;
+	-moz-box-shadow: 0px 0px 4px  #000;
+	box-shadow: 0px 0px 4px  #000;
+    opacity: 0;
+    transition: opacity .25s ease;
+}
+span.overlay:hover {
+    opacity: 1;
+}
+span.overlay:hover::before{
+    content: 'Comparar';
+    text-shadow: 0px 0px 5px black;
+    height: 28px;
+    border-radius: 5px;
+    font-size: 28px;
+    color: white;
+    position:absolute;
+    top: 50%;
+    right: 10%;
 }
