@@ -1,7 +1,3 @@
-$(document).load (function () {
-
-});
-
 $(document).ready(function () {
     /**
     * Devuelve la URL con la imagen de poster de la pelicula
