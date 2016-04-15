@@ -8,7 +8,7 @@ $rating = json_decode("{}");
 if (!empty($id)) {
     $result = $db->query("SELECT rating FROM movies WHERE id = '$id'");
     if ($movie = $result->fetchArray(SQLITE3_ASSOC)){
-        $rating = array("rating"=>$movie['rating'], 'min'=>0, 'max'=>5, 'type'=>'float');
+        $rating = array("rating"=>$movie['rating'], 'min'=>0.0, 'max'=>5.0, 'fragment'=>0.5, 'type'=>'float');
     }
 }
 echo json_encode($rating);
