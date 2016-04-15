@@ -203,22 +203,18 @@ $(document).ready(function () {
             $("#year").val(pelicula.year);
             $('#rating').rating('rate', pelicula.rating);
             $('.rating').change(function(){
-                alert("Me cambiaron el rating");
                 pelicula.rating = $(this).val();
-                console.log(pelicula.rating);
                 $.ajax({
                     url: "api.php/movies",
                     method: "POST",
                     data: pelicula
                 }).done(function(data){
-                    console.log(data);
                     $(document).trigger("add-alerts", {
                         message: "Pelicula guardada con éxito!",
                         priority: "success"
                     });
                     setInterval(function () {$(document).trigger("clear-alerts");}, 4500);
                 }).fail(function(data){
-                    console.log(data.responseText["msg"]);
                     $(document).trigger("add-alerts", {
                         message: "Error al guardar ",
                         priority: "error"
@@ -250,7 +246,6 @@ $(document).ready(function () {
         var max_substr = 550;
         mostrar_paginacion(data.total_pages, data.page);
 
-        //console.log(data);
         for (var i in data.results){
             var imdb_id = data.results[i].id;
             var poster_url = "http://placehold.it/92x138?text=Sin+Imagen";
@@ -290,7 +285,7 @@ $(document).ready(function () {
             rating = 5.0;
         }
         pelicula = {
-            id: data.id,
+            id: data.imdb_id,
             title: data.original_title,
             genre: get_genres_name(data.genres),
             year: new Date(String(data.release_date)).getFullYear(),
