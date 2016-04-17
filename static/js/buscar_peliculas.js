@@ -77,7 +77,7 @@ $(document).ready(function () {
             buscar_poster(pelicula['id'], pelicula_portada_id);
             lista_peliculas.append(pelicula_item);
             $('.rating').rating();
-            $('#overlay-portada-' + pelicula['id']).bind("click", function() {
+            $('#overlay-portada-' + pelicula['id']).bind("click", function(e) {
                 comparar($(this).data('pelicula-id'));
             });
         }
@@ -348,8 +348,52 @@ $(document).ready(function () {
      */
     function comparar(id) {
         //alert("Comparo " + id);
-        $('#myModal').modal('show');
+        console.log(id);
+        generar_modal(id, function(){
+            $('#myModal').modal('show');
+        });
     }
+
+
+
+    function generar_modal(imdb_id, callback){
+        var API_KEY = "53eb1914f7a9090c92553339f74280ce";
+        var url = "https://api.themoviedb.org/3/movie/" + imdb_id + "?api_key=" + API_KEY;
+        $.ajax({
+            url: url,
+            method: "GET"
+        })
+        .done(function (data) {
+            console.log(data);
+            $('.modal-title').html(data.original_title);
+            var genres = get_genres_name(data.genres);
+            var overview = data.overview;
+            if( overview.length > 125)
+                overview = overview.substring(0, 125)+" ...";
+            var markup_pelicula =
+            "<div class='col-xs-12 col-sm-3 col-lg-2 col-md-2 item-pelicula'>"+
+                "<img id='' class='portada' src='http://image.tmdb.org/t/p/w150"+ data.poster_path +"' alt='' />" +
+                "<div class='puntaje puntaje-modal'>" +
+                "    <input type='hidden'" +
+                "    name='rating' id='rating-"+data.imdb_id+"' class='rating' data-filled='glyphicon glyphicon-star'" +
+                "    data-empty='glyphicon glyphicon-star-empty' data-fractions='2' value=''/>"+
+                "</div>"+
+            "</div>"+
+            "<div class='col-xs-12 col-sm-6 col-lg-4 col-md-5'>"+
+            " <h5><strong>"+ new Date(String(data.release_date)).getFullYear() +"</strong></h5>"+
+            "    <p class='text-muted'>"+ genres +"</p>"+
+            " <p>"+ overview +"</p>"+
+            "    </div>";
+            var rating = data.vote_average;
+            if(rating > 5.0){
+                rating = 5.0;
+            }
+            $("#myModal .modal-body .row").html(markup_pelicula);
+            $('#rating-'+data.imdb_id).rating('rate', rating);
+            callback();
+        })
+    }
+
 
     if (getUrlParameter("term")) {
         autocompletar_form(getUrlParameter("term"));

@@ -47,6 +47,14 @@ body{
 .item-pelicula .puntaje {
     text-shadow: 3px 2px 8px rgba(0,0,0,.52);
 }
+.item-pelicula .puntaje-modal{
+    text-shadow: none;
+    margin-top: 10px;
+}
+.item-pelicula .puntaje-modal .glyphicon-star,
+.item-pelicula .puntaje-modal .glyphicon-star-empty{
+    font-size: 28px
+}
 
 .glyphicon-star,
 .glyphicon-star-empty{
@@ -210,4 +218,9 @@ span.overlay:hover::before{
     position:absolute;
     top: 50%;
     right: 10%;
+    cursor: pointer;
+}
+
+.modal-body{
+    overflow: hidden;
 }
