@@ -366,7 +366,7 @@ $(document).ready(function () {
             if( overview.length > 125)
                 overview = overview.substring(0, 125)+" ...";
             var markup_pelicula =
-            "<div class='col-xs-12 col-sm-3 col-lg-2 col-md-2 item-pelicula'>"+
+            "<div class='col-xs-12 col-sm-3 col-lg-2 item-pelicula'>"+
                 "<img id='' class='portada' src='http://image.tmdb.org/t/p/w150"+ data.poster_path +"' alt='' />" +
                 "<div class='puntaje puntaje-modal'>" +
                 "    <input type='hidden'" +
@@ -374,16 +374,36 @@ $(document).ready(function () {
                 "    data-empty='glyphicon glyphicon-star-empty' data-fractions='2' value=''/>"+
                 "</div>"+
             "</div>"+
-            "<div class='col-xs-12 col-sm-6 col-lg-4 col-md-5'>"+
-            " <h5><strong>"+ new Date(String(data.release_date)).getFullYear() +"</strong></h5>"+
-            "    <p class='text-muted'>"+ genres +"</p>"+
-            " <p>"+ overview +"</p>"+
-            "    </div>";
+            "<div class='col-xs-12 col-sm-6 col-lg-4 col-md-4'>"+
+            "   <h5><strong>"+ new Date(String(data.release_date)).getFullYear() +"</strong></h5>"+
+            "   <p class='text-muted'>"+ genres +"</p>"+
+            "   <p>"+ overview +"</p>"+
+                "<table class='table table-striped text-center'>"+
+                    "<thead>"+
+                        "<tr>"+
+                            "<td>"+
+                                "<select class='form-control' style='width:70%; display:block; margin:0 auto;'>"+
+                                    "<option><a href='#g1'>Grupo 1</a></option>"+
+                                    "<option><a href='#g2'>Grupo 2</a></option>"+
+                                    "<option><a href='#g3'>Grupo 3</a></option>"+
+                                "</select>"+
+                            "</td>"+
+                            "<td style='font-size:16px'>Local</td>"+
+                        "</tr>"+
+                    "</thead>"+
+                    "<tbody>"+
+                        "<tr>"+
+                            "<td class='rating-err'><h6><strong>-1.0</strong></h6></td>"+
+                            "<td class='rating-win'><h6><strong>5.0</strong></h6></td>"+
+                        "</tr>"+
+                    "</tbody>"+
+                "</table>"+
+            "</div>";
             var rating = data.vote_average;
             if(rating > 5.0){
                 rating = 5.0;
             }
-            $("#myModal .modal-body .row").html(markup_pelicula);
+            $("#myModal #info").html(markup_pelicula);
             $('#rating-'+data.imdb_id).rating('rate', rating);
             callback();
         })

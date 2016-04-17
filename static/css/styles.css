@@ -213,7 +213,7 @@ span.overlay:hover::before{
     text-shadow: 0px 0px 5px black;
     height: 28px;
     border-radius: 5px;
-    font-size: 28px;
+    font-size: 24px;
     color: white;
     position:absolute;
     top: 50%;
@@ -221,6 +221,19 @@ span.overlay:hover::before{
     cursor: pointer;
 }
 
-.modal-body{
-    overflow: hidden;
+
+.rating-grupo, .rating-local{
+    text-align: center
+}
+
+.rating-win h6{
+    color: #4caf50;
+}
+
+.rating-err h6{
+    color: #e51c23;
+}
+
+.divider-left {
+  border-right: 2px dashed #ddd;
 }
