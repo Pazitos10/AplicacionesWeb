@@ -376,15 +376,15 @@ $(document).ready(function () {
                     "</thead>"+
                     "<tbody>"+
                         "<tr>"+
-                            "<td class='rating-err'><h6 id='rating-externo'>-1.0</h6></td>"+
-                            "<td class='rating-win'><h6 id='rating-local'>5.0</h6></td>"+
+                            "<td><h6 id='rating-externo'></h6></td>"+
+                            "<td><h6 class='rating-win' id='rating-local'>5.0</h6></td>"+
                         "</tr>"+
                     "</tbody>"+
                 "</table>"+
             "</div>";
             $("#myModal #info").html(markup_pelicula);
             $('#select-grupo-comparacion').click(function (){
-                consultar_api_externa($(this)[0].selectedIndex+1);
+                consultar_api_externa($(this)[0].selectedIndex+1, imdb_id);
             });
             $.ajax({
                     url: "api.php/movies?term=" + imdb_id,
@@ -399,18 +399,45 @@ $(document).ready(function () {
         })
     }
 
-    function consultar_api_externa (grupo) {
+    function consultar_api_externa (grupo, imdb_id) {
+        var url = '';
+        var ip = 'http://192.168.2.141:3000';
+        var param = ''
         switch (grupo) {
             case 1:
-                console.log('llamar a api de grupo 1');
+                url = ip+'/peliculas/'+ imdb_id +'/comparar';
+                param = "ponderacion";
+                type = 'int';
                 break;
             case 2:
-                console.log('llamar a api de grupo 2');
+                url = ip+'/movie/data?id=' + imdb_id;
+                param = "ranking";
+                type = 'float';
                 break;
-            default:
-                console.log('llamar a api de grupo 3');
+            case 3:
+                url = ip+'/proyecto/buscapelicula.php?id='+imdb_id;
+                param = "ponderacion";
+                type = 'int';
                 break;
         }
+        $.ajax({
+            url: url,
+            method: "GET",
+            crossDomain: true
+        }).done(function(data){
+            console.log(data);
+            if (!$.isEmptyObject(data)){
+                $('#rating-externo').removeClass("rating-err");
+                var rating = data["param"];
+                if (type === 'int'){
+                    rating = data["param"]/2.0;
+                }
+                $('#rating-externo').html(rating);
+            }else {
+                $('#rating-externo').html("-1.0");
+                $('#rating-externo').addClass("rating-err");
+            }
+        });
     }
 
 
@@ -420,4 +447,7 @@ $(document).ready(function () {
         buscar_peliculas("*");
 
     }
+
+
+
 });

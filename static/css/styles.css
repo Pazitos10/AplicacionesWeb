@@ -226,11 +226,11 @@ span.overlay:hover::before{
     text-align: center
 }
 
-.rating-win h6{
+.rating-win{
     color: #4caf50;
 }
 
-.rating-err h6{
+.rating-err{
     color: #e51c23;
 }
 
