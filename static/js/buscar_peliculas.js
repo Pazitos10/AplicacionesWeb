@@ -280,33 +280,21 @@ $(document).ready(function () {
         if (data.poster_path !== null ){
             poster_url = "http://image.tmdb.org/t/p/w150" + data.poster_path;
         }
-        var rating = data.vote_average;
-        if(rating > 5.0){
-            rating = 5.0;
-        }
         pelicula = {
             id: data.imdb_id,
             title: data.original_title,
             genre: get_genres_name(data.genres),
             year: new Date(String(data.release_date)).getFullYear(),
             poster_url: poster_url,
-            rating: rating
+            rating: 0.0
         };
         return pelicula;
     }
-    //Funcion de autocomplete
-    // $("#search_term").keyup(function () {
-    //     var that = this,
-    //         value = $(this).val();
-    //
-    //     if (value.length >= 3 ) {
-    //         buscar_peliculas(value);
-    //     }
-    // });
-
-
 
     /* Event handling */
+    $('#info-grupos-btn').click(function(){
+        $('#modal-info-grupos').modal('show');
+    });
 
     $("#search-term-input").keypress(function( event ) {
         if ( event.which == 13 ) {
@@ -342,14 +330,10 @@ $(document).ready(function () {
      * Logica para la comparacion de peliculas
      */
     function comparar(id) {
-        //alert("Comparo " + id);
-        console.log(id);
         generar_modal(id, function(){
             $('#myModal').modal('show');
         });
     }
-
-
 
     function generar_modal(imdb_id, callback){
         var API_KEY = "53eb1914f7a9090c92553339f74280ce";
@@ -359,7 +343,6 @@ $(document).ready(function () {
             method: "GET"
         })
         .done(function (data) {
-            console.log(data);
             $('.modal-title').html(data.original_title);
             var genres = get_genres_name(data.genres);
             var overview = data.overview;
@@ -382,10 +365,10 @@ $(document).ready(function () {
                     "<thead>"+
                         "<tr>"+
                             "<td>"+
-                                "<select class='form-control' style='width:70%; display:block; margin:0 auto;'>"+
-                                    "<option><a href='#g1'>Grupo 1</a></option>"+
-                                    "<option><a href='#g2'>Grupo 2</a></option>"+
-                                    "<option><a href='#g3'>Grupo 3</a></option>"+
+                                "<select id='select-grupo-comparacion' class='form-control' style='width:70%; display:block; margin:0 auto;'>"+
+                                    "<option>Grupo 1</option>"+
+                                    "<option>Grupo 2</option>"+
+                                    "<option>Grupo 3</option>"+
                                 "</select>"+
                             "</td>"+
                             "<td style='font-size:16px'>Local</td>"+
@@ -393,20 +376,41 @@ $(document).ready(function () {
                     "</thead>"+
                     "<tbody>"+
                         "<tr>"+
-                            "<td class='rating-err'><h6><strong>-1.0</strong></h6></td>"+
-                            "<td class='rating-win'><h6><strong>5.0</strong></h6></td>"+
+                            "<td class='rating-err'><h6 id='rating-externo'>-1.0</h6></td>"+
+                            "<td class='rating-win'><h6 id='rating-local'>5.0</h6></td>"+
                         "</tr>"+
                     "</tbody>"+
                 "</table>"+
             "</div>";
-            var rating = data.vote_average;
-            if(rating > 5.0){
-                rating = 5.0;
-            }
             $("#myModal #info").html(markup_pelicula);
-            $('#rating-'+data.imdb_id).rating('rate', rating);
+            $('#select-grupo-comparacion').click(function (){
+                consultar_api_externa($(this)[0].selectedIndex+1);
+            });
+            $.ajax({
+                    url: "api.php/movies?term=" + imdb_id,
+                    method: "GET"
+                })
+                .done(function( data_api ) {
+                    var rating = data_api[0].rating
+                    $('#rating-'+imdb_id).rating('rate', rating );
+                    $('#rating-local').html(rating);
+            });
             callback();
         })
+    }
+
+    function consultar_api_externa (grupo) {
+        switch (grupo) {
+            case 1:
+                console.log('llamar a api de grupo 1');
+                break;
+            case 2:
+                console.log('llamar a api de grupo 2');
+                break;
+            default:
+                console.log('llamar a api de grupo 3');
+                break;
+        }
     }
 
 

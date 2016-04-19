@@ -237,3 +237,13 @@ span.overlay:hover::before{
 .divider-left {
   border-right: 2px dashed #ddd;
 }
+
+
+.form-centered input[type="text"]{
+    margin:0 auto;
+    margin-bottom:10px;
+    width: 80%
+}
+.form-centered .btn{
+    margin-top: 10px
+}
