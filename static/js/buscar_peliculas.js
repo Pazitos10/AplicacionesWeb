@@ -10,7 +10,7 @@ $(document).ready(function () {
         var API_KEY = "53eb1914f7a9090c92553339f74280ce";
         $.ajax({
             url: "https://api.themoviedb.org/3/movie/" + imdb_id + "?api_key=" + API_KEY,
-            method: "GET"
+            type: "GET"
         })
         .done(function( data ) {
             $("#" + img_id).attr("src", "http://image.tmdb.org/t/p/w150" + data.poster_path);
@@ -19,23 +19,16 @@ $(document).ready(function () {
 
     function buscar_peliculas(search_term) {
         //alert("Busco " + "api.php/movies?term=" + search_term);
-        if(search_term !== "*"){
-            $.ajax({
-                    url: "api.php/movies?term=" + search_term,
-                    method: "GET"
-                })
-                .done(function( data ) {
-                    mostrar_peliculas(data, search_term);
-                });
-        }else{
-            $.ajax({
-                    url: "api.php/movies",
-                    method: "GET"
-                })
-                .done(function( data ) {
-                    mostrar_peliculas(data, "");
+        var url = "api.php/movies";
+        if(search_term !== "*")
+            url += "?term=" + search_term;
+        $.ajax({
+                url: url,
+                type: "GET"
+            }).done(function( data ) {
+                mostrar_peliculas(data, search_term);
             });
-        }
+
     }
 
     function mostrar_peliculas(peliculas, search_term) {
@@ -164,11 +157,13 @@ $(document).ready(function () {
         }
         $.ajax({
             url: url,
-            method: "GET"
+            type: "GET"
         })
         .done(function (data) { autocomplete_succeed(data) })
         .fail(autocomplete_failed());
     }
+
+    /* Genera el markup con la informacion de la pelicula cuando la busqueda fue exitosa */
     function autocomplete_succeed(data){
         var form_input = $('#form-input');
         pelicula = {};
@@ -206,7 +201,7 @@ $(document).ready(function () {
                 pelicula.rating = $(this).val();
                 $.ajax({
                     url: "api.php/movies",
-                    method: "POST",
+                    type: "POST",
                     data: pelicula
                 }).done(function(data){
                     $(document).trigger("add-alerts", {
@@ -224,6 +219,8 @@ $(document).ready(function () {
             });
         }
     }
+
+    /* Genera el markup a mostrar cuando no se encontraron resultados a la busqueda */
     function autocomplete_failed(){
         var results_container = $('.results-container');
         results_container.empty();
@@ -238,6 +235,8 @@ $(document).ready(function () {
         "</div>";
         results_container.append(info_pelicula);
     }
+
+    /* Genera el markup para mostrar resultados cuando se buscan peliculas por titulo */
     function show_results(data){
         $('.results-container').empty(); //Limpiamos resultados anteriores
 
@@ -274,6 +273,8 @@ $(document).ready(function () {
             autocompletar_form(target.attr('imdb-id'));
         });
     }
+
+    /* Autocompleta la informacion de una pelicula basandose en su id*/
     function autocomplete_by_id(data){
         limpiar_form();
         var poster_url = "http://placehold.it/150x200?text=Sin+Imagen";
@@ -291,9 +292,123 @@ $(document).ready(function () {
         return pelicula;
     }
 
+    /* Realiza el query a la api externa indicada para la comparacion de ratings */
+    function consultar_api_externa (grupo, imdb_id) {
+        var query = {};
+        switch (grupo) {
+            case 1:
+                query.url = localStorage.getItem('url-grupo-1')+'/peliculas/'+ imdb_id +'/comparar';
+                query.param_name = "ponderacion";
+                query.result_type = 'int';
+                break;
+            case 2:
+                query.url = localStorage.getItem('url-grupo-2')+'/movie/data?id=' + imdb_id;
+                query.param_name = "ranking";
+                query.result_type = 'float';
+                break;
+            case 3:
+                query.url = localStorage.getItem('url-grupo-3')+'/proyecto/buscapelicula.php?id='+ imdb_id;
+                query.param_name = "ponderacion";
+                query.result_type = 'int';
+                break;
+        }
+        // console.log(query.url);
+        $.ajax({
+            url: query.url,
+            type: "GET",
+            crossDomain: true
+        }).done(function(data){
+            if (!$.isEmptyObject(data)){
+                $('#rating-externo').removeClass("rating-err");
+                $('#rating-externo').removeClass("rating-win");
+                $('#rating-local').removeClass("rating-win");
+                var rating = data[query.param_name];
+                if (query.result_type === 'int'){
+                    rating = data[query.param_name]/2.0;
+                }
+                if( $('#rating-local').html() > $('#rating-externo').html()){
+                    $('#rating-externo').removeClass("rating-win");
+                    $('#rating-local').addClass("rating-win");
+                }else {
+                    $('#rating-local').removeClass("rating-win");
+                    $('#rating-externo').addClass("rating-win");
+                }
+                $('#rating-externo').html(rating);
+            }else {
+                $('#rating-externo').html("-1.0");
+                $('#rating-externo').addClass("rating-err");
+            }
+        }).fail(function () {
+            $('#rating-local').addClass("rating-win");
+            $('#rating-externo').html("Error de conexión");
+            $('#rating-externo').addClass("rating-err");
+            console.log('Error: URL not reachable');
+        });
+    }
+
+    /* Autocompleta el formulario de URLs de apis externas */
+    function completarApisURL() {
+        var name = 'url-grupo-';
+        for (var i = 0; i < 3; i++) {
+            // console.log(localStorage.getItem(name+String(i+1)));
+            $('input[name='+name+String(i+1) +']').val(localStorage.getItem(name+String(i+1)));
+        }
+    }
+
+    /*
+     * Logica para la comparacion de peliculas
+     */
+    function comparar(id) {
+        generar_modal(id, function(){
+            $('#myModal').modal('show');
+        });
+    }
+
+    /* Genera el markup para el modal de comparacion */
+    function generar_modal(imdb_id, callback){
+        var API_KEY = "53eb1914f7a9090c92553339f74280ce";
+        var url = "https://api.themoviedb.org/3/movie/" + imdb_id + "?api_key=" + API_KEY;
+        $.ajax({
+            url: url,
+            type: "GET"
+        })
+        .done(function (data) {
+            $('.modal-title-comparacion').html(data.original_title);
+            var genres = get_genres_name(data.genres);
+            var overview = data.overview;
+            if( overview.length > 125)
+                overview = overview.substring(0, 125)+" ...";
+            var markup_pelicula =
+            "<img id='' class='portada' src='http://image.tmdb.org/t/p/w150"+ data.poster_path +"' alt='' />" +
+            "<div class='puntaje puntaje-modal'>" +
+            "    <input type='hidden'" +
+            "    name='rating' id='rating-"+data.imdb_id+"' class='rating' data-filled='glyphicon glyphicon-star'" +
+            "    data-empty='glyphicon glyphicon-star-empty' data-fractions='2' value=''/>"+
+            "</div>";
+            $("#myModal #info").html(markup_pelicula);
+            $('#release-date').html(new Date(data.release_date).getFullYear());
+            $('#overview-text').html(overview);
+            $('#genres').html(genres)
+            $('#select-grupo-comparacion').click(function (){
+                consultar_api_externa($(this)[0].selectedIndex+1, imdb_id);
+            });
+            $.ajax({
+                    url: "api.php/movies?term=" + imdb_id,
+                    type: "GET"
+                })
+                .done(function( data_api ) {
+                    var rating = data_api[0].rating
+                    $('#rating-'+imdb_id).rating('rate', rating );
+                    $('#rating-local').html(rating);
+            });
+            callback();
+        })
+    }
+
     /* Event handling */
     $('#info-grupos-btn').click(function(){
         $('#modal-info-grupos').modal('show');
+        completarApisURL();
     });
 
     $("#search-term-input").keypress(function( event ) {
@@ -304,17 +419,7 @@ $(document).ready(function () {
 
     $(".navbar-form #search-term-button").click(function () {
         var search_term = $("#search-term-input").val();
-        if (search_term.length != 0) {
-            buscar_peliculas(search_term);
-        } else {
-            $(document).trigger("add-alerts", {
-                message: "Por favor, ingrese el Id de la pelicula",
-                priority: "error"
-            });
-            $(".navbar-form #search-term-input").focus();
-            setInterval(function () {$(document).trigger("clear-alerts");}, 4500);
-        }
-
+        buscar_peliculas(search_term);
     });
 
     $('.search-input #search-term-button').click(function () {
@@ -326,119 +431,33 @@ $(document).ready(function () {
         }
     });
 
-    /*
-     * Logica para la comparacion de peliculas
-     */
-    function comparar(id) {
-        generar_modal(id, function(){
-            $('#myModal').modal('show');
-        });
-    }
-
-    function generar_modal(imdb_id, callback){
-        var API_KEY = "53eb1914f7a9090c92553339f74280ce";
-        var url = "https://api.themoviedb.org/3/movie/" + imdb_id + "?api_key=" + API_KEY;
-        $.ajax({
-            url: url,
-            method: "GET"
-        })
-        .done(function (data) {
-            $('.modal-title').html(data.original_title);
-            var genres = get_genres_name(data.genres);
-            var overview = data.overview;
-            if( overview.length > 125)
-                overview = overview.substring(0, 125)+" ...";
-            var markup_pelicula =
-            "<div class='col-xs-12 col-sm-3 col-lg-2 item-pelicula'>"+
-                "<img id='' class='portada' src='http://image.tmdb.org/t/p/w150"+ data.poster_path +"' alt='' />" +
-                "<div class='puntaje puntaje-modal'>" +
-                "    <input type='hidden'" +
-                "    name='rating' id='rating-"+data.imdb_id+"' class='rating' data-filled='glyphicon glyphicon-star'" +
-                "    data-empty='glyphicon glyphicon-star-empty' data-fractions='2' value=''/>"+
-                "</div>"+
-            "</div>"+
-            "<div class='col-xs-12 col-sm-6 col-lg-4 col-md-4'>"+
-            "   <h5><strong>"+ new Date(String(data.release_date)).getFullYear() +"</strong></h5>"+
-            "   <p class='text-muted'>"+ genres +"</p>"+
-            "   <p>"+ overview +"</p>"+
-                "<table class='table table-striped text-center'>"+
-                    "<thead>"+
-                        "<tr>"+
-                            "<td>"+
-                                "<select id='select-grupo-comparacion' class='form-control' style='width:70%; display:block; margin:0 auto;'>"+
-                                    "<option>Grupo 1</option>"+
-                                    "<option>Grupo 2</option>"+
-                                    "<option>Grupo 3</option>"+
-                                "</select>"+
-                            "</td>"+
-                            "<td style='font-size:16px'>Local</td>"+
-                        "</tr>"+
-                    "</thead>"+
-                    "<tbody>"+
-                        "<tr>"+
-                            "<td><h6 id='rating-externo'></h6></td>"+
-                            "<td><h6 class='rating-win' id='rating-local'>5.0</h6></td>"+
-                        "</tr>"+
-                    "</tbody>"+
-                "</table>"+
-            "</div>";
-            $("#myModal #info").html(markup_pelicula);
-            $('#select-grupo-comparacion').click(function (){
-                consultar_api_externa($(this)[0].selectedIndex+1, imdb_id);
-            });
-            $.ajax({
-                    url: "api.php/movies?term=" + imdb_id,
-                    method: "GET"
-                })
-                .done(function( data_api ) {
-                    var rating = data_api[0].rating
-                    $('#rating-'+imdb_id).rating('rate', rating );
-                    $('#rating-local').html(rating);
-            });
-            callback();
-        })
-    }
-
-    function consultar_api_externa (grupo, imdb_id) {
+    $('#guardar-urls').click(function (e) {
+        e.preventDefault();
         var url = '';
-        var ip = 'http://192.168.2.141:3000';
-        var param = ''
-        switch (grupo) {
-            case 1:
-                url = ip+'/peliculas/'+ imdb_id +'/comparar';
-                param = "ponderacion";
-                type = 'int';
-                break;
-            case 2:
-                url = ip+'/movie/data?id=' + imdb_id;
-                param = "ranking";
-                type = 'float';
-                break;
-            case 3:
-                url = ip+'/proyecto/buscapelicula.php?id='+imdb_id;
-                param = "ponderacion";
-                type = 'int';
-                break;
-        }
-        $.ajax({
-            url: url,
-            method: "GET",
-            crossDomain: true
-        }).done(function(data){
-            console.log(data);
-            if (!$.isEmptyObject(data)){
-                $('#rating-externo').removeClass("rating-err");
-                var rating = data["param"];
-                if (type === 'int'){
-                    rating = data["param"]/2.0;
+        var name = '';
+        for (var i = 0; i < 3; i++) {
+            name = "url-grupo-"+String(i+1);
+            url = localStorage.getItem(name);
+            url_input = $('input[name='+name+']').val();
+            if (url === undefined){
+                if (url_input.startsWith('http://')){
+                    url = url_input;
+                }else{
+                    url = 'http://'+ url_input;
                 }
-                $('#rating-externo').html(rating);
-            }else {
-                $('#rating-externo').html("-1.0");
-                $('#rating-externo').addClass("rating-err");
+                localStorage.setItem(name, url);
+            } else {
+                localStorage.setItem(name, url_input);
             }
+        }
+        $('#modal-info-grupos').modal('hide');
+        $(document).trigger("add-alerts", {
+            message: "URLs guardadas con éxito!",
+            priority: "success"
         });
-    }
+        setInterval(function () {$(document).trigger("clear-alerts");}, 4500);
+
+    });
 
 
     if (getUrlParameter("term")) {
@@ -447,7 +466,5 @@ $(document).ready(function () {
         buscar_peliculas("*");
 
     }
-
-
 
 });
