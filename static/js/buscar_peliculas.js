@@ -28,7 +28,6 @@ $(document).ready(function () {
             }).done(function( data ) {
                 mostrar_peliculas(data, search_term);
             });
-
     }
 
     function mostrar_peliculas(peliculas, search_term) {
@@ -36,7 +35,7 @@ $(document).ready(function () {
             //Habria que distinguir si no se encontraron de verdad o bien, no existen peliculas en la db
             if (search_term.length > 0){
                 $(document).trigger("add-alerts", {
-                    message: "No se encontraron Peliculas con Id o Titulo ' " + search_term +" '. <a href='save_movie.html?term=" + search_term + "'>Buscarla en IMDB</a>",
+                    message: "No se encontraron Peliculas con Id o Titulo ' " + search_term +" '. <a id='buscar-en-imdb' href='save_movie.html?term=" + search_term + "'>Buscarla en IMDB</a>",
                     priority: "warning"
                 });
             }
@@ -170,6 +169,7 @@ $(document).ready(function () {
         if (data.hasOwnProperty('total_results')){
             //Search by title
             if (data.total_results > 0){
+                $('.search-input-alta #search-term-input').val(data.original_title);
                 show_results(data);
             } else{
                 autocomplete_failed();
@@ -239,9 +239,13 @@ $(document).ready(function () {
     /* Genera el markup para mostrar resultados cuando se buscan peliculas por titulo */
     function show_results(data){
         $('.results-container').empty(); //Limpiamos resultados anteriores
-
+        var term = $('#search-term-input').val();
+        if ($('#search-term-input').val().length === 0){
+            var term = decodeURI(window.location.href.split("term=")[1]);
+            $('#search-term-input').val(term);
+        }
         var resultados = "<div class='form-results' id='search-results'>"+
-        "<p class='text-center'><strong>"+data.total_results+"</strong> Resultados para '"+$('.search-input #search-term-input').val()+"'</p>";
+        "<p class='text-center'><strong>"+data.total_results+"</strong> Resultados para '"+ term  +"'</p>";
         var max_substr = 550;
         mostrar_paginacion(data.total_pages, data.page);
 
@@ -277,6 +281,7 @@ $(document).ready(function () {
     /* Autocompleta la informacion de una pelicula basandose en su id*/
     function autocomplete_by_id(data){
         limpiar_form();
+        $('.search-input').replaceWith("<span class='link-container'><a class='glyphicon glyphicon-chevron-left' style='font-size: 20px' href=''></a></span>");
         var poster_url = "http://placehold.it/150x200?text=Sin+Imagen";
         if (data.poster_path !== null ){
             poster_url = "http://image.tmdb.org/t/p/w150" + data.poster_path;

@@ -247,3 +247,11 @@ span.overlay:hover::before{
 .form-centered .btn{
     margin-top: 10px
 }
+
+.link-container a{
+    color: #666666 !important;
+}
+.link-container  a:hover{
+    color: black !important;
+    text-decoration: none !important;
+}
