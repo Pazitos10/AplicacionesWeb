@@ -12,6 +12,7 @@
     <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="static/js/bootstrap-rating.min.js"></script>
     <script type="text/javascript" src="static/js/jquery.bsAlerts.min.js"></script>
+    <script type="text/javascript" src="static/js/ping.js" charset="utf-8"></script>
     <script type="text/javascript" src="static/js/buscar_peliculas.js"></script>
 </head>
 <body>
@@ -119,9 +120,9 @@
                 <div class="modal-body" style="overflow:hidden">
                     <div class="form-container">
                         <form class="form form-horizontal form-centered" action="" method="POST">
-                            <input class="form-control" name="url-grupo-1" type="text" value="" placeholder="ip-grupo-1:puerto">
-                            <input class="form-control" name="url-grupo-2" type="text" value="" placeholder="ip-grupo-2:puerto">
-                            <input class="form-control" name="url-grupo-3" type="text" value="" placeholder="ip-grupo-3:puerto">
+                            <input class="form-control" name="url-grupo-1" type="text" value="" placeholder="ip-grupo-1:puerto"><span id="url-grupo-1" class=""></span>
+                            <input class="form-control" name="url-grupo-2" type="text" value="" placeholder="ip-grupo-2:puerto"><span id="url-grupo-2" class=""></span>
+                            <input class="form-control" name="url-grupo-3" type="text" value="" placeholder="ip-grupo-3:puerto"><span id="url-grupo-3" class=""></span>
                             <input class="btn btn-primary pull-right" id="guardar-urls" type="submit" value="guardar">
                         </form>
                     </div>

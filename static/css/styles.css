@@ -227,10 +227,12 @@ span.overlay:hover::before{
 }
 
 .rating-win{
+    font-weight: bold;
     color: #4caf50;
 }
 
 .rating-err{
+    font-weight: bold;
     color: #e51c23;
 }
 
@@ -238,12 +240,12 @@ span.overlay:hover::before{
   border-right: 2px dashed #ddd;
 }
 
-
 .form-centered input[type="text"]{
     margin:0 auto;
     margin-bottom:10px;
     width: 80%
 }
+
 .form-centered .btn{
     margin-top: 10px
 }
@@ -254,4 +256,33 @@ span.overlay:hover::before{
 .link-container  a:hover{
     color: black !important;
     text-decoration: none !important;
+}
+
+
+.server-up{
+}
+.server-up::before{
+    content: "";
+    background: lightgreen;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    position:relative;
+    top: -40px;
+    left: 5px
+}
+
+.server-down{
+}
+.server-down::before{
+    content: "";
+    background: tomato;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    position:relative;
+    top: -40px;
+    left: 5px
 }

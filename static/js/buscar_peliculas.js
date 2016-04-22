@@ -59,7 +59,7 @@ $(document).ready(function () {
                 "   <img id='" + pelicula_portada_id + "' class='portada' src='http://fillmurray.com/140/209' alt='' />",
                 "   <p class='titulo'>" + pelicula['title'] + "</p>",
                 "   <div class='puntaje puntaje-form'>",
-                "    <input type='hidden' ",
+                "    <input type='hidden' data-readonly",
                 "    name='rating' id='rating' class='rating' data-filled='glyphicon glyphicon-star' data-pelicula-id=" + pelicula["id"],
                 "    data-empty='glyphicon glyphicon-star-empty' data-fractions='2' value='"+pelicula["rating"]+"'/>",
                 "   </div>",
@@ -302,7 +302,7 @@ $(document).ready(function () {
         var query = {};
         switch (grupo) {
             case 1:
-                query.url = localStorage.getItem('url-grupo-1')+'/peliculas/'+ imdb_id +'/comparar';
+                query.url = localStorage.getItem('url-grupo-1')+'/peliculas/'+ imdb_id +'/comparar/';
                 query.param_name = "ponderacion";
                 query.result_type = 'int';
                 break;
@@ -317,7 +317,7 @@ $(document).ready(function () {
                 query.result_type = 'int';
                 break;
         }
-        // console.log(query.url);
+        console.log('url: '+query.url);
         $.ajax({
             url: query.url,
             type: "GET",
@@ -328,10 +328,10 @@ $(document).ready(function () {
                 $('#rating-externo').removeClass("rating-win");
                 $('#rating-local').removeClass("rating-win");
                 var rating = data[query.param_name];
-                if (query.result_type === 'int'){
-                    rating = data[query.param_name]/2.0;
-                }
-                if( $('#rating-local').html() > $('#rating-externo').html()){
+                // if (query.result_type === 'int'){
+                //     rating = data[query.param_name];
+                // }
+                if( Number($('#rating-local').html()) > Number($('#rating-externo').html())){
                     $('#rating-externo').removeClass("rating-win");
                     $('#rating-local').addClass("rating-win");
                 }else {
@@ -386,7 +386,7 @@ $(document).ready(function () {
             var markup_pelicula =
             "<img id='' class='portada' src='http://image.tmdb.org/t/p/w150"+ data.poster_path +"' alt='' />" +
             "<div class='puntaje puntaje-modal'>" +
-            "    <input type='hidden'" +
+            "    <input type='hidden' data-readonly" +
             "    name='rating' id='rating-"+data.imdb_id+"' class='rating' data-filled='glyphicon glyphicon-star'" +
             "    data-empty='glyphicon glyphicon-star-empty' data-fractions='2' value=''/>"+
             "</div>";
@@ -436,6 +436,25 @@ $(document).ready(function () {
         }
     });
 
+    function checkServerUp (url, selector, name) {
+        // if (name === 'url-grupo-1')
+        //     url+= '/peliculas/tt0000/comparar/';
+        // if (name === 'url-grupo-2')
+        //     url+= '/movie/data?id=tt000';
+        // if (name === 'url-grupo-3')
+        //     url+= "/proyecto/buscapelicula.php?id=tt0000";
+        ping(url).then(function(delta) {
+            selector.toggleClass('server-up');
+            // console.log('Url: '+url);
+            // console.log('Ping time was ' + String(delta) + ' ms');
+        }).catch(function(err) {
+            selector.toggleClass('server-down');
+            // console.log('Url: '+url);
+            // console.error('Could not ping remote URL', err);
+        });
+
+    }
+
     $('#guardar-urls').click(function (e) {
         e.preventDefault();
         var url = '';
@@ -451,19 +470,25 @@ $(document).ready(function () {
                     url = 'http://'+ url_input;
                 }
                 localStorage.setItem(name, url);
+                checkServerUp(url, $('span[id='+name+']'));
             } else {
-                localStorage.setItem(name, url_input);
+                if (url_input.startsWith('http://')){
+                    url = url_input;
+                }else{
+                    url = 'http://'+ url_input;
+                }
+                localStorage.setItem(name, url);
+                checkServerUp(url, $('span[id='+name+']'), name);
             }
         }
-        $('#modal-info-grupos').modal('hide');
-        $(document).trigger("add-alerts", {
-            message: "URLs guardadas con éxito!",
-            priority: "success"
-        });
-        setInterval(function () {$(document).trigger("clear-alerts");}, 4500);
+        // $('#modal-info-grupos').modal('hide');
+        // $(document).trigger("add-alerts", {
+        //     message: "URLs guardadas con éxito!",
+        //     priority: "success"
+        // });
+        // setInterval(function () {$(document).trigger("clear-alerts");}, 4500);
 
     });
-
 
     if (getUrlParameter("term")) {
         autocompletar_form(getUrlParameter("term"));
