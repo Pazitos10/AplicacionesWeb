@@ -322,30 +322,29 @@ $(document).ready(function () {
             url: query.url,
             type: "GET",
             crossDomain: true,
-            timeout: 2000
+            datatype: "json"
         }).done(function(data){
+            if ($.isArray(data))
+                data = data[0];
+            console.log(data);
             if (!$.isEmptyObject(data)){
                 $('#rating-externo').removeClass("rating-err");
                 $('#rating-externo').removeClass("rating-win");
                 $('#rating-local').removeClass("rating-win");
                 var rating = data[query.param_name];
-                // if (query.result_type === 'int'){
-                //     rating = data[query.param_name];
-                // }
-                console.log(rating.length);
-                if( Number($('#rating-local').html()) > Number($('#rating-externo').html())){
+                $('#rating-externo').html(rating);
+                if( Number($('#rating-local').text()) > Number($('#rating-externo').text())){
                     $('#rating-externo').removeClass("rating-win");
                     $('#rating-local').addClass("rating-win");
-                }else if(Number($('#rating-local').html()) < Number($('#rating-externo').html())) {
+                }else if(Number($('#rating-local').text()) < Number($('#rating-externo').text())) {
                     $('#rating-local').removeClass("rating-win");
                     $('#rating-externo').addClass("rating-win");
                 }
-                $('#rating-externo').html(rating);
             }else {
                 $('#rating-externo').html('No calificada');
                 $('#rating-externo').addClass("rating-err");
             }
-        }).fail(function () {
+        }).fail(function (data) {
             $('#rating-local').addClass("rating-win");
             $('#rating-externo').html("Error de conexión");
             $('#rating-externo').addClass("rating-err");
@@ -397,7 +396,10 @@ $(document).ready(function () {
             $('#overview-text').html(overview);
             $('#genres').html(genres);
             $('#btn-comparar').click(function (){
-                consultar_api_externa($('#select-grupo-comparacion')[0].selectedIndex+1, imdb_id);
+                var select = $('#select-grupo-comparacion');
+                consultar_api_externa($(select)[0].selectedIndex+1, imdb_id);
+                var strGrupo = $(select)[0].options[$(select)[0].selectedIndex].text;
+                $('#nombre-grupo').html(strGrupo);
             });
             $.ajax({
                     url: "api.php/movies?term=" + imdb_id,
