@@ -258,8 +258,18 @@ span.overlay:hover::before{
     text-decoration: none !important;
 }
 
+#overview-text{
+    margin-bottom: 0px
+}
+.table{
+    font-size: 14px;
+}
+.table p{
+    margin-bottom: 2px
+}
 
-.server-up{
+.server-up, .server-down{
+    height: 0px;
 }
 .server-up::before{
     content: "";
@@ -270,10 +280,8 @@ span.overlay:hover::before{
     display: inline-block;
     position:relative;
     top: -40px;
-    left: 5px
-}
-
-.server-down{
+    left: 5px;
+    visibility: visible;
 }
 .server-down::before{
     content: "";
@@ -284,5 +292,20 @@ span.overlay:hover::before{
     display: inline-block;
     position:relative;
     top: -40px;
-    left: 5px
+    left: 5px;
+    visibility: visible;
+}
+
+@media screen and (min-width: 768px) {
+    .table{
+        width: 98%;
+        margin-bottom: 5px;
+    }
+    #btn-comparar{margin-right: 10px !important}
+    .server-up::before{
+        left: 30px;
+    }
+    .server-down::before{
+        left: 30px
+    }
 }

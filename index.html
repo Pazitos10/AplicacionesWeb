@@ -72,29 +72,31 @@
                             <div id="info-container">
                                 <div id="info" class='col-xs-12 col-sm-3 col-lg-2 item-pelicula'></div>
                                 <div class='col-xs-12 col-sm-6 col-lg-4 col-md-4'>
-                                   <h5><strong id='release-date'></strong></h5>
-                                   <p class='text-muted' id="genres"></p>
-                                   <p id="overview-text"></p>
-                                    <table class='table table-striped text-center'>
+                                    <h5><strong id='release-date'></strong></h5>
+                                    <p class='text-muted' id="genres"></p>
+                                    <p id="overview-text"></p>
+                                    <table class='table table-striped table-condensed text-center'>
                                         <thead>
                                             <tr>
-                                                <td>
-                                                    <select id='select-grupo-comparacion' class='form-control' style='width:70%; display:block; margin:0 auto;'>
-                                                        <option>Grupo 1</option>
-                                                        <option>Grupo 2</option>
-                                                        <option>Grupo 3</option>
-                                                    </select>
-                                                </td>
-                                                <td style='font-size:16px'>Local</td>
+                                                <td>Local</td>
+                                                <td>Grupo X</td>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td><h6 id='rating-externo'></h6></td>
-                                                <td><h6 id='rating-local'></h6></td>
+                                                <td class="col-md-2"><p id='rating-local'></p></td>
+                                                <td class="col-md-2"><p id='rating-externo'></p></td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <div class="comparar-group">
+                                        <select id='select-grupo-comparacion' class='form-control pull-left' style="width:50%">
+                                            <option value="1">Grupo 1</option>
+                                            <option value="2">Grupo 2</option>
+                                            <option value="3">Grupo 3</option>
+                                        </select>
+                                        <button id="btn-comparar" class="btn btn-success pull-right">Comparar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -120,9 +122,9 @@
                 <div class="modal-body" style="overflow:hidden">
                     <div class="form-container">
                         <form class="form form-horizontal form-centered" action="" method="POST">
-                            <input class="form-control" name="url-grupo-1" type="text" value="" placeholder="ip-grupo-1:puerto"><span id="url-grupo-1" class=""></span>
-                            <input class="form-control" name="url-grupo-2" type="text" value="" placeholder="ip-grupo-2:puerto"><span id="url-grupo-2" class=""></span>
-                            <input class="form-control" name="url-grupo-3" type="text" value="" placeholder="ip-grupo-3:puerto"><span id="url-grupo-3" class=""></span>
+                            <input class="form-control" name="url-grupo-1" type="text" value="" placeholder="ip-grupo-1:puerto"><div id="url-grupo-1" class=""></div>
+                            <input class="form-control" name="url-grupo-2" type="text" value="" placeholder="ip-grupo-2:puerto"><div id="url-grupo-2" class=""></div>
+                            <input class="form-control" name="url-grupo-3" type="text" value="" placeholder="ip-grupo-3:puerto"><div id="url-grupo-3" class=""></div>
                             <input class="btn btn-primary pull-right" id="guardar-urls" type="submit" value="guardar">
                         </form>
                     </div>

@@ -312,7 +312,7 @@ $(document).ready(function () {
                 query.result_type = 'float';
                 break;
             case 3:
-                query.url = localStorage.getItem('url-grupo-3')+'/proyecto/buscapelicula.php?id='+ imdb_id;
+                query.url = localStorage.getItem('url-grupo-3')+'/proyecto/buscapeliculas.php?id='+ imdb_id;
                 query.param_name = "ponderacion";
                 query.result_type = 'int';
                 break;
@@ -321,7 +321,8 @@ $(document).ready(function () {
         $.ajax({
             url: query.url,
             type: "GET",
-            crossDomain: true
+            crossDomain: true,
+            timeout: 2000
         }).done(function(data){
             if (!$.isEmptyObject(data)){
                 $('#rating-externo').removeClass("rating-err");
@@ -331,16 +332,17 @@ $(document).ready(function () {
                 // if (query.result_type === 'int'){
                 //     rating = data[query.param_name];
                 // }
+                console.log(rating.length);
                 if( Number($('#rating-local').html()) > Number($('#rating-externo').html())){
                     $('#rating-externo').removeClass("rating-win");
                     $('#rating-local').addClass("rating-win");
-                }else {
+                }else if(Number($('#rating-local').html()) < Number($('#rating-externo').html())) {
                     $('#rating-local').removeClass("rating-win");
                     $('#rating-externo').addClass("rating-win");
                 }
                 $('#rating-externo').html(rating);
             }else {
-                $('#rating-externo').html("-1.0");
+                $('#rating-externo').html('No calificada');
                 $('#rating-externo').addClass("rating-err");
             }
         }).fail(function () {
@@ -393,9 +395,9 @@ $(document).ready(function () {
             $("#myModal #info").html(markup_pelicula);
             $('#release-date').html(new Date(data.release_date).getFullYear());
             $('#overview-text').html(overview);
-            $('#genres').html(genres)
-            $('#select-grupo-comparacion').click(function (){
-                consultar_api_externa($(this)[0].selectedIndex+1, imdb_id);
+            $('#genres').html(genres);
+            $('#btn-comparar').click(function (){
+                consultar_api_externa($('#select-grupo-comparacion')[0].selectedIndex+1, imdb_id);
             });
             $.ajax({
                     url: "api.php/movies?term=" + imdb_id,
@@ -436,23 +438,21 @@ $(document).ready(function () {
         }
     });
 
-    function checkServerUp (url, selector, name) {
-        // if (name === 'url-grupo-1')
-        //     url+= '/peliculas/tt0000/comparar/';
-        // if (name === 'url-grupo-2')
-        //     url+= '/movie/data?id=tt000';
-        // if (name === 'url-grupo-3')
-        //     url+= "/proyecto/buscapelicula.php?id=tt0000";
-        ping(url).then(function(delta) {
-            selector.toggleClass('server-up');
-            // console.log('Url: '+url);
-            // console.log('Ping time was ' + String(delta) + ' ms');
-        }).catch(function(err) {
-            selector.toggleClass('server-down');
-            // console.log('Url: '+url);
-            // console.error('Could not ping remote URL', err);
+    function checkServerUp (url, selector, name, grupo) {
+        Ping(url).done(function (success, url, time, on) {
+            // console.log(success, url, time, on);
+        	if (Number(time) > 5000 ){
+                $('#select-grupo-comparacion option[value='+grupo+']').attr('disabled', 'disabled');
+                selector.removeClass('server-up').addClass('server-down');
+            }else{
+                $('#select-grupo-comparacion option[value='+grupo+']').removeAttr('disabled');
+                selector.removeClass('server-down').addClass('server-up');
+            }
+        }).fail(function (failure, url, time, on) {
+        	    // console.log('error '+ grupo);
+                $('#select-grupo-comparacion option[value='+grupo+']').attr('disabled', 'disabled');
+                selector.removeClass('server-up').addClass('server-down');
         });
-
     }
 
     $('#guardar-urls').click(function (e) {
@@ -470,7 +470,6 @@ $(document).ready(function () {
                     url = 'http://'+ url_input;
                 }
                 localStorage.setItem(name, url);
-                checkServerUp(url, $('span[id='+name+']'));
             } else {
                 if (url_input.startsWith('http://')){
                     url = url_input;
@@ -478,8 +477,8 @@ $(document).ready(function () {
                     url = 'http://'+ url_input;
                 }
                 localStorage.setItem(name, url);
-                checkServerUp(url, $('span[id='+name+']'), name);
             }
+            checkServerUp(url, $('div[id='+name+']'), name, i+1);
         }
         // $('#modal-info-grupos').modal('hide');
         // $(document).trigger("add-alerts", {
@@ -496,5 +495,37 @@ $(document).ready(function () {
         buscar_peliculas("*");
 
     }
+
+    function Ping(url, timeout) {
+		timeout = timeout || 1500;
+		var timer = null;
+
+		return $.Deferred(function deferred(defer) {
+
+			var img = new Image();
+			img.onload = function () { success("onload"); };
+			img.onerror = function () { success("onerror"); };  // onerror is also success, because this means the domain/ip is found, only the image not;
+
+			var start = new Date();
+			img.src = url += ("?cache=" + +start);
+			timer = window.setTimeout(function timer() { fail(); }, timeout);
+
+			function cleanup() {
+				window.clearTimeout(timer);
+				timer = img = null;
+			}
+
+			function success(on) {
+				cleanup();
+				defer.resolve(true, url, new Date() - start, on);
+			}
+
+			function fail() {
+				cleanup();
+				defer.reject(false, url, new Date() - start, "timeout");
+			}
+
+		}).promise();
+	}
 
 });
