@@ -1,25 +1,25 @@
 <?php
 
-use App\Task;
+use App\Plantilla;
 use Illuminate\Http\Request;
 
 /**
- * Show Task Dashboard
+ * Show Plantilla Dashboard
  */
 Route::get('/', function () {
-    $tasks = Task::orderBy('created_at', 'asc')->get();
+    $plantillas = Plantilla::orderBy('created_at', 'asc')->get();
 
-    return view('tasks', [
-        'tasks' => $tasks
+    return view('plantillas', [
+        'plantillas' => $plantillas
     ]);
 });
 
 /**
- * Add New Task
+ * Agrega una nueva Plantilla
  */
-Route::post('/task', function (Request $request) {
+Route::post('/plantillas', function (Request $request) {
     $validator = Validator::make($request->all(), [
-        'name' => 'required|max:255',
+        'cuerpo' => 'required',
     ]);
 
     if ($validator->fails()) {
@@ -28,18 +28,18 @@ Route::post('/task', function (Request $request) {
             ->withErrors($validator);
     }
 
-    $task = new Task;
-    $task->name = $request->name;
-    $task->save();
+    $plantilla = new Plantilla;
+    $plantilla->cuerpo = $request->cuerpo;
+    $plantilla->save();
 
     return redirect('/');
 });
 
 /**
- * Delete Task
+ * Elimina Plantilla
  */
-Route::delete('/task/{task}', function (Task $task) {
-    $task->delete();
+Route::delete('/plantillas/{plantilla}', function (Plantilla $plantilla) {
+    $plantilla->delete();
 
     return redirect('/');
 });
