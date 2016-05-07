@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 Route::get('/', function () {
     $plantillas = Plantilla::orderBy('created_at', 'asc')->get();
 
-    return view('plantillas', [
+    return view('home', [
         'plantillas' => $plantillas
     ]);
 });

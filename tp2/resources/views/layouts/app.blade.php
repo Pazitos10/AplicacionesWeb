@@ -17,7 +17,7 @@
         <div class="container">
             <nav class="navbar navbar-inverse">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="{{ URL::to('plantilla') }}">Plantillas</a>
+                    <a class="navbar-brand" href="{{ URL::to('/') }}">Plantillas</a>
                 </div>
                 <ul class="nav navbar-nav">
                     <li><a href="{{ URL::to('plantilla') }}">Ver todas las Plantillas</a></li>
