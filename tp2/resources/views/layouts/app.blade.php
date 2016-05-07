@@ -1,9 +1,9 @@
 <!-- resources/views/layouts/app.blade.php -->
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
-        <title>Laravel Quickstart - Basic</title>
+        <title>Aplicaciones Web - TP 2</title>
 
         <!-- CSS And JavaScript -->
 

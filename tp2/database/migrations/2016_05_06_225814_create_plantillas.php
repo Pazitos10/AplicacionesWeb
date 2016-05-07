@@ -14,7 +14,8 @@ class CreatePlantillas extends Migration
     {
         Schema::create('plantillas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('cuerpo');
+            $table->string('nombre');
+            $table->text('cuerpo');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ class CreatePlantillas extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('plantillas');
     }
 }
