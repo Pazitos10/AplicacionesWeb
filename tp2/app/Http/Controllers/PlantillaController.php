@@ -82,7 +82,12 @@ class PlantillaController extends Controller
      */
     public function show($id)
     {
-        //
+        // busco la Plantilla
+        $plantilla = Plantilla::find($id);
+
+        // show the edit form and pass the nerd
+        return View::make('plantilla.view')
+            ->with('plantilla', $plantilla);
     }
 
     /**
@@ -143,6 +148,12 @@ class PlantillaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Busco la Plantilla
+        $plantilla = Plantilla::find($id);
+        $plantilla->delete();
+
+        // redirect
+        Session::flash('message', 'Plantilla eliminada con éxito!');
+        return Redirect::to('plantilla');
     }
 }

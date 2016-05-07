@@ -15,8 +15,14 @@
 
     <body>
         <div class="container">
-            <nav class="navbar navbar-default">
-                <!-- Navbar Contents -->
+            <nav class="navbar navbar-inverse">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{{ URL::to('plantilla') }}">Plantillas</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="{{ URL::to('plantilla') }}">Ver todas las Plantillas</a></li>
+                    <li><a href="{{ URL::to('plantilla/create') }}">Crear nueva Plantilla</a>
+                </ul>
             </nav>
         </div>
 
