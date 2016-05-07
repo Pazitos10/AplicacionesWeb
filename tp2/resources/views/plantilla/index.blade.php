@@ -32,6 +32,15 @@
                     <td>
                         <a class="btn btn-small btn-default" href="{{ URL::to('plantilla/' . $value->id) }}" title="Ver la plantilla"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                         <a class="btn btn-small btn-default" href="{{ URL::to('plantilla/' . $value->id . '/edit') }}" title="Editar la plantilla"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        {{ Form::open(array('url' => 'plantilla/' . $value->id, 'class' => 'pull-right')) }}
+                        {{ Form::hidden('_method', 'DELETE') }}
+                        {{ Form::button('<i class="glyphicon glyphicon-remove"></i> ', array(
+                        'type' => 'submit',
+                        'title' => 'Eliminar la plantilla',
+                        'class'=> 'btn btn-small btn-danger',
+                        'onclick'=>'return confirm("Estás seguro de eliminar la Plantilla?")'))
+                        }}
+                        {{ Form::close() }}
                     </td>
                 </tr>
             @endforeach

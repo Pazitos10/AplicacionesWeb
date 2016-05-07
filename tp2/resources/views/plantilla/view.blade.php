@@ -5,7 +5,6 @@
 @section('content')
 
 <div class="container">
-    <h1>Ver Plantilla</h1>
     <!-- will be used to show any messages -->
     @if (Session::has('message'))
         <div class="alert alert-info">{{ Session::get('message') }}</div>
@@ -17,5 +16,6 @@
 
     <textarea readonly>{{ $plantilla->cuerpo }}</textarea>
 
+    <a class="btn btn-primary" href="{{ url("plantilla/") }}">&laquo; Volver</a>
 </div>
 @endsection
