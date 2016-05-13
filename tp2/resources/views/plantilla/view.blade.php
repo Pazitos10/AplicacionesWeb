@@ -16,6 +16,8 @@
 
     <textarea readonly>{{ $plantilla->cuerpo }}</textarea>
 
+    <img src="{{ $plantilla->thumbnail }}" alt="" />
+
     <a class="btn btn-primary" href="{{ url("plantilla/") }}">&laquo; Volver</a>
 </div>
 @endsection

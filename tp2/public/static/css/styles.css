@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+.nav-style, .nav-logo{
+    font-family: 'Pacifico', cursive;
+    font-size: 18px
+}
+.nav-logo{
+    font-size: 20px;
+}
+
+.btn-group-mostrar {
+    display: flex;
+    justify-content: center;
+    margin: 10px auto;
+}
+
+body{
+    padding-top: 80px;
+    background-color: #FFFFFF
+}
+
+.list-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.form-inline{
+    display:inline !important;
+}
+
+iframe #tinymce.mce-content-body{
+    padding: 5px 10px;
+    background-color: #18BC9C;
+    color: white;
+    font-weight: bold;
+}

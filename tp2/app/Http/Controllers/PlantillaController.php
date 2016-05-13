@@ -25,7 +25,8 @@ class PlantillaController extends Controller
         $plantillas = Plantilla::all();
 
         // paso todas las plantillas a la vista
-        return \View::make('plantilla.index')
+        //return \View::make('plantilla.index')
+        return \View::make('home')
             ->with('plantillas', $plantillas);
     }
 
@@ -66,6 +67,7 @@ class PlantillaController extends Controller
             $plantilla = new Plantilla();
             $plantilla->nombre  = Input::get('nombre');
             $plantilla->cuerpo  = Input::get('cuerpo');
+            $plantilla->thumbnail = Input::get('thumbnail');
             $plantilla->save();
 
             // redirect
