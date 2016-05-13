@@ -5,7 +5,7 @@
 <div class="col-lg-10 col-lg-offset-1 col-xs-12">
     <!-- Plantillas Actualess -->
     <div class="list-wrapper">
-        <div class="col-lg-8 col-xs-12">
+        <div class="col-lg-12 col-xs-12">
             @if (count($plantillas) > 0)
             <h3 class="text-center">
                 Plantillas Actuales
@@ -90,9 +90,6 @@
                                 <a href="#">4</a>
                             </li>
                             <li>
-                                <a href="#">5</a>
-                            </li>
-                            <li>
                                 <a href="#">&raquo;</a>
                             </li>
                         </ul>
@@ -101,6 +98,14 @@
                 <!-- /.row -->
 
                 <hr>
+                <footer>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p>Copyright &copy; Iglesias Matias - Pazos Bruno - 2016</p>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </footer>
             </div>
             @endif
         </div>

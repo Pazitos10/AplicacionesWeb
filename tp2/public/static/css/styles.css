@@ -28,10 +28,3 @@ body{
 .form-inline{
     display:inline !important;
 }
-
-iframe #tinymce.mce-content-body{
-    padding: 5px 10px;
-    background-color: #18BC9C;
-    color: white;
-    font-weight: bold;
-}

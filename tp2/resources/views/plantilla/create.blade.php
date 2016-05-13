@@ -1,15 +1,6 @@
 <!-- app/views/plantilla/create.blade.php -->
 @extends('layouts.app')
-<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-<script>
-    tinymce.init({  selector:'textarea',
-                    setup: function (ed) {
-                        ed.on('KeyDown', function (e){
-                            crear_placeholders(ed);
-                        });
-                    }
-                });
-</script>
+
 @section('content')
 
 <div class="col-lg-10 col-lg-offset-1">
@@ -34,7 +25,7 @@
         <!-- Cuerpo de la Plantilla -->
         <div class="form-group">
             {!! Form::label('cuerpo', 'Cuerpo:', ['class' => 'control-label']) !!}
-            {!! Form::textarea('cuerpo', null, ['class' => 'form-control']) !!}
+            {!! Form::textarea('cuerpo', null, ['class' => 'form-control', 'id' => 'editor']) !!}
         </div>
         {!! Form::hidden('thumbnail', null) !!}
 
@@ -43,4 +34,18 @@
         </form>
 
 </div>
+<script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script>
+<script>
+
+CKEDITOR.replace( 'editor' );
+CKEDITOR.instances.editor.on('key', function(e) {
+    // obtiene lo ingresado en formato html
+    //var self = this;
+    // setTimeout(function() {
+    //     console.log(self.getData());
+    // }, 10);
+    crear_placeholders();
+});
+
+</script>
 @endsection
