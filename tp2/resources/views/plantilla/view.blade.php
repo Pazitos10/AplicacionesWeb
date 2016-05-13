@@ -13,7 +13,7 @@
 
     <h1>Mostrando {{ $plantilla->nombre }}</h1>
 
-    <textarea readonly>{{ $plantilla->cuerpo }}</textarea>
+    <textarea id="editor" readonly>{{ $plantilla->cuerpo }}</textarea>
 
     <img src="{{ $plantilla->thumbnail }}" alt="" />
 

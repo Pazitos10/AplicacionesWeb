@@ -25,7 +25,7 @@
         <!-- Cuerpo de la Plantilla -->
         <div class="form-group">
             {!! Form::label('cuerpo', 'Cuerpo:', ['class' => 'control-label']) !!}
-            {!! Form::textarea('cuerpo', null, ['class' => 'form-control']) !!}
+            {!! Form::textarea('cuerpo', null, ['class' => 'form-control', 'id' => 'editor']) !!}
         </div>
 
         <!-- Guardar Plantilla -->
