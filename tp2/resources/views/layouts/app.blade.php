@@ -15,9 +15,6 @@
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
         <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
         <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
-        <script type="text/javascript" src="{{URL::asset('static/js/jquery.caret.min.js')}}"></script>
-        <script type="text/javascript" src="{{URL::asset('static/js/jquery.tags.min.js')}}"></script>
-        <link rel="stylesheet" href="{{URL::asset('static/css/jquery.tags.css')}}" charset="utf-8">
 
     </head>
 

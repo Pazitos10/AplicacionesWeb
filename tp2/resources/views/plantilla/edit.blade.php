@@ -1,19 +1,5 @@
 <!-- app/views/plantilla/edit.blade.php -->
 @extends('layouts.app')
-<script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script>
-<script>
-
-CKEDITOR.replace( 'editor' );
-CKEDITOR.instances.editor.on('key', function(e) {
-    // obtiene lo ingresado en formato html
-    //var self = this;
-    // setTimeout(function() {
-    //     console.log(self.getData());
-    // }, 10);
-    crear_placeholders();
-});
-
-</script>
 @section('content')
 
 <div class="container">
@@ -46,4 +32,18 @@ CKEDITOR.instances.editor.on('key', function(e) {
         {!! Form::submit('Guardar Cambios', ['class' => 'btn btn-primary']) !!}
     </form>
 </div>
+<script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script>
+<script>
+
+CKEDITOR.replace( 'editor' );
+CKEDITOR.instances.editor.on('key', function(e) {
+    // obtiene lo ingresado en formato html
+    //var self = this;
+    // setTimeout(function() {
+    //     console.log(self.getData());
+    // }, 10);
+    crear_placeholders();
+});
+
+</script>
 @endsection
