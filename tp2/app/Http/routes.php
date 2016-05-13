@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 // Authentication routes...
 Route::get('login', 'Auth\AuthController@getLogin');
 Route::post('login', 'Auth\AuthController@postLogin');
-Route::get('logout', 'Auth\AuthController@getLogout');
+Route::get('logout', 'Auth\AuthController@logout');
+
 
 // Registration routes...
 Route::get('register', 'Auth\AuthController@getRegister');

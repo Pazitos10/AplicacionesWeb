@@ -41,28 +41,28 @@
                               <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ URL::to('plantilla') }}">Listado</a></li>
                                 <li><a href="{{ URL::to('plantilla/create') }}">Crear</a></li>
-                                <li><a href="#">Modificar</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Eliminar</a></li>
-                              </ul>
-                            </li>
-                            <li class="dropdown">
-                              <a href="#" class="dropdown-toggle nav-style" data-toggle="dropdown" role="button" aria-expanded="false">Cartas <span class="caret"></span></a>
-                              <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Listado</a></li>
-                                <li><a href="#">Crear</a></li>
-                                <li><a href="#">Modificar</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Eliminar</a></li>
-                              </ul>
-                            </li>
-                        </ul>
-                        <!-- Right Side Of Navbar -->
+                                  <!-- <li><a href="#">Modificar</a></li> -->
+                                  <!-- <li class="divider"></li> -->
+                                  <!-- <li><a href="#">Eliminar</a></li>-->
+                                </ul>
+                              </li>
+                              <li class="dropdown">
+                                <a href="#" class="dropdown-toggle nav-style" data-toggle="dropdown" role="button" aria-expanded="false">Cartas <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                  <li><a href="#">Listado</a></li>
+                                  <li><a href="#">Crear</a></li>
+                                  <li><a href="#">Modificar</a></li>
+                                  <li class="divider"></li>
+                                  <li><a href="#">Eliminar</a></li>
+                                </ul>
+                              </li>
+                          </ul>
+                          <!-- Right Side Of Navbar -->
                         <ul class="nav navbar-nav navbar-right">
                             <!-- Authentication Links -->
                             @if (Auth::guest())
-                                <li><a href="{{ url('login') }}">Login</a></li>
-                                <li><a href="{{ url('register') }}">Register</a></li>
+                                <li><a href="{{ url('login') }}">Iniciar sesión</a></li>
+                                <li><a href="{{ url('register') }}">Registrarme</a></li>
                             @else
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -70,7 +70,7 @@
                                     </a>
 
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="{{ url('logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                        <li><a href="{{ url('logout') }}"><i class="fa fa-btn fa-sign-out"></i>Cerrar sesión</a></li>
                                     </ul>
                                 </li>
                             @endif
