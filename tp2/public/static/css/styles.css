@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-.nav-style, .nav-logo{
+.nav-style, .nav-logo, .navbar-nav, .navbar-link{
     font-family: 'Pacifico', cursive;
     font-size: 18px
 }
@@ -27,4 +27,20 @@ body{
 
 .form-inline{
     display:inline !important;
+}
+
+a {
+    color:white;
+}
+
+a:hover {
+    color: black;
+}
+
+.navbar-inverse .navbar-link {
+    color: black;
+}
+
+.navbar-inverse .navbar-link:hover {
+    color: white;
 }
