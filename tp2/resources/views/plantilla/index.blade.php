@@ -1,7 +1,6 @@
 <!-- app/views/plantilla/index.blade.php -->
 @extends('layouts.app')
 
-</script>
 @section('content')
 
 <div class="container">

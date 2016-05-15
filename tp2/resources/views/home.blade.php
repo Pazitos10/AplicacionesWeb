@@ -64,7 +64,7 @@
                                 <a href="#" title="Eliminar" class=""><span class="glyphicon glyphicon-remove btn-on-item icon-remove"></span></a>
                             </div>
                             <h4 class="nombre-plantilla">
-                                <a href="{{ URL::to('plantilla/' . $plantilla->id . '/edit') }}">{{ $plantilla->nombre }}</a>
+                                {{ $plantilla->nombre }}
                             </h4>
                         </div>
                     @endforeach
@@ -120,5 +120,6 @@
     </div>
 
 </div>
+<script type="text/javascript" src="{{ URL::asset('static/js/main.js') }}"></script>
 
 @endsection
