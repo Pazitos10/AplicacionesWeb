@@ -87,3 +87,10 @@ a:hover {
 .icon-remove{
     color: tomato;
 }
+
+.controls-container{
+    display:flex;
+    justify-content: space-between;
+    margin-bottom: 11px;
+    margin-top: 21px;
+}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Carta;
 use App\Plantilla;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\View;
 
 use App\Http\Requests;
 
-class PlantillaController extends Controller
+class CartaController extends Controller
 {
     public function __construct()
     {
@@ -27,12 +28,12 @@ class PlantillaController extends Controller
     public function index()
     {
         // get all the nerds
-        $plantillas = Plantilla::all();
+        $cartas = Carta::all();
 
         // paso todas las plantillas a la vista
         //return \View::make('plantilla.index')
-        return \View::make('plantilla.index')
-            ->with('plantillas', $plantillas);
+        return \View::make('carta.index')
+            ->with('cartas', $cartas);
     }
 
     /**
@@ -42,9 +43,27 @@ class PlantillaController extends Controller
      */
     public function create()
     {
+        //Refinar para que solo traiga las plantillas que le pertenecen al usuario.
+        $plantillas = Plantilla::lists('nombre', 'id');
+
         // load the create form (app/views/plantilla/create.blade.php)
-        return \View::make('plantilla.create');
+        return \View::make('carta.create')
+                ->with('plantillas', $plantillas);
     }
+
+    /**
+     * Devuelve informacion de plantillas en formato json.
+     *
+     * @return Response
+     */
+    public static function get_json_plantilla($id)
+    {
+        //Refinar para que solo traiga las plantillas que le pertenecen al usuario.
+        $plantilla = Plantilla::where('id', $id)->first();
+        $json_response = $plantilla["placeholders"];
+        return response()->json($json_response);
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -64,21 +83,20 @@ class PlantillaController extends Controller
 
         // process the login
         if ($validator->fails()) {
-            return Redirect::to('plantilla/create')
+            return Redirect::to('carta/create')
                 ->withErrors($validator)
                 ->withInput(Input::except('password'));
         } else {
             // store
-            $plantilla = new Plantilla();
-            $plantilla->nombre  = Input::get('nombre');
-            $plantilla->cuerpo  = Input::get('cuerpo');
-            $plantilla->thumbnail = Input::get('thumbnail');
-            $plantilla->placeholders = Input::get('placeholders');
-            $plantilla->save();
+            $carta = new Carta();
+            $carta->nombre  = Input::get('nombre');
+            $carta->cuerpo  = Input::get('cuerpo');
+            $carta->plantilla_id = Input::get('plantilla_id');
+            $carta->save();
 
             // redirect
-            Session::flash('message', 'Plantilla Guardada con éxito!');
-            return Redirect::to('plantilla');
+            Session::flash('message', 'Carta Guardada con éxito!');
+            return Redirect::to('carta');
         }
     }
 
@@ -90,12 +108,12 @@ class PlantillaController extends Controller
      */
     public function show($id)
     {
-        // busco la Plantilla
-        $plantilla = Plantilla::find($id);
+        // busco la Carta
+        $carta = Carta::find($id);
 
         // show the edit form and pass the nerd
-        return View::make('plantilla.view')
-            ->with('plantilla', $plantilla);
+        return View::make('carta.view')
+            ->with('carta', $carta);
     }
 
     /**
@@ -106,12 +124,12 @@ class PlantillaController extends Controller
      */
     public function edit($id)
     {
-        // busco la Plantilla
-        $plantilla = Plantilla::find($id);
+        // busco la Carta
+        $carta = Carta::find($id);
 
         // show the edit form and pass the nerd
-        return View::make('plantilla.edit')
-            ->with('plantilla', $plantilla);
+        return View::make('carta.edit')
+            ->with('carta', $carta);
     }
 
     /**
@@ -132,21 +150,20 @@ class PlantillaController extends Controller
 
         // process the login
         if ($validator->fails()) {
-            return Redirect::to('plantilla/' . $id . '/edit')
+            return Redirect::to('carta/' . $id . '/edit')
                 ->withErrors($validator)
                 ->withInput(Input::except('password'));
         } else {
             // store
-            $plantilla = Plantilla::find($id);
-            $plantilla->nombre  = Input::get('nombre');
-            $plantilla->cuerpo  = Input::get('cuerpo');
-            $plantilla->thumbnail = Input::get('thumbnail');
-            $plantilla->placeholders = Input::get('placeholders');
-            $plantilla->save();
+            $carta = Carta::find($id);
+            $carta->nombre  = Input::get('nombre');
+            $carta->cuerpo  = Input::get('cuerpo');
+            $carta->plantilla_id = Input::get('plantilla_id');
+            $carta->save();
 
             // redirect
-            Session::flash('message', 'Plantilla actualizada con éxito!');
-            return Redirect::to('plantilla');
+            Session::flash('message', 'Carta actualizada con éxito!');
+            return Redirect::to('carta');
         }
     }
 
@@ -158,12 +175,12 @@ class PlantillaController extends Controller
      */
     public function destroy($id)
     {
-        // Busco la Plantilla
-        $plantilla = Plantilla::find($id);
+        // Busco la Carta
+        $plantilla = Carta::find($id);
         $plantilla->delete();
 
         // redirect
-        Session::flash('message', 'Plantilla eliminada con éxito!');
-        return Redirect::to('plantilla');
+        Session::flash('message', 'Carta eliminada con éxito!');
+        return Redirect::to('carta');
     }
 }

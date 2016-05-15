@@ -35,6 +35,7 @@
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="navbar-collapse">
+                        @if (!Auth::guest())
                         <ul class="nav navbar-nav">
                             <li class="dropdown">
                               <a href="#" class="dropdown-toggle nav-style" data-toggle="dropdown" role="button" aria-expanded="false">Plantillas <span class="caret"></span></a>
@@ -49,14 +50,15 @@
                               <li class="dropdown">
                                 <a href="#" class="dropdown-toggle nav-style" data-toggle="dropdown" role="button" aria-expanded="false">Cartas <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                  <li><a href="#">Listado</a></li>
-                                  <li><a href="#">Crear</a></li>
-                                  <li><a href="#">Modificar</a></li>
+                                  <li><a href="{{ URL::to('carta') }}">Listado</a></li>
+                                  <li><a href="{{ URL::to('carta/create') }}">Crear</a></li>
+                                  <!-- <li><a href="#">Modificar</a></li>
                                   <li class="divider"></li>
-                                  <li><a href="#">Eliminar</a></li>
+                                  <li><a href="#">Eliminar</a></li> -->
                                 </ul>
                               </li>
                           </ul>
+                        @endif
                           <!-- Right Side Of Navbar -->
                         <ul class="nav navbar-nav navbar-right">
                             <!-- Authentication Links -->

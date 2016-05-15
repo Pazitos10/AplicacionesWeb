@@ -1,6 +1,8 @@
 <?php
 
 use App\Plantilla;
+use App\Carta;
+use App\Http\Controllers\CartaController;
 use Illuminate\Http\Request;
 
 // Authentication routes...
@@ -19,9 +21,14 @@ Route::post('register', 'Auth\AuthController@postRegister');
 Route::get('/', function () {
     $plantillas = Plantilla::orderBy('created_at', 'asc')->get();
 
-    return view('home', [
+    return view('plantilla.index', [
         'plantillas' => $plantillas
     ]);
 });
 
+
 Route::resource('plantilla', 'PlantillaController');
+Route::resource('carta', 'CartaController');
+Route::get('carta/get_json_plantilla/{id}', function($id){
+    return CartaController::get_json_plantilla($id);
+});
