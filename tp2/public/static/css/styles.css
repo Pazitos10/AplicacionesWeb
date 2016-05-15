@@ -4,7 +4,24 @@ body{
     background-color: #FFFFFF
 }
 
-.nav-style, .nav-logo{
+a {
+    color:white;
+}
+
+a:hover {
+    color: black;
+}
+
+.navbar-inverse .navbar-link {
+    color: black;
+}
+
+.navbar-inverse .navbar-link:hover {
+    color: white;
+}
+
+
+.nav-style, .nav-logo, .navbar-nav, .navbar-link{
     font-family: 'Pacifico', cursive;
     font-size: 18px
 }
@@ -27,7 +44,6 @@ body{
 .form-inline{
     display:inline !important;
 }
-
 
 .item{
     box-shadow: 0px 2px 5px #E1E1E1;
