@@ -60,7 +60,9 @@ class CartaController extends Controller
     {
         //Refinar para que solo traiga las plantillas que le pertenecen al usuario.
         $plantilla = Plantilla::where('id', $id)->first();
-        $json_response = $plantilla["placeholders"];
+        //$json_response = $plantilla["placeholders"];
+        $cuerpo = str_replace("\"", "'", $plantilla["cuerpo"]);
+        $json_response = '{ "cuerpo": "'. $cuerpo .'", "placeholders": '. $plantilla["placeholders"] .'}';
         return response()->json($json_response);
     }
 

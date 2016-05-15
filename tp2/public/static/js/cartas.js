@@ -1,28 +1,50 @@
 $(document).ready(function(){
-    function set_label(value){
-        $('#campo_id')[0].innerHTML = value;
+    function set_label(value, index, total){
+        var label = value + " (" + index + "/" + total + " )" ;
+        $('#campo_id')[0].innerHTML = label;
+    }
+
+    function make_ajax_request(data) {
+        var plantilla_id = data.target.value;
+        $.ajax({
+            url: './get_json_plantilla/'+plantilla_id,
+            type: 'GET'
+        }).done(function(data){
+            var form = armar_form(JSON.parse(data));
+            handle_control_events(form);
+        })
+    }
+
+    function mostrar_cuerpo(cuerpo) {
+        console.log(cuerpo);
+        $('#cuerpo-carta').empty();
+        $('#cuerpo-carta').append(cuerpo);
+
     }
 
     function armar_form(data){
         var form = {};
         var inputs = [];
         var labels = [];
-        $.each( data, function( key, value ) {
+        var placeholders = data["placeholders"];
+        var cuerpo = data["cuerpo"];
+        $.each( placeholders, function( key, value ) {
             labels.push(value);
             inputs.push("<input class='form-control' name='"+key+"' id='"+key+"' placeholder='"+value+"'>");
         });
         $('#dynamic-fields').empty();
         $('#dynamic-fields').append(inputs[0]);
-        set_label(labels[0]);
         form.labels = labels;
         form.inputs = inputs;
+        set_label(labels[0], 1, form.labels.length);
+        mostrar_cuerpo(cuerpo);
         return form;
     }
 
     function fill_with_content(form, index) {
         $('#dynamic-fields').empty();
         $('#dynamic-fields').append(form.inputs[index]);
-        set_label(form.labels[index]);
+        set_label(form.labels[index], index+1, form.labels.length);
     }
 
     function handle_control_events(form) {
@@ -47,14 +69,7 @@ $(document).ready(function(){
 
     $('#plantilla_id').change(function(data) {
         $('.controls-container').show();
-        var plantilla_id = data.target.value;
-        $.ajax({
-            url: './get_json_plantilla/'+plantilla_id,
-            type: 'GET'
-        }).done(function(data){
-            var form = armar_form(JSON.parse(data));
-            handle_control_events(form);
-        })
+        make_ajax_request(data);
     });
 
     $('.controls-container').hide();

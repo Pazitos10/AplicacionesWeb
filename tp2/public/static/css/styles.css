@@ -84,6 +84,7 @@ a:hover {
     right: 15px;
 }
 
+
 .icon-remove{
     color: tomato;
 }
@@ -93,4 +94,17 @@ a:hover {
     justify-content: space-between;
     margin-bottom: 11px;
     margin-top: 21px;
+}
+
+#cuerpo-carta{
+    min-height: 233px;
+    box-shadow: 0px 1px 5px #E1E1E1;
+    padding: 10px;
+}
+
+.btn-container{
+    display:flex;
+    justify-content: space-between;
+    /*margin-bottom: 11px;
+    margin-top: 21px;*/
 }

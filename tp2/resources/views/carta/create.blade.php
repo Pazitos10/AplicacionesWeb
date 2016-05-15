@@ -36,9 +36,6 @@
             <div id="dynamic-fields">
 
             </div>
-            {{--<!-- @foreach( $placeholders as $placeholder )
-                {!! Form::text('campo', null, ['class' => 'form-control', 'id' => $placeholder, 'placeholder' => $placeholder])!!}
-            @endforeach -->--}}
         </div>
 
     </div>
@@ -48,14 +45,22 @@
         <!-- Cuerpo de la Plantilla -->
         <div class="form-group">
             {!! Form::label('cuerpo', 'Cuerpo:', ['class' => 'control-label']) !!}
-            {!! Form::textarea('cuerpo', null, ['class' => 'form-control', 'id' => 'editor', 'disabled']) !!}
+            {{--{!! Form::textarea('cuerpo', null, ['class' => 'form-control', 'id' => 'editor', 'disabled']) !!}--}}
+            <div id="cuerpo-carta">
+
+            </div>
+
         </div>
         {!! Form::hidden('thumbnail', null) !!}
         {!! Form::hidden('placeholders', null) !!}
-
+        {!! Form::hidden('cuerpo', null) !!}
 
         <!-- Guardar Carta -->
-        {!! Form::submit('Guardar Carta', ['class' => 'btn btn-primary pull-right', 'id' => 'btn-guardar']) !!}
+        <div class="btn-container">
+            <a href="#" class="btn btn-info"><span class="glyphicon glyphicon-eye-open"></span>  Vista previa</a>
+            <a href="#" class="btn btn-danger"><span class="glyphicon glyphicon-file"></span>  Descargar PDF</a>
+            {!! Form::submit('Guardar Carta', ['class' => 'btn btn-success pull-right', 'id' => 'btn-guardar']) !!}
+        </div>
     </div>
     {!! Form::close() !!}
 </div>
