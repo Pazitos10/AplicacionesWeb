@@ -1,4 +1,8 @@
 @charset "UTF-8";
+body{
+    padding-top: 80px;
+    background-color: #FFFFFF
+}
 
 .nav-style, .nav-logo{
     font-family: 'Pacifico', cursive;
@@ -14,11 +18,6 @@
     margin: 10px auto;
 }
 
-body{
-    padding-top: 80px;
-    background-color: #FFFFFF
-}
-
 .list-wrapper{
     display: flex;
     flex-wrap: wrap;
@@ -27,4 +26,48 @@ body{
 
 .form-inline{
     display:inline !important;
+}
+
+
+.item{
+    box-shadow: 0px 2px 5px #E1E1E1;
+    margin-right: 10px;
+    margin-bottom: 15px;
+}
+.item:hover .btn-on-item {
+    /*Muestra los botones de opcion cuando se hace hover sobre el item*/
+    display: inline-block;
+}
+
+.thumb {
+    position: relative;
+    left: -20px;
+    top: 10px;
+    max-width: 110% !important;
+}
+
+.nombre-plantilla{
+    border-top: 1px dashed #ecf0f1;
+    padding-top: 5px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.btn-on-item{
+    display: none;
+    color: #18bc9c;
+    margin-left: 20px;
+    text-shadow: 0px 2px 5px #E1E1E1,
+                0px 2px 5px #E1E1E1,
+                0px 2px 5px #E1E1E1;
+}
+
+.btn-item-options{
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.icon-remove{
+    color: tomato;
 }

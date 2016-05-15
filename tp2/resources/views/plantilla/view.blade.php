@@ -11,24 +11,19 @@
     <!-- if there are creation errors, they will show here -->
     @include('common.errors')
 
-    <h1>Mostrando {{ $plantilla->nombre }}</h1>
-
+    <h3>Mostrando: {{ $plantilla->nombre }}</h3>
     <textarea id="editor" readonly>{{ $plantilla->cuerpo }}</textarea>
-
-    <img src="{{ $plantilla->thumbnail }}" alt="" />
-
+    <br>
     <a class="btn btn-primary" href="{{ url("plantilla/") }}">&laquo; Volver</a>
 </div>
-<script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script>
+<script type="text/javascript" src="{{ URL::asset('static/js/ckeditor/ckeditor.js') }}"></script>
 <script>
-
 CKEDITOR.replace( 'editor' );
-CKEDITOR.instances.editor.on('key', function(e) {
-    // obtiene lo ingresado en formato html
-    //var self = this;
-    // setTimeout(function() {
-    //     console.log(self.getData());
-    // }, 10);
+CKEDITOR.instances.editor.on('change', function(e) {
+    crear_placeholders();
+});
+//aplicamos los cambios al contenido preexistente
+CKEDITOR.instances.editor.on('instanceReady', function(e) {
     crear_placeholders();
 });
 

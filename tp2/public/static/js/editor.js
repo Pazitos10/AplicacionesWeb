@@ -5,7 +5,8 @@ function crear_placeholders(editor){
                     "padding: 5px 10px;"
 
     var code_blocks = $('iframe').contents().find('body').find('code');
-    for (var i=0; i < code_blocks.length; i++) {
+    // console.log(code_blocks);
+    for (var i=0; i < code_blocks.length - 1 ; i++) {
         code_blocks[i].style = style;
     }
 }

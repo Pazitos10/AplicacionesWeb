@@ -13,7 +13,8 @@
 
     {!! Form::model($plantilla, [
         'method' => 'PUT',
-        'route' => ['plantilla.update', $plantilla->id]
+        'route' => ['plantilla.update', $plantilla->id],
+        'id' => 'form-plantilla'
     ]) !!}
         {!! csrf_field() !!}
 
@@ -27,21 +28,23 @@
             {!! Form::label('cuerpo', 'Cuerpo:', ['class' => 'control-label']) !!}
             {!! Form::textarea('cuerpo', null, ['class' => 'form-control', 'id' => 'editor']) !!}
         </div>
+        {!! Form::hidden('thumbnail', null) !!}
+        {!! Form::hidden('placeholders', null) !!}
 
         <!-- Guardar Plantilla -->
-        {!! Form::submit('Guardar Cambios', ['class' => 'btn btn-primary']) !!}
+        {!! Form::submit('Guardar Cambios', ['class' => 'btn btn-primary', 'id' => 'btn-guardar']) !!}
     </form>
 </div>
-<script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script>
+<!-- <script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script> -->
+<script src="{{URL::asset('static/js/plantillas.js')}}" charset="utf-8"></script>
+<script type="text/javascript" src="{{ URL::asset('static/js/ckeditor/ckeditor.js') }}"></script>
 <script>
-
 CKEDITOR.replace( 'editor' );
-CKEDITOR.instances.editor.on('key', function(e) {
-    // obtiene lo ingresado en formato html
-    //var self = this;
-    // setTimeout(function() {
-    //     console.log(self.getData());
-    // }, 10);
+CKEDITOR.instances.editor.on('change', function(e) {
+    crear_placeholders();
+});
+//aplicamos los cambios al contenido preexistente
+CKEDITOR.instances.editor.on('instanceReady', function(e) {
     crear_placeholders();
 });
 

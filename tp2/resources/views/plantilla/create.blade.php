@@ -14,7 +14,7 @@
     @include('common.errors')
 
 
-    {{ Form::open(array('url' => 'plantilla/', 'id' => 'nueva-plantilla'))  }}
+    {{ Form::open(array('url' => 'plantilla/', 'id' => 'form-plantilla'))  }}
     {!! csrf_field() !!}
 
             <!-- Nombre de la Plantilla -->
@@ -28,17 +28,19 @@
             {!! Form::textarea('cuerpo', null, ['class' => 'form-control', 'id' => 'editor']) !!}
         </div>
         {!! Form::hidden('thumbnail', null) !!}
+        {!! Form::hidden('placeholders', null) !!}
 
         <!-- Guardar Plantilla -->
         {!! Form::submit('Guardar Plantilla', ['class' => 'btn btn-primary', 'id' => 'btn-guardar']) !!}
         </form>
 
 </div>
-<script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script>
+<!--script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script-->
+<script type="text/javascript" src="{{ URL::asset('static/js/ckeditor/ckeditor.js') }}"></script>
 <script>
 
 CKEDITOR.replace( 'editor' );
-CKEDITOR.instances.editor.on('key', function(e) {
+CKEDITOR.instances.editor.on('change', function(e) {
     // obtiene lo ingresado en formato html
     //var self = this;
     // setTimeout(function() {
@@ -46,6 +48,7 @@ CKEDITOR.instances.editor.on('key', function(e) {
     // }, 10);
     crear_placeholders();
 });
+
 
 </script>
 @endsection

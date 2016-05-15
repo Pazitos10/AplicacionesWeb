@@ -68,6 +68,7 @@ class PlantillaController extends Controller
             $plantilla->nombre  = Input::get('nombre');
             $plantilla->cuerpo  = Input::get('cuerpo');
             $plantilla->thumbnail = Input::get('thumbnail');
+            $plantilla->placeholders = Input::get('placeholders');
             $plantilla->save();
 
             // redirect
@@ -134,6 +135,8 @@ class PlantillaController extends Controller
             $plantilla = Plantilla::find($id);
             $plantilla->nombre  = Input::get('nombre');
             $plantilla->cuerpo  = Input::get('cuerpo');
+            $plantilla->thumbnail = Input::get('thumbnail');
+            $plantilla->placeholders = Input::get('placeholders');
             $plantilla->save();
 
             // redirect
