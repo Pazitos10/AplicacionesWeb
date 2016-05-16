@@ -1,11 +1,10 @@
 <!-- app/views/carta/create.blade.php -->
-@extends('layouts.app')
+@extends('home')
 
-@section('content')
-
-<div class="col-lg-10 col-lg-offset-1">
+@section('dynamic-content')
 
     <h3 class="text-center">Crear Nueva Carta</h3>
+    <hr>
     <!-- will be used to show any messages -->
     @if (Session::has('message'))
         <div class="alert alert-info">{{ Session::get('message') }}</div>
@@ -16,7 +15,7 @@
 
     {{ Form::open(array('url' => 'carta/', 'id' => 'form-carta'))  }}
     {!! csrf_field() !!}
-    <div class="left-col col-lg-4">
+    <div class="left-col col-lg-4 col-xs-12">
 
         <!-- Titulo de la Carta -->
         <div class="form-group">
@@ -29,9 +28,9 @@
         </div>
         <div class="form-group">
             <div class="controls-container">
-                <a href="#" id="btn-prev-field"><span class="glyphicon glyphicon-chevron-left"></span></a>
-                <label for="campo_id" id="campo_id" class="text-center">[Nombre campo]</label>
-                <a href="#" id="btn-next-field"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                <a href="#" id="btn-prev-field" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                <label for="campo_id" id="campo_id" class="text-center"></label>
+                <a href="#" id="btn-next-field" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-chevron-right"></span></a>
             </div>
             <div id="dynamic-fields">
 
@@ -39,7 +38,7 @@
         </div>
 
     </div>
-    <div class="right-col col-lg-8">
+    <div class="right-col col-lg-8 col-xs-12">
 
 
         <!-- Cuerpo de la Plantilla -->
@@ -57,19 +56,22 @@
 
         <!-- Guardar Carta -->
         <div class="btn-container">
-            <a href="#" class="btn btn-info" id="btn-vista-previa"><span class="glyphicon glyphicon-eye-open"></span>  Vista previa</a>
-            <a href="#" class="btn btn-danger" id="btn-pdf"><span class="glyphicon glyphicon-file"></span>  Descargar PDF</a>
-            <!-- {!! Form::submit('Guardar Carta', ['class' => 'btn btn-success pull-right', 'id' => 'btn-guardar']) !!} -->
-            {{ Form::button('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar Carta ', array(
-                'type' => 'submit',
-                'class'=> 'btn btn-success',
-                'id' => 'btn-guardar-carta')
-                )
-            }}
+            <!-- <div class="btn-group"> -->
+                <a href="#" class="btn btn-md btn-info" id="btn-vista-previa"><span class="glyphicon glyphicon-eye-open"></span> <span class="hidden-xs"><b> Vista previa </b></span></a>
+                <a href="#" class="btn btn-md btn-danger" id="btn-pdf"><span class="glyphicon glyphicon-save"></span><span class="hidden-xs"><b>  Descargar PDF </b></span></a>
+                <a href="#" class="btn btn-md btn-warning" id="btn-mail"><span class="glyphicon glyphicon-envelope"></span><span class="hidden-xs"><b> Enviar por E-mail </b></span></a>
+                <!-- {!! Form::submit('Guardar Carta', ['class' => 'btn btn-success pull-right', 'id' => 'btn-guardar']) !!} -->
+                {{ Form::button('<span class="glyphicon glyphicon-floppy-disk"></span> <span class="hidden-xs"><b>Guardar</b></span> ', array(
+                    'type' => 'submit',
+                    'class'=> 'btn btn-md btn-success',
+                    'id' => 'btn-guardar-carta')
+                    )
+                }}
+            <!-- </div> -->
         </div>
     </div>
     {!! Form::close() !!}
-</div>
+
 <script type="text/javascript"  src="{{URL::asset('static/js/cartas.js')}}"></script>
 
 @endsection

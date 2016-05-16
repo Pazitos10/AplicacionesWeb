@@ -10,11 +10,13 @@ $(document).ready(function(){
             $('#btn-guardar-carta').prop('disabled', true);
             $('#btn-vista-previa').addClass('disabled');
             $('#btn-pdf').addClass('disabled');
+            $('#btn-mail').addClass('disabled');
         }else{
             $('#btn-guardar-carta').removeClass('disabled');
             $('#btn-guardar-carta').prop('disabled', false);
             $('#btn-vista-previa').removeClass('disabled');
             $('#btn-pdf').removeClass('disabled');
+            $('#btn-mail').removeClass('disabled');
         }
     }
 
@@ -119,7 +121,8 @@ $(document).ready(function(){
     */
     function handle_control_events(form) {
         var index = 0;
-        $('#btn-next-field').click(function(){
+        $('#btn-next-field').click(function(e){
+            e.preventDefault();
             if (index < form.labels.length - 1)
                 index += 1;
             else
@@ -127,7 +130,8 @@ $(document).ready(function(){
             fill_with_content(form, index);
         });
 
-        $('#btn-prev-field').click(function(){
+        $('#btn-prev-field').click(function(e){
+            e.preventDefault(); // to avoid annoying jumps
             if (index > 0)
                 index -= 1;
             else
