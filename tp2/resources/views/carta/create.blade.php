@@ -57,9 +57,15 @@
 
         <!-- Guardar Carta -->
         <div class="btn-container">
-            <a href="#" class="btn btn-info"><span class="glyphicon glyphicon-eye-open"></span>  Vista previa</a>
-            <a href="#" class="btn btn-danger"><span class="glyphicon glyphicon-file"></span>  Descargar PDF</a>
-            {!! Form::submit('Guardar Carta', ['class' => 'btn btn-success pull-right', 'id' => 'btn-guardar']) !!}
+            <a href="#" class="btn btn-info" id="btn-vista-previa"><span class="glyphicon glyphicon-eye-open"></span>  Vista previa</a>
+            <a href="#" class="btn btn-danger" id="btn-pdf"><span class="glyphicon glyphicon-file"></span>  Descargar PDF</a>
+            <!-- {!! Form::submit('Guardar Carta', ['class' => 'btn btn-success pull-right', 'id' => 'btn-guardar']) !!} -->
+            {{ Form::button('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar Carta ', array(
+                'type' => 'submit',
+                'class'=> 'btn btn-success',
+                'id' => 'btn-guardar-carta')
+                )
+            }}
         </div>
     </div>
     {!! Form::close() !!}
