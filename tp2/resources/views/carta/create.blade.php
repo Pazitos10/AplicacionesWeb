@@ -43,16 +43,14 @@
 
         <!-- Cuerpo de la Plantilla -->
         <div class="form-group">
-            {!! Form::label('cuerpo', 'Cuerpo:', ['class' => 'control-label']) !!}
-            {{--{!! Form::textarea('cuerpo', null, ['class' => 'form-control', 'id' => 'editor', 'disabled']) !!}--}}
+            {!! Form::label('cuerpo-carta', 'Cuerpo:', ['class' => 'control-label']) !!}
             <div id="cuerpo-carta">
 
             </div>
 
         </div>
-        {!! Form::hidden('thumbnail', null) !!}
-        {!! Form::hidden('placeholders', null) !!}
-        {!! Form::hidden('cuerpo', null) !!}
+        {!! Form::hidden('placeholders', null, ['id' => 'placeholders']) !!}
+        {!! Form::hidden('cuerpo', null, ['id' => 'cuerpo']) !!}
 
         <!-- Guardar Carta -->
         <div class="btn-container">
@@ -72,6 +70,11 @@
     </div>
     {!! Form::close() !!}
 
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone-min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/backbone.epoxy/1.3.1/backbone.epoxy.js"></script>
 <script type="text/javascript"  src="{{URL::asset('static/js/cartas.js')}}"></script>
 
 @endsection

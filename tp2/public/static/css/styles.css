@@ -3,6 +3,7 @@ body{
     padding-top: 80px;
     background-color: #FFFFFF
 }
+
 /*
 a {
     color:white;
@@ -21,12 +22,15 @@ a:hover {
 }
 
 
-.nav-style, .nav-logo, .navbar-nav, .navbar-link{
-    font-family: 'Pacifico', cursive;
+.nav-style, .nav-logo, .navbar-nav, .navbar-link, .custom-header{
+    font-family: 'pacifico', cursive;
     font-size: 18px
 }
 .nav-logo{
     font-size: 20px;
+}
+.custom-header{
+    font-size: 36px;
 }
 
 .btn-group-mostrar {
@@ -108,4 +112,44 @@ a:hover {
     justify-content: space-between;
     /*margin-bottom: 11px;
     margin-top: 21px;*/
+}
+
+.fake-prompt{
+    display: inline-block;
+    width: 1px;
+    height: 20px;
+    background-color: #149c82;
+    border: 1px solid rgba(0,0,0,.05);
+    z-index: 2;
+}
+.replacement{
+    background-color: rgba(249, 236, 49, 0.3);
+    font-weight: bold;
+}
+
+.btn-full-width{
+    width: 100%;
+}
+.lead{
+    font-weight: bold;
+}
+
+
+.custom-hr-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: 'pacifico', cursive;
+    font-size: 18px;
+    margin: 10px auto;
+}
+
+.custom-hr{
+    margin-top: 21px;
+    margin-bottom: 21px;
+    padding: 0px 10px;
+    border: 0;
+    border-top: 1px solid #ecf0f1;
+    display: inline-block;
+    width: 20%;
 }

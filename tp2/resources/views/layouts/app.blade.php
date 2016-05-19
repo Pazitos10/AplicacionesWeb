@@ -5,6 +5,7 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <title>Aplicaciones Web - TP 2</title>
+        <link rel="stylesheet" href="{{ URL::asset('static/css/fonts.css') }}" media="screen" charset="utf-8">
         <link rel="stylesheet" href="{{ URL::asset('static/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ URL::asset('static/css/styles.css') }}">
         <script src="{{ URL::asset('static/js/jquery-1.12.3.min.js') }}"></script>
@@ -12,9 +13,8 @@
         <script src="{{ URL::asset('static/js/html2canvas.js')}}"></script>
         <script type="text/javascript" src="{{ URL::asset('static/js/plantillas.js')}}"></script>
         <script type="text/javascript" src="{{ URL::asset('static/js/editor.js')}}"></script>
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-        <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
-        <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+        <!-- <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css"> -->
+        <!-- <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'> -->
 
     </head>
 

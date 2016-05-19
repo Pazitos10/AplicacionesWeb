@@ -23,8 +23,8 @@
                         <td>{{ $carta->nombre }}</td>
                         <td class="hidden-xs">{{ date('d/m/Y - H:i:s', strtotime($carta->updated_at)) }}</td>
                         <td class="pull-right">
-                            <a class="btn btn-default btn-sm " href="{{ URL::to('plantilla/' . $carta->id) }}" title="Ver la plantilla"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-                            <a class="btn btn-default btn-sm " href="{{ URL::to('plantilla/' . $carta->id . '/edit') }}" title="Editar la plantilla"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                            <a class="btn btn-default btn-sm " href="{{ URL::to('carta/' . $carta->id) }}" title="Ver la carta"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                            <a class="btn btn-default btn-sm " href="{{ URL::to('carta/' . $carta->id . '/edit') }}" title="Editar la carta"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                             {{ Form::open(array('url' => 'carta/' . $carta->id, 'class' => 'form-inline')) }}
                             {{ Form::hidden('_method', 'DELETE') }}
                             {{ Form::button('<i class="glyphicon glyphicon-remove"></i> ', array(
@@ -59,7 +59,7 @@
                         <a href="#" title="Ver" class=""><span class="glyphicon glyphicon-eye-open btn-on-item"></span></a>
                         <a href="#" title="Eliminar" class=""><span class="glyphicon glyphicon-remove btn-on-item icon-remove"></span></a>
                     </div>
-                    <h4 class="nombre-plantilla">
+                    <h4 class="nombre-carta">
                         {{ $carta->nombre }}
                     </h4>
                 </div>

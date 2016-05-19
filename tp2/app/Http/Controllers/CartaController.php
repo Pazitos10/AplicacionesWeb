@@ -56,14 +56,30 @@ class CartaController extends Controller
      *
      * @return Response
      */
-    public static function get_json_plantilla($id)
+    public static function get_json_plantilla($id_plantilla, $id_carta = null)
     {
         //Refinar para que solo traiga las plantillas que le pertenecen al usuario.
-        $plantilla = Plantilla::where('id', $id)->first();
-        //$json_response = $plantilla["placeholders"];
+        $plantilla = Plantilla::where('id', $id_plantilla)->first();
+        $placeholders = $plantilla["placeholders"];
+        if (isset($id_carta)){
+            $carta = Carta::where('id', $id_carta)->first();
+            $placeholders = $carta["placeholders"];
+        }
         $cuerpo = str_replace("\"", "'", $plantilla["cuerpo"]);
-        $json_response = '{ "cuerpo": "'. $cuerpo .'", "placeholders": '. $plantilla["placeholders"] .'}';
+        $json_response = '{ "cuerpo": "'. $cuerpo .'", "placeholders": '. $placeholders .'}';
         return response()->json($json_response);
+    }
+
+
+    /**
+     * Genera y retorna el PDF de la carta indicada por parametros.
+     *
+     * @return Response
+     */
+    public static function get_pdf($id_carta)
+    {
+        $carta = Carta::where('id', $id_carta)->first();
+        return null;
     }
 
 
@@ -90,10 +106,15 @@ class CartaController extends Controller
                 ->withInput(Input::except('password'));
         } else {
             // store
+            $cuerpo = "<!DOCTYPE html><html><head><meta charset='UTF-8'>
+                        <title>Title of the document</title></head><body>"
+                        . Input::get('cuerpo') .
+                        "</body></html>";
             $carta = new Carta();
             $carta->nombre  = Input::get('nombre');
-            $carta->cuerpo  = Input::get('cuerpo');
+            $carta->cuerpo  = $cuerpo;
             $carta->plantilla_id = Input::get('plantilla_id');
+            $carta->placeholders = Input::get('placeholders');
             $carta->save();
 
             // redirect
@@ -128,10 +149,12 @@ class CartaController extends Controller
     {
         // busco la Carta
         $carta = Carta::find($id);
+        $plantillas = Plantilla::lists('nombre', 'id');
 
         // show the edit form and pass the nerd
         return View::make('carta.edit')
-            ->with('carta', $carta);
+            ->with('carta', $carta)
+            ->with('plantillas', $plantillas);
     }
 
     /**
