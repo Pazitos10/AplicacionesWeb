@@ -3,7 +3,7 @@
 
 @section('dynamic-content')
 
-    <h3 class="text-center">Editar Nueva Carta</h3>
+    <h3 class="text-center custom-header">Editar Carta</h3>
     <hr>
     <!-- will be used to show any messages -->
     @if (Session::has('message'))
@@ -27,7 +27,14 @@
         </div>
         <div class="form-group">
             {!! Form::label('plantilla_id', 'Plantilla base:', ['class' => 'control-label']) !!}
-            {!! Form::select('plantilla_id', $plantillas, null, array('class' => 'form-control')) !!}
+            {!! Form::select('plantilla_id', $plantillas, null, array('class' => 'form-control'), $carta->plantilla_id) !!}
+        </div>
+        <div class="form-group">
+            <label for="switch-publica">Pública:</label>
+            <div class="material-switch pull-right" id="switch-publica">
+                <input id="custom-switch" name="publica" type="checkbox" data-checked="{{$carta->publica}}"/>
+                <label for="custom-switch" class="label-success label-success-switch"></label>
+            </div>
         </div>
         <div class="form-group">
             <div class="controls-container">

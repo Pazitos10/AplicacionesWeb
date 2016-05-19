@@ -56,15 +56,11 @@ class CartaController extends Controller
      *
      * @return Response
      */
-    public static function get_json_plantilla($id_plantilla, $id_carta = null)
+    public static function get_json_plantilla($id_plantilla)
     {
         //Refinar para que solo traiga las plantillas que le pertenecen al usuario.
         $plantilla = Plantilla::where('id', $id_plantilla)->first();
         $placeholders = $plantilla["placeholders"];
-        if (isset($id_carta)){
-            $carta = Carta::where('id', $id_carta)->first();
-            $placeholders = $carta["placeholders"];
-        }
         $cuerpo = str_replace("\"", "'", $plantilla["cuerpo"]);
         $json_response = '{ "cuerpo": "'. $cuerpo .'", "placeholders": '. $placeholders .'}';
         return response()->json($json_response);
@@ -113,6 +109,7 @@ class CartaController extends Controller
             $carta = new Carta();
             $carta->nombre  = Input::get('nombre');
             $carta->cuerpo  = $cuerpo;
+            $carta->publica = Input::get('publica');
             $carta->plantilla_id = Input::get('plantilla_id');
             $carta->placeholders = Input::get('placeholders');
             $carta->save();
@@ -183,6 +180,10 @@ class CartaController extends Controller
             $carta = Carta::find($id);
             $carta->nombre  = Input::get('nombre');
             $carta->cuerpo  = Input::get('cuerpo');
+            if (Input::get('publica') != null)
+                $carta->publica = true;
+            else
+                $carta->publica = false;
             $carta->plantilla_id = Input::get('plantilla_id');
             $carta->save();
 
@@ -201,8 +202,8 @@ class CartaController extends Controller
     public function destroy($id)
     {
         // Busco la Carta
-        $plantilla = Carta::find($id);
-        $plantilla->delete();
+        $carta = Carta::find($id);
+        $carta->delete();
 
         // redirect
         Session::flash('message', 'Carta eliminada con éxito!');

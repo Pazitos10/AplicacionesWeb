@@ -3,9 +3,8 @@
 @section('dynamic-content')
 
     @if (count($cartas) > 0)
-    <h3 class="text-center">
-        Cartas Actuales
-    </h3>
+    <h3 class="text-center custom-header">Cartas Actuales</h3>
+    <hr>
     <div class="btn-group btn-group-mostrar">
         <button id="btn-tabla" class="btn btn-default btn-sm" title="ver tabla"><span class="glyphicon glyphicon-th-list"></span></button>
         <button id="btn-listado" class="btn btn-default btn-sm" title="ver listado"><span class="glyphicon glyphicon-th"></span></button>
@@ -67,34 +66,7 @@
         </div>
         <!-- /.row -->
 
-        <hr>
-
-        <!-- Pagination -->
-        <div class="row text-center">
-            <div class="col-lg-12">
-                <ul class="pagination">
-                    <li>
-                        <a href="#">&laquo;</a>
-                    </li>
-                    <li class="active">
-                        <a href="#">1</a>
-                    </li>
-                    <li>
-                        <a href="#">2</a>
-                    </li>
-                    <li>
-                        <a href="#">3</a>
-                    </li>
-                    <li>
-                        <a href="#">4</a>
-                    </li>
-                    <li>
-                        <a href="#">&raquo;</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <!-- /.row -->
+        
     </div>
     @else
         <h3 class="text-muted">

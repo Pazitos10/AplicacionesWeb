@@ -1,11 +1,12 @@
 <!-- app/views/plantilla/create.blade.php -->
-@extends('layouts.app')
+@extends('home')
 
-@section('content')
+@section('dynamic-content')
 
 <div class="col-lg-10 col-lg-offset-1">
 
-    <h3 class="text-center">Crear Nueva Plantilla</h3>
+    <h3 class="text-center custom-header">Crear Plantilla</h3>
+    <hr>
     <!-- will be used to show any messages -->
     @if (Session::has('message'))
         <div class="alert alert-info">{{ Session::get('message') }}</div>
@@ -31,7 +32,13 @@
         {!! Form::hidden('placeholders', null) !!}
 
         <!-- Guardar Plantilla -->
-        {!! Form::submit('Guardar Plantilla', ['class' => 'btn btn-primary', 'id' => 'btn-guardar']) !!}
+        {{ Form::button('<span class="glyphicon glyphicon-floppy-disk"></span> <span class="hidden-xs"><b>Guardar</b></span> ', array(
+            'type' => 'submit',
+            'class'=> 'btn btn-md pull-right btn-success',
+            'id' => 'btn-guardar')
+            )
+        }}
+        <!-- {!! Form::submit('Guardar', ['class' => 'btn btn-success pull-right', 'id' => 'btn-guardar']) !!} -->
         </form>
 
 </div>

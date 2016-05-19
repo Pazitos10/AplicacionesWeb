@@ -8,14 +8,12 @@
         <link rel="stylesheet" href="{{ URL::asset('static/css/fonts.css') }}" media="screen" charset="utf-8">
         <link rel="stylesheet" href="{{ URL::asset('static/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ URL::asset('static/css/styles.css') }}">
+        <link rel="stylesheet" href="{{ URL::asset('static/css/switch.css') }}">
         <script src="{{ URL::asset('static/js/jquery-1.12.3.min.js') }}"></script>
         <script src="{{ URL::asset('static/js/bootstrap.min.js')}}"></script>
         <script src="{{ URL::asset('static/js/html2canvas.js')}}"></script>
         <script type="text/javascript" src="{{ URL::asset('static/js/plantillas.js')}}"></script>
         <script type="text/javascript" src="{{ URL::asset('static/js/editor.js')}}"></script>
-        <!-- <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css"> -->
-        <!-- <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'> -->
-
     </head>
 
     <body>

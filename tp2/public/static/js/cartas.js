@@ -48,7 +48,6 @@ $(document).ready(function(){
         });
     }
 
-
     /*
     *   Obtiene los valores ingresados en los placeholders
     *   y retorna un objeto JSON con dichos valores.
@@ -64,25 +63,17 @@ $(document).ready(function(){
     }
 
     /*
-    *   Verifica que acciones es posible realizar segun el contenido del cuerpo
-    *   y habilita los botones correspondientes
+    *   Setea el valor del switch de carta publica,
+    *   basado en su valor en el modelo.
     */
-    /*function verificar_acciones() {
-        var buttons = [ '#btn-guardar-carta',
-                        '#btn-vista-previa',
-                        '#btn-pdf',
-                        '#btn-mail'
-                    ];
-        if( $('#cuerpo-carta').is(':empty') ) {
-            for (var button in buttons) {
-                $(button).addClass('disabled');
-            }
+    function set_publica(){
+        var isPublic = Number($('#custom-switch').data("checked"));
+        if (isPublic != 0){
+            $('#custom-switch').attr('checked', 'checked') ;
         }else{
-            for (var button in buttons) {
-                $(button).removeClass('disabled');
-            }
+            $('#custom-switch').removeAttr('checked');
         }
-    }*/
+    }
 
 
     /*
@@ -115,6 +106,7 @@ $(document).ready(function(){
                     armar_form(data, miCarta, miCartaView);
                     handle_control_events(miCarta);
                 }
+                set_publica();
             })
     }
 
@@ -172,6 +164,37 @@ $(document).ready(function(){
         set_label(labels[index], index+1, labels.length);
     }
 
+    /* Deshabilita los controles <- -> en el formulario*/
+    function disable_controls() {
+        $('#btn-next-field').addClass('disabled');
+        $('#btn-prev-field').addClass('disabled');
+    }
+
+    /* Habilita los controles <- -> en el formulario*/
+    function enable_controls() {
+        $('#btn-next-field').removeClass('disabled');
+        $('#btn-prev-field').removeClass('disabled');
+    }
+
+    /* Permite avanzar y mostrar el campo dinamico */
+    function next_field(index, fields_qty) {
+        if (index < fields_qty - 1)
+            index += 1;
+        else
+            index = 0;
+        return index;
+    }
+
+    /* Permite retroceder y mostrar el campo dinamico */
+    function prev_field(index, fields_qty) {
+        if (index > 0)
+            index -= 1;
+        else
+            index = fields_qty - 1 ;
+        return index;
+    }
+
+
     /*
     *   Verifica los eventos de los controles del carousel
     *   para los campos dinamicos.
@@ -181,26 +204,18 @@ $(document).ready(function(){
         labels.pop('cuerpo');
         var index = 0;
         if (labels.length === 1) {
-            $('#btn-next-field').addClass('disabled');
-            $('#btn-prev-field').addClass('disabled');
+            disable_controls();
         }else{
-            $('#btn-next-field').removeClass('disabled');
-            $('#btn-prev-field').removeClass('disabled');
+            enable_controls();
             $('#btn-next-field').click(function(e){
                 e.preventDefault();
-                if (index < labels.length - 1)
-                    index += 1;
-                else
-                    index = 0;
+                index = next_field(index, labels.length);
                 fill_with_content(index, labels);
             });
 
             $('#btn-prev-field').click(function(e){
                 e.preventDefault(); // to avoid annoying jumps
-                if (index > 0)
-                    index -= 1;
-                else
-                    index = labels.length - 1 ;
+                index = prev_field(index, labels.length);
                 fill_with_content(index, labels);
             });
         }
@@ -222,6 +237,7 @@ $(document).ready(function(){
     $('#btn-pdf').click(function (e) {
         downloadPDF();
     })
+
 
     //Inicialization
     var miCarta = miCarta | new Carta();

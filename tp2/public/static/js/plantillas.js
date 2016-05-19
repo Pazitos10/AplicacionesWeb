@@ -34,6 +34,11 @@ $(document).ready(function(){
         add_placeholders_to_form();
     }
 
+    function confirmar_eliminacion() {
+        console.log('hola');
+        return confirm("Estás seguro de eliminar la Plantilla?");
+    }
+
     $('#btn-guardar').click(function(e){
         e.preventDefault();
         prepare_form();

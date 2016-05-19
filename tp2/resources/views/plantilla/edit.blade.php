@@ -1,9 +1,9 @@
 <!-- app/views/plantilla/edit.blade.php -->
-@extends('layouts.app')
-@section('content')
+@extends('home')
+@section('dynamic-content')
 
-<div class="container">
-    <h1>Editar Plantilla</h1>
+    <h3 class="text-center custom-header">Editar Plantilla</h3>
+    <hr>
     <!-- will be used to show any messages -->
     @if (Session::has('message'))
         <div class="alert alert-info">{{ Session::get('message') }}</div>
@@ -32,9 +32,15 @@
         {!! Form::hidden('placeholders', null) !!}
 
         <!-- Guardar Plantilla -->
-        {!! Form::submit('Guardar Cambios', ['class' => 'btn btn-primary', 'id' => 'btn-guardar']) !!}
+        {{ Form::button('<span class="glyphicon glyphicon-floppy-disk"></span> <span class="hidden-xs"><b>Guardar</b></span> ', array(
+            'type' => 'submit',
+            'class'=> 'btn btn-md pull-right btn-success',
+            'id' => 'btn-guardar')
+            )
+        }}
+        <!-- {!! Form::submit('Guardar Cambios', ['class' => 'btn btn-primary', 'id' => 'btn-guardar']) !!} -->
     </form>
-</div>
+
 <!-- <script src="//cdn.ckeditor.com/4.5.9/standard/ckeditor.js"></script> -->
 <script src="{{URL::asset('static/js/plantillas.js')}}" charset="utf-8"></script>
 <script type="text/javascript" src="{{ URL::asset('static/js/ckeditor/ckeditor.js') }}"></script>
