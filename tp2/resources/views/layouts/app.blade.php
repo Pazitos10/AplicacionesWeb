@@ -48,8 +48,10 @@
                               <li class="dropdown">
                                 <a href="#" class="dropdown-toggle nav-style" data-toggle="dropdown" role="button" aria-expanded="false">Cartas <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                  <li><a href="{{ URL::to('carta') }}">Listado</a></li>
+                                  <li><a href="{{ URL::to('carta') }}">Mis cartas</a></li>
                                   <li><a href="{{ URL::to('carta/create') }}">Crear</a></li>
+                                  <li class="divider"></li>
+                                  <li><a href="{{ URL::to('carta/publicas') }}">Cartas públicas</a></li>
                                   <!-- <li><a href="#">Modificar</a></li>
                                   <li class="divider"></li>
                                   <li><a href="#">Eliminar</a></li> -->

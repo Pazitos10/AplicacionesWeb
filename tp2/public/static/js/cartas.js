@@ -8,10 +8,8 @@ $(document).ready(function(){
             var c = this.get("cuerpo");
             var prompt = "";
             var name = $('#dynamic-fields input:visible').prop('name');
-            if (c){
-                prompt = "<span id='"+name+"' class='fake-prompt'></span>";
-                return _.template(c.replace(this.regex, "<span class='replacement'><%=  $1 %>"+ prompt+"</span>"));
-            }
+            if (c)
+                return _.template(c.replace(this.regex, "<span class='replacement'><%= $1 %></span>"));
         }
     });
 
@@ -29,24 +27,31 @@ $(document).ready(function(){
         render: function() {
             this.$el.empty();
             var t = this.model.template();
-            if (t)
+            if (t){
                 this.$el.append(t(this.model.toJSON()));
+            }
             return this.$el;
         }
     });
 
-    function downloadPDF() {
-        var nombre_archivo = $('#nombre_carta') + ".pdf";
-        $.ajax({
-            url: './descargar/' + nombre_archivo,
-            type: 'GET'
-        }).done(function(data){
-            window.location = 'descargar/';
-            console.log("descarga exitosa");
-        }).fail(function(data){
-            console.log("error al descargar");
+    function get_thumbnail(contenido, alto, ancho){
+        html2canvas( contenido, {
+            height: alto,
+            width: ancho,
+            onrendered: function(canvas) {
+                $('input[name=thumbnail]').val(canvas.toDataURL());
+                $('#form-carta').submit();
+            }
         });
     }
+
+    function prepare_form(){
+        var alto = 150;
+        var ancho = 250;
+        var target = $('#cuerpo-carta');
+        get_thumbnail(target, alto, ancho);
+    }
+
 
     /*
     *   Obtiene los valores ingresados en los placeholders
@@ -91,23 +96,23 @@ $(document).ready(function(){
     function make_ajax_request(data) {
         var plantilla_id = data.target.value;
         var carta_id = $('#carta_id').val();
-        miCarta = new Carta();
-        miCartaView = new CartaView({model: miCarta});
-            $.ajax({
-                url: './get_json_plantilla/'+plantilla_id,
-                type: 'GET'
-            }).done(function(data){
-                if(!carta_id){
-                    armar_form(JSON.parse(data), miCarta, miCartaView);
-                    handle_control_events(miCarta);
-                }else{
-                    var placeholders = JSON.parse($('#placeholders').val());
-                    var data = { cuerpo: JSON.parse(data)['cuerpo'], placeholders: placeholders }
-                    armar_form(data, miCarta, miCartaView);
-                    handle_control_events(miCarta);
-                }
-                set_publica();
-            })
+        $.ajax({
+            url: './get_json_plantilla/'+plantilla_id,
+            type: 'GET'
+        }).done(function(data){
+            miCarta = new Carta();
+            miCartaView = new CartaView({model: miCarta});
+            if(!carta_id){
+                armar_form(JSON.parse(data), miCarta, miCartaView);
+                handle_control_events(miCarta);
+            }else{
+                var placeholders = JSON.parse($('#placeholders').val());
+                var custom_data = { cuerpo: JSON.parse(data)["cuerpo"], placeholders: placeholders }
+                armar_form(custom_data, miCarta, miCartaView);
+                handle_control_events(miCarta);
+            }
+            set_publica();
+        })
     }
 
 
@@ -146,7 +151,7 @@ $(document).ready(function(){
             model.set(key, value);
             var $input = $("<input class='form-control' name='"+key+"' id='"+key+"' placeholder='"+value+"' value='"+value+"' maxlength='30'>");
             $input.on("keyup", function() {
-                model.set(value, $(this).val());
+                model.set(key, $(this).val());
             });
             agregar_campos($input);
         });
@@ -229,15 +234,13 @@ $(document).ready(function(){
 
     $('#btn-guardar-carta').click(function(e) {
         e.preventDefault();
-        $('#cuerpo').val(miCarta.get('cuerpo'));
+        //$('#cuerpo').val(miCarta.get('cuerpo'));
+        $('#cuerpo').val($('#cuerpo-carta')[0].innerHTML);
+        console.log($('#cuerpo-carta')[0].innerHTML);
         $('#placeholders').val(JSON.stringify(get_placeholders(miCarta)));
+        //prepare_form();
         $('#form-carta').submit();
     });
-
-    $('#btn-pdf').click(function (e) {
-        downloadPDF();
-    })
-
 
     //Inicialization
     var miCarta = miCarta | new Carta();

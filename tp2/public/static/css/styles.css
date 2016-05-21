@@ -32,6 +32,10 @@ a:hover {
 .custom-header{
     font-size: 36px;
 }
+.custom-header-sm{
+    font-size: 24px;
+}
+
 
 .btn-group-mostrar {
     display: flex;
@@ -152,4 +156,9 @@ a:hover {
     border-top: 1px solid #ecf0f1;
     display: inline-block;
     width: 20%;
+}
+
+.custom-hr-centered{
+    display: flex;
+    width: 80%;
 }

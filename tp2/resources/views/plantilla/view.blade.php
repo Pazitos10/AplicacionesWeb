@@ -1,31 +1,25 @@
 <!-- app/views/plantilla/view.blade.php -->
-@extends('layouts.app')
+@extends('home')
 
-@section('content')
+@section('dynamic-content')
 
-<div class="container">
-    <!-- will be used to show any messages -->
-    @if (Session::has('message'))
-        <div class="alert alert-info">{{ Session::get('message') }}</div>
-        @endif
-    <!-- if there are creation errors, they will show here -->
-    @include('common.errors')
-
-    <h3>Mostrando: {{ $plantilla->nombre }}</h3>
+    <h3 class="text-center custom-header">{{$plantilla->nombre}}</h3>
+    <hr>
     <textarea id="editor" readonly>{{ $plantilla->cuerpo }}</textarea>
-    <br>
-    <a class="btn btn-primary" href="{{ url("plantilla/") }}">&laquo; Volver</a>
-</div>
-<script type="text/javascript" src="{{ URL::asset('static/js/ckeditor/ckeditor.js') }}"></script>
-<script>
-CKEDITOR.replace( 'editor' );
-CKEDITOR.instances.editor.on('change', function(e) {
-    crear_placeholders();
-});
-//aplicamos los cambios al contenido preexistente
-CKEDITOR.instances.editor.on('instanceReady', function(e) {
-    crear_placeholders();
-});
 
-</script>
+    <div class="btn-group btn-group-mostrar">
+        <a class="btn btn-primary" href="{{ url("plantilla/") }}"><span class="glyphicon glyphicon-chevron-left"></span> Volver</a>
+    </div>
+    <script type="text/javascript" src="{{ URL::asset('static/js/ckeditor/ckeditor.js') }}"></script>
+    <script>
+    CKEDITOR.replace( 'editor' );
+    CKEDITOR.instances.editor.on('change', function(e) {
+        crear_placeholders();
+    });
+    //aplicamos los cambios al contenido preexistente
+    CKEDITOR.instances.editor.on('instanceReady', function(e) {
+        crear_placeholders();
+    });
+
+    </script>
 @endsection

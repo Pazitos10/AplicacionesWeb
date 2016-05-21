@@ -58,12 +58,12 @@
         </div>
         {!! Form::hidden('placeholders', null, ['id' => 'placeholders']) !!}
         {!! Form::hidden('cuerpo', null, ['id' => 'cuerpo']) !!}
+        {!! Form::hidden('thumbnail', null) !!}
 
         <!-- Guardar Carta -->
         <div class="btn-container">
             <!-- <div class="btn-group"> -->
                 <a href="#" class="btn btn-md btn-info" id="btn-vista-previa"><span class="glyphicon glyphicon-eye-open"></span> <span class="hidden-xs"><b> Vista previa </b></span></a>
-                <a href="#" class="btn btn-md btn-danger" id="btn-pdf"><span class="glyphicon glyphicon-save"></span><span class="hidden-xs"><b>  Descargar PDF </b></span></a>
                 <a href="#" class="btn btn-md btn-warning" id="btn-mail"><span class="glyphicon glyphicon-envelope"></span><span class="hidden-xs"><b> Enviar por E-mail </b></span></a>
                 <!-- {!! Form::submit('Guardar Carta', ['class' => 'btn btn-success pull-right', 'id' => 'btn-guardar']) !!} -->
                 {{ Form::button('<span class="glyphicon glyphicon-floppy-disk"></span> <span class="hidden-xs"><b>Guardar</b></span> ', array(

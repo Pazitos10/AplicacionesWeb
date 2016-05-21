@@ -10,21 +10,23 @@ use PDF;
 
 class PdfController extends Controller
 {
-    public function descargar ($id){
-        // return PDF::loadFile('https://www.github.com')->stream('github.pdf');
-        $carta = Carta::where('id', $id)->first();
+    public static function descargar ($carta){
         $pdf = PDF::loadHTML($carta->cuerpo);
-        return $pdf->stream();
+        $filename = strtolower(str_replace(' ','_',$carta->nombre)).'.pdf';
+        return $pdf->download($filename);
     }
 
-    public function guardar()
+    public static function guardar($nombre, $cuerpo)
     {
-        $filename = storage_path('app/example.pdf');
-        $pdf = PDF::loadView('https://github.com');
-        $pdf->save(storage_path($filename));
+        $filename = storage_path('app/public/'. $nombre . '.pdf');
+        $pdf = PDF::generateFromHtml($cuerpo, $filename,[],$overwrite = true);
+        // $pdf->save($filename, true);
     }
 
-    // public function github(){
-    //     return \PDF::loadView('ruta.vista', $datos)->download('nombre-archivo.pdf');
-    // }
+    public static function attach_pdf($carta)
+    {
+        $pdf = PDF::loadHTML($carta->cuerpo);
+        return $pdf->output();
+    }
+
 }

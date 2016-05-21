@@ -26,9 +26,12 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('carta/publicas', 'CartaController@get_publicas');
 
 Route::resource('plantilla', 'PlantillaController');
 Route::resource('carta', 'CartaController');
+
+
 
 /* Rutas AJAX */
 /* Se utiliza durante la creacion de cartas */
@@ -52,4 +55,4 @@ Route::get('carta/{id_carta}/get_pdf/',
             return CartaController::get_pdf($id_carta);
 });
 
-Route::get('carta/descargar/{id}', 'PdfController@descargar');
+Route::post('carta/{id_carta}/send_mail', 'CartaController@send_mail');
