@@ -6,10 +6,10 @@ $(document).ready(function(){
         },
         template: function() {
             var c = this.get("cuerpo");
-            var prompt = "";
             var name = $('#dynamic-fields input:visible').prop('name');
-            if (c)
-                return _.template(c.replace(this.regex, "<span class='replacement'><%= $1 %></span>"));
+            if (c){
+                return _.template(c.replace(this.regex, "<span class='replacement' id='$1'><%= $1 %></span>"));
+            }
         }
     });
 
@@ -18,11 +18,6 @@ $(document).ready(function(){
         initialize: function(options) {
             this.model = options.model;
             this.listenTo(this.model, 'change', this.render);
-            setInterval(function(){
-                var name = $('#dynamic-fields input:visible').prop('name');
-                $('#'+name + ".fake-prompt").fadeOut();
-                $('#'+name + ".fake-prompt").fadeIn();
-            },1000);
         },
         render: function() {
             this.$el.empty();
@@ -106,6 +101,19 @@ $(document).ready(function(){
         })
     }
 
+    /*
+    * Resalta el campo a completar en el cuerpo de la carta
+    */
+    function highlight_field() {
+        var name_visible = $('#dynamic-fields input:visible').prop('name');
+        $('#'+name_visible+'.replacement').addClass('active');
+        var invisibles = $('#dynamic-fields input:hidden');
+        $.each(invisibles, function (index, value) {
+            var name_invisible = $(value).prop('name');
+            $('#'+name_invisible+'.replacement').removeClass('active');
+        });
+    }
+
 
     /*
     *   Agrega los inputs de campos dinamicos al DOM
@@ -158,6 +166,7 @@ $(document).ready(function(){
     function fill_with_content(index, labels) {
         mostrar_campo(index);
         set_label(labels[index], index+1, labels.length);
+        highlight_field();
     }
 
     /* Deshabilita los controles <- -> en el formulario*/
@@ -203,6 +212,7 @@ $(document).ready(function(){
             disable_controls();
         }else{
             enable_controls();
+            highlight_field();
             $('#btn-next-field').click(function(e){
                 e.preventDefault();
                 index = next_field(index, labels.length);
