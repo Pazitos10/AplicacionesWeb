@@ -36,19 +36,18 @@
         <div class="row list-wrapper">
             @foreach ($cartas as $carta)
                 <div class="col-md-3 item">
-                    <a href="{{ URL::to('carta/' . $carta->id . '/edit') }}">
+                    <a href="{{ URL::to('carta/'.$carta->id) }}">
                         @if (isset($carta->thumbnail))
-                            <img class="img-responsive thumb" src="{{ $carta->thumbnail }}" alt="">
+                            <div class="crop">
+                                <img class="thumb-cartas" src="{{ $carta->thumbnail }}" alt="">
+                            </div>
                         @else
                             <img class="img-responsive thumb" src="http://placehold.it/700x400" alt="" />
                         @endif
                     </a>
-                    <!-- <div class="btn-group categorias">
-                        <a href="#" title="Queja" class="btn btn-warning btn-xs disabled">Queja</a>
-                        <a href="#" title="Pública" class="btn btn-info btn-xs disabled">Pública</a>
-                    </div> -->
                     <div class="btn-group btn-item-options">
-                        <a href="#" title="Ver" class=""><span class="glyphicon glyphicon-eye-open btn-on-item"></span></a>
+                        <a href="{{ URL::to('carta/' . $carta->id) }}" title="Ver" class=""><span class="glyphicon glyphicon-eye-open btn-on-item"></span></a>
+                        <a href="{{ URL::to('carta/' . $carta->id  .'/get_pdf') }}" title="Descargar" class=""><span class="glyphicon glyphicon-save btn-on-item"></span></a>
                     </div>
                     <h4 class="nombre-carta">
                         {{ $carta->nombre }}
@@ -59,8 +58,11 @@
         <!-- /.row -->
     </div>
     @else
-        <h3 class="text-muted">
-            <strong>No hay cartas públicas para mostrar. Crea una por medio de Cartas -> Crear, y activa el campo pública.</strong>
+        <h3 class="text-muted text-center">
+            <strong>
+                <p>No hay cartas públicas para mostrar.</p>
+                <p>Crea una por medio de Cartas -> Crear o edita una de tus cartas, y activa el campo pública.</p>
+            </strong>
         </h3>
 
     @endif

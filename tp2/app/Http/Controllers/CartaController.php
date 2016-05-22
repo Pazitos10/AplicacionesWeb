@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Carta;
 use App\Plantilla;
 use Mail;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
@@ -159,6 +160,7 @@ class CartaController extends Controller
         } else {
             // store
             $carta = new Carta();
+            $carta->autor_id = Auth::user()->id;
             $carta->nombre  = Input::get('nombre');
             $cuerpo = "<!DOCTYPE html><html><head><meta charset='UTF-8'>
                         <title>". $carta->nombre ."</title></head><body>"
@@ -243,6 +245,7 @@ class CartaController extends Controller
         } else {
             // store
             $carta = Carta::find($id);
+            $carta->autor_id = Auth::user()->id;
             $carta->nombre  = Input::get('nombre');
             $cuerpo = "<!DOCTYPE html><html><head><meta charset='UTF-8'>
                         <title>". $carta->nombre ."</title></head><body>"

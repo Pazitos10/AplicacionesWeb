@@ -52,13 +52,12 @@
         <div class="form-group">
             {!! Form::label('cuerpo-carta', 'Cuerpo:', ['class' => 'control-label']) !!}
             <div id="cuerpo-carta">
-
             </div>
 
         </div>
         {!! Form::hidden('placeholders', null, ['id' => 'placeholders']) !!}
         {!! Form::hidden('cuerpo', null, ['id' => 'cuerpo']) !!}
-        {!! Form::hidden('thumbnail', null) !!}
+        {!! Form::hidden('thumbnail', null, ['id' => 'thumbnail']) !!}
 
         <!-- Guardar Carta -->
         <div class="btn-container">

@@ -34,22 +34,13 @@ $(document).ready(function(){
         }
     });
 
-    function get_thumbnail(contenido, alto, ancho){
-        html2canvas( contenido, {
-            height: alto,
-            width: ancho,
+    function get_thumbnail(target){
+        html2canvas( target , {
             onrendered: function(canvas) {
-                $('input[name=thumbnail]').val(canvas.toDataURL());
+                $('#thumbnail').val(canvas.toDataURL("image/png"));
                 $('#form-carta').submit();
             }
         });
-    }
-
-    function prepare_form(){
-        var alto = 150;
-        var ancho = 250;
-        var target = $('#cuerpo-carta');
-        get_thumbnail(target, alto, ancho);
     }
 
 
@@ -238,8 +229,8 @@ $(document).ready(function(){
         $('#cuerpo').val($('#cuerpo-carta')[0].innerHTML);
         console.log($('#cuerpo-carta')[0].innerHTML);
         $('#placeholders').val(JSON.stringify(get_placeholders(miCarta)));
-        //prepare_form();
-        $('#form-carta').submit();
+        get_thumbnail($('#cuerpo-carta')[0]);
+        // $('#form-carta').submit();
     });
 
     //Inicialization

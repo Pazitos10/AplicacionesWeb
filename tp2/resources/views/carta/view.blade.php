@@ -8,7 +8,7 @@
 
     </div>
     <div class="btn-group btn-group-mostrar">
-        <a href="{{ URL::to('/carta') }}" id="btn-volver" class="btn btn-primary btn-sm" title="ver tabla"><span class="glyphicon glyphicon-chevron-left"></span>Volver a listado</a>
+        <a href="{{ URL::previous() }}" id="btn-volver" class="btn btn-primary btn-sm" title="ver tabla"><span class="glyphicon glyphicon-chevron-left"></span>Volver a listado</a>
     </div>
     <!-- @endif -->
     <script type="text/javascript">

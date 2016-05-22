@@ -62,7 +62,7 @@
         {!! Form::hidden('placeholders', $carta->placeholders, ['id' => 'placeholders']) !!}
         {!! Form::hidden('cuerpo', $carta->cuerpo, ['id' => 'cuerpo']) !!}
         {!! Form::hidden('carta_id', $carta->id, ['id' => 'carta_id']) !!}
-        {!! Form::hidden('thumbnail', null) !!}
+        {!! Form::hidden('thumbnail', null, ['id' => 'thumbnail']) !!}
 
         <!-- Guardar Carta -->
         <!-- <div class="btn-container"> -->

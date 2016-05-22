@@ -47,7 +47,7 @@
                         @if (isset($plantilla->thumbnail))
                             <img class="img-responsive thumb" src="{{ $plantilla->thumbnail }}" alt="">
                         @else
-                            <img class="img-responsive thumb" src="http://placehold.it/700x400" alt="" />
+                            <img class="img-responsive" src="http://placehold.it/700x400" alt="" />
                         @endif
                     </a>
                     <!-- <div class="btn-group categorias">
