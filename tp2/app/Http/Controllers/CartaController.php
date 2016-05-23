@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Carta;
 use App\Plantilla;
+use App\User;
 use Mail;
 use Auth;
 use Illuminate\Http\Request;
@@ -115,23 +116,40 @@ class CartaController extends Controller
                 ->with('cartas', $cartas)
                 ->withErrors($validator);
         } else {
-            $carta = Carta::where('id', $id_carta)->first();
-            $pdf = PdfController::attach_pdf($carta);
+            try{
+                $carta = Carta::where('id', $id_carta)->first();
+                $pdf = PdfController::attach_pdf($carta);
+                $user =  User::where('id', Auth::user()->id)->first();
+                $data = array(
+                    'carta' => $carta ,
+                    'pdf' => $pdf,
+                    'receiver_email' => Input::get('email'),
+                    'receiver_name' => Input::get('destinatario'),
+                    'display' => $carta->nombre,
+                    'sender_email' => $user->email,
+                    'sender_name' => $user->name
+                );
 
-            $data = array(
-                'carta' => $carta ,
-                'pdf' => $pdf,
-                'mail_to' => Input::get('email'),
-                'nombre' => Input::get('destinatario'),
-                'display' => $carta->nombre
-            );
-
-            Mail::send('mail.message', $data, function($message) use ($data) {
-                    $message->from('pazosbruno@gmail.com', 'Bruno Pazos')
-                        ->to($data['mail_to'], $data['nombre'])
-                        ->subject('Bienvenida')
-                        ->attachData($data['pdf'], $data['display']);
-                });
+                Mail::send('mail.message', $data, function($message) use ($data) {
+                        $message->from($data['sender_email'], $data['sender_name'])
+                            ->to($data['receiver_email'], $data['receiver_name'])
+                            ->subject('Bienvenida')
+                            ->attachData($data['pdf'], $data['display']);
+                    });
+            }catch (Swift_TransportException $STe) {
+                // logging error
+                $string = date("Y-m-d H:i:s")  . ' - ' . $STe->getMessage() . PHP_EOL;
+                file_put_contents("errorlog.txt", $string, FILE_APPEND);
+                // send error note to user
+                $errorMsg = "the mail service has encountered a problem. Please retry later or contact the site admin.";
+            }
+            catch (Exception $e) {
+                // logging error
+                $string = date("Y-m-d H:i:s")  . ' - GENERAL ERROR - ' . $e->getMessage() . PHP_EOL;
+                file_put_contents("errorlog.txt", $string, FILE_APPEND);
+                // redirect to error page
+                $app->abort(500, "Oops, something went seriously wrong. Please retry later !");
+            }
         }
     }
 

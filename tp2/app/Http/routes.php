@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Plantilla;
 use App\Carta;
 use App\Http\Controllers\CartaController;
@@ -20,10 +21,13 @@ Route::post('register', 'Auth\AuthController@postRegister');
  */
 Route::get('/', function () {
     $plantillas = Plantilla::orderBy('created_at', 'asc')->get();
-
-    return view('plantilla.index', [
-        'plantillas' => $plantillas
-    ]);
+    if (Auth::check()){
+        return view('plantilla.index', [
+            'plantillas' => $plantillas
+        ]);
+    }else{
+        return redirect('/login'); //Si no esta logueado, redirige a login.
+    }
 });
 
 Route::get('carta/publicas', 'CartaController@get_publicas');

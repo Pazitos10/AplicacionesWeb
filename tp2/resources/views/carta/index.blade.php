@@ -26,7 +26,7 @@
                             @endif
                         </td>
                         <td class="hidden-xs">{{ date('d/m/Y - H:i:s', strtotime($carta->updated_at)) }}</td>
-                        <td class="pull-right">
+                        <td class="pull-right hidden-xs">
                             <a class="btn btn-primary btn-sm " href="{{ URL::to('carta/' . $carta->id) }}" title="Ver la carta"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                             <button type="button" class="btn btn-sm btn-primary" id="btn-mail" title="Enviar por email"><span class="glyphicon glyphicon-envelope"></span></button>
                             <a class="btn btn-sm btn-primary" href="{{ URL::to('carta/' . $carta->id . '/get_pdf') }}" id="btn-pdf" title="Descargar pdf"><span class="glyphicon glyphicon-save"></span></a>
@@ -40,6 +40,9 @@
                                 'onclick'=>'return confirm("Estás seguro de eliminar la Carta?")'))
                             }}
                             {{ Form::close() }}
+                        </td>
+                        <td class="pull-right visible-xs">
+                            <button class="btn btn-xs btn-info" id="btn-menu-responsive"><span class="glyphicon glyphicon-menu-hamburger"></span></button>
                         </td>
                     </tr>
                 @endforeach
@@ -64,14 +67,24 @@
                         <a href="#" title="Pública" class="btn btn-info btn-xs disabled">Pública</a>
                     </div> -->
                     <div class="btn-group btn-item-options">
-                        @if(! $carta->publica)
-                            <span title="carta privada" class="glyphicon glyphicon-lock btn-on-item"></span>
-                        @endif
-                        <a href="#" title="Ver" class=""><span class="glyphicon glyphicon-eye-open btn-on-item"></span></a>
-                        <a href="#" title="Eliminar" class=""><span class="glyphicon glyphicon-remove btn-on-item icon-remove"></span></a>
+                        <a href="{{ URL::to('carta/' . $carta->id . '/send_mail') }}" id="btn-mail" title="Enviar por email"><span class="glyphicon glyphicon-envelope btn-on-item hidden-xs"></span></a>
+                        <a href="{{ URL::to('carta/' . $carta->id . '/get_pdf') }}" id="btn-pdf" title="Descargar pdf"><span class="glyphicon glyphicon-save btn-on-item hidden-xs"></span></a>
+                        <a href="{{ URL::to('carta/' . $carta->id) }}" title="Ver" ><span class="glyphicon glyphicon-eye-open btn-on-item hidden-xs"></span></a>
+                        <a href="{{ URL::to('carta/' . $carta->id . '/destroy') }}" title="Eliminar" ><span class="glyphicon glyphicon-remove btn-on-item icon-remove hidden-xs"></span></a>
                     </div>
                     <h4 class="nombre-carta">
-                        {{ $carta->nombre }}
+                        @if(! $carta->publica)
+                            <div class="item-footer">
+                                <span title="carta privada" class="glyphicon glyphicon-lock btn-sm pull-left"></span>
+                                {{ $carta->nombre }}
+                                <button type="button" id="btn-item-menu-responsive" class="btn btn-xs"><span class="glyphicon glyphicon-menu-hamburger visible-xs"></span></button>
+                            </div>
+                        @else
+                            <div class="item-footer">
+                                {{ $carta->nombre }}
+                                <button type="button" id="btn-item-menu-responsive" class="btn btn-xs"><span class="glyphicon glyphicon-menu-hamburger visible-xs"></span></button>
+                            </div>
+                        @endif
                     </h4>
                 </div>
             @endforeach
@@ -119,12 +132,56 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <div class="modal fade" id="modalMenuResponsive" tabindex="-1" role="dialog" aria-labelledby="myModalMenuResponsive">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title custom-header custom-header-sm text-center" id="myModalMenuResponsive">Opciones</h4>
+                </div>
+                <div class="modal-body" style="overflow:hidden">
+                    <div class="col-xs-12">
+                        <div class="list-group">
+                            <a href="{{URL::to('./carta/'. $carta->id )}}" class="list-group-item"><span class="glyphicon glyphicon-eye-open"></span> Vista Previa</a>
+                            <button type="button" class="list-group-item" id="btn-item-mail"><span class="glyphicon glyphicon-envelope"></span> Enviar por e-mail</button>
+                            <a href="{{ URL::to('carta/' . $carta->id . '/get_pdf') }}" id="btn-pdf" class="list-group-item"><span class="glyphicon glyphicon-save"></span> Descargar pdf</a>
+                            <a href="{{ URL::to('carta/' . $carta->id . '/edit') }}" class="list-group-item"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
+                            {{ Form::open(array('url' => 'carta/' . $carta->id)) }}
+                            {{ Form::hidden('_method', 'DELETE') }}
+                            {{ Form::button('<i class="glyphicon glyphicon-remove"></i> Eliminar', array(
+                                'type' => 'submit',
+                                'title' => 'Eliminar la carta',
+                                'class'=> 'list-group-item list-group-item-danger',
+                                'onclick'=>'return confirm("Estás seguro de eliminar la Carta?")'))
+                            }}
+                            {{ Form::close() }}
+
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
     <script type="text/javascript">
         $(document).ready(function(){
             $('#btn-mail').click(function () {
+                $('#modalMenuResponsive').modal('hide');
                 $('#modalMail').modal('toggle');
-            })
+            });
+
+            $('#btn-item-mail').click(function () {
+                $('#modalMenuResponsive').modal('hide');
+                $('#modalMail').modal('toggle');
+            });
+
+            $('#btn-menu-responsive').click(function () {
+                $('#modalMenuResponsive').modal('toggle');
+            });
+
+            $('#btn-item-menu-responsive').click(function () {
+                $('#modalMenuResponsive').modal('toggle');
+            });
         });
     </script>
 
