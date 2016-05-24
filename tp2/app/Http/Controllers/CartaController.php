@@ -90,7 +90,7 @@ class CartaController extends Controller
     public static function get_publicas()
     {
         $cartas = Carta::where('publica', true)->get();
-        return \View::make('carta.publicas', ['cartas' => $cartas]);
+        return \View::make('carta.index', ['cartas' => $cartas]);
     }
 
 

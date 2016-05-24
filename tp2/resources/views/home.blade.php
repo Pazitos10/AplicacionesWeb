@@ -19,5 +19,5 @@
     </footer>
 </div>
 <script type="text/javascript" src="{{ URL::asset('static/js/main.js') }}"></script>
-
+<script type="text/javascript" src="{{URL::asset('static/js/modal-menu.js')}}"></script>
 @endsection
