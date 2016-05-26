@@ -18,7 +18,7 @@
                             @if(! $carta->publica)
                                 <span title="carta privada" class="glyphicon glyphicon-lock carta-privada"></span>
                             @endif
-                            <button type="button" name="button"  class="btn btn-xs btn-menu-responsive">
+                            <button type="button" name="button"  class="btn btn-xs btn-menu-responsive" data-id="{{$carta->id}}">
                                 <span class="glyphicon glyphicon-menu-hamburger"></span>
                             </button>
                         </div>
@@ -29,5 +29,3 @@
     </div>
     <!-- /.row -->
 </div>
-@include('carta.modals.modal-mail', ['carta' => $carta])
-@include('carta.modals.modal-menu-responsive', ['carta' => $carta])

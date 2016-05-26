@@ -16,10 +16,6 @@
             var contenido = $('#cuerpo').val();
             $('#cuerpo-carta').empty();
             $('#cuerpo-carta').append(contenido);
-
-            $('#btn-volver').click(function () {
-                window.location = './';
-            });
         })
 
     </script>

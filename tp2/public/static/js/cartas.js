@@ -208,11 +208,11 @@ $(document).ready(function(){
         var labels = Object.keys(model.attributes)
         labels.pop('cuerpo');
         var index = 0;
+        highlight_field();
         if (labels.length === 1) {
             disable_controls();
         }else{
             enable_controls();
-            highlight_field();
             $('#btn-next-field').click(function(e){
                 e.preventDefault();
                 index = next_field(index, labels.length);
@@ -235,12 +235,9 @@ $(document).ready(function(){
 
     $('#btn-guardar-carta').click(function(e) {
         e.preventDefault();
-        //$('#cuerpo').val(miCarta.get('cuerpo'));
         $('#cuerpo').val($('#cuerpo-carta')[0].innerHTML);
-        console.log($('#cuerpo-carta')[0].innerHTML);
         $('#placeholders').val(JSON.stringify(get_placeholders(miCarta)));
         get_thumbnail($('#cuerpo-carta')[0]);
-        // $('#form-carta').submit();
     });
 
     //Inicialization

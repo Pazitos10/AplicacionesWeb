@@ -10,17 +10,17 @@
                         <img class="img-responsive" src="http://placehold.it/700x400" alt="" />
                     @endif
                 </a>
-                <!-- <div class="btn-group categorias">
-                    <a href="#" title="Queja" class="btn btn-warning btn-xs disabled">Queja</a>
-                    <a href="#" title="Pública" class="btn btn-info btn-xs disabled">Pública</a>
-                </div> -->
-                <div class="btn-group btn-item-options">
-                    <a href="#" title="Ver" class=""><span class="glyphicon glyphicon-eye-open btn-on-item"></span></a>
-                    <a href="#" title="Eliminar" class=""><span class="glyphicon glyphicon-remove btn-on-item icon-remove"></span></a>
+
+                <div class="nombre-plantilla">
+                    <div class="item-footer">
+                        {{ $plantilla->nombre }}
+                        <div class="item-footer-options">
+                            <button type="button" name="button"  class="btn btn-xs btn-menu-responsive" data-id="{{$plantilla->id}}">
+                                <span class="glyphicon glyphicon-menu-hamburger"></span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <h4 class="nombre-plantilla">
-                    {{ $plantilla->nombre }}
-                </h4>
             </div>
         @endforeach
     </div>

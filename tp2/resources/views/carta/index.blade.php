@@ -28,4 +28,8 @@
             </strong>
         </h3>
     @endif
+
+    @include('layouts.modals')
+
+
 @endsection

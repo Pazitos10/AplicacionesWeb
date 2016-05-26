@@ -16,4 +16,5 @@
             <strong>No tienes plantillas para mostrar. Crea una por medio de Plantillas -> Crear.</strong>
         </h3>
     @endif
+    @include('layouts.modals')
 @endsection
