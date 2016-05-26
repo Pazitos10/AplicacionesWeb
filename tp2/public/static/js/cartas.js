@@ -192,12 +192,12 @@ $(document).ready(function(){
             var $input = $("<input class='form-control' name='"+key+"' id='"+key+"' placeholder='"+value+"' value='"+value+"' maxlength='30'>");
             $input.on("keyup", function() {
                 model.set(key, $(this).val());
+                highlight_field();
             });
             agregar_campos($input);
         });
         model.set("cuerpo", data["cuerpo"]);
         view.render();
-
     }
 
     /*
