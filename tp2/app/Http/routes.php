@@ -16,23 +16,10 @@ Route::get('logout', 'Auth\AuthController@logout');
 Route::get('register', 'Auth\AuthController@getRegister');
 Route::post('register', 'Auth\AuthController@postRegister');
 
-/**
- * Show Plantilla Dashboard
- */
-Route::get('/', function () {
-    $plantillas = Plantilla::orderBy('created_at', 'asc')->get();
-    if (Auth::check()){
-        return view('plantilla.index', [
-            'plantillas' => $plantillas
-        ]);
-    }else{
-        return redirect('/login'); //Si no esta logueado, redirige a login.
-    }
-});
-
 Route::get('carta/publicas', 'CartaController@get_publicas');
 Route::get('carta/{id}/public', 'CartaController@show_public');
 
+Route::get('/', 'PlantillaController@index');
 Route::resource('plantilla', 'PlantillaController');
 Route::resource('carta', 'CartaController');
 

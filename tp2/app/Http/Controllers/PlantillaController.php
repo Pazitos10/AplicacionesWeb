@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Plantilla;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -26,13 +27,13 @@ class PlantillaController extends Controller
      */
     public function index()
     {
-        // get all the nerds
-        $plantillas = Plantilla::all();
-
-        // paso todas las plantillas a la vista
-        //return \View::make('plantilla.index')
-        return \View::make('plantilla.index')
-            ->with('plantillas', $plantillas);
+        if (Auth::check()){
+            $plantillas = Plantilla::where('autor_id', Auth::user()->id)->get();
+            return \View::make('plantilla.index')
+                    ->with('plantillas', $plantillas);
+        }else{
+            return redirect('/login'); //Si no esta logueado, redirige a login.
+        }
     }
 
     /**
@@ -70,6 +71,7 @@ class PlantillaController extends Controller
         } else {
             // store
             $plantilla = new Plantilla();
+            $plantilla->autor_id = Auth::user()->id;
             $plantilla->nombre  = Input::get('nombre');
             $plantilla->cuerpo  = Input::get('cuerpo');
             $plantilla->thumbnail = Input::get('thumbnail');
@@ -138,6 +140,7 @@ class PlantillaController extends Controller
         } else {
             // store
             $plantilla = Plantilla::find($id);
+            $plantilla->autor_id = Auth::user()->id;
             $plantilla->nombre  = Input::get('nombre');
             $plantilla->cuerpo  = Input::get('cuerpo');
             $plantilla->thumbnail = Input::get('thumbnail');

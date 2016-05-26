@@ -32,11 +32,8 @@ class CartaController extends Controller
      */
     public function index()
     {
-        // get all the nerds
-        $cartas = Carta::all();
-
-        // paso todas las plantillas a la vista
-        //return \View::make('plantilla.index')
+        //Todas las cartas del usuario
+        $cartas = Carta::where('autor_id', Auth::user()->id)->get();
         return \View::make('carta.index')
             ->with('cartas', $cartas);
     }
@@ -49,8 +46,7 @@ class CartaController extends Controller
     public function create()
     {
         //Refinar para que solo traiga las plantillas que le pertenecen al usuario.
-        $plantillas = Plantilla::lists('nombre', 'id');
-
+        $plantillas = Plantilla::where('autor_id', Auth::user()->id)->lists('nombre', 'id');
         // load the create form (app/views/plantilla/create.blade.php)
         return \View::make('carta.create')
                 ->with('plantillas', $plantillas);
@@ -61,7 +57,7 @@ class CartaController extends Controller
     *   Se buscan todos los campos que quieren ocultarse y se reemplazan
     *   los valores anonimos por tantas x como letras tenga el dato.
     *   Se mantiene tambien el estilo css para ocultar los datos.
-    *   @return nuevo_cuerpo (HTML transformado). 
+    *   @return nuevo_cuerpo (HTML transformado).
     */
     private static function get_cuerpo_publico($cuerpo){
         $dom = new DOMDocument();
@@ -87,8 +83,10 @@ class CartaController extends Controller
         $styles_url = URL::asset('static/css/styles.css');
         if($options['id'])
             $carta = Carta::find($options['id']);
-        else
+        else{
             $carta = new Carta();
+            $carta->plantilla_id = Input::get('plantilla_id');
+        }
         $carta->autor_id = Auth::user()->id;
         $carta->nombre  = Input::get('nombre');
         $cuerpo_privado = "<!DOCTYPE html><html><head>
@@ -249,7 +247,7 @@ class CartaController extends Controller
                 ->withInput(Input::except('password'));
         } else {
             // store
-            self::guardar();
+            self::guardar_carta(['id' => null]);
 
             // PdfController::guardar(str_to_lower(str_replace(' ', '_', $carta->nombre)), $carta->cuerpo);
             // redirect
