@@ -63,6 +63,8 @@
         {!! Form::hidden('cuerpo', $carta->cuerpo, ['id' => 'cuerpo']) !!}
         {!! Form::hidden('carta_id', $carta->id, ['id' => 'carta_id']) !!}
         {!! Form::hidden('thumbnail', null, ['id' => 'thumbnail']) !!}
+        {!! Form::hidden('cuerpo_publico', null, ['id' => 'cuerpo_publico']) !!}
+        {!! Form::hidden('thumbnail_publico', null, ['id' => 'thumbnail_publico']) !!}
 
         <!-- Guardar Carta -->
         <!-- <div class="btn-container"> -->

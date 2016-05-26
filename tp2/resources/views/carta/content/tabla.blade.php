@@ -8,14 +8,14 @@
             <tbody>
                 @foreach ($cartas as $carta)
                     <tr>
-                        @if(Request::path() == 'carta/publica')
+                        @if(Request::path() == 'carta/publicas')
                             <td>
                                 {{ $carta->nombre }}
                             </td>
                             <td class="hidden-xs">{{ date('d/m/Y - H:i:s', strtotime($carta->updated_at)) }}</td>
                             <td class="pull-right">
-                                <a class="btn btn-primary btn-sm " href="{{ URL::to('carta/' . $carta->id) }}" title="Ver la carta"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-                                <a class="btn btn-sm btn-primary" href="{{ URL::to('carta/' . $carta->id . '/get_pdf') }}" id="btn-pdf" title="Descargar pdf"><span class="glyphicon glyphicon-save"></span></a>
+                                <a class="btn btn-primary btn-sm " href="{{ URL::to('carta/' . $carta->id . '/public' ) }}" title="Ver la carta"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                                <a class="btn btn-sm btn-primary" href="{{ URL::to('carta/' . $carta->id . '/get_public_pdf') }}" id="btn-pdf" title="Descargar pdf"><span class="glyphicon glyphicon-save"></span></a>
                             </td>
                         @else
                             <td>

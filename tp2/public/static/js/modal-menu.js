@@ -33,8 +33,8 @@ $(document).ready(function(){
         }
 
         if(estoyEnCartasPublicas){
-            $('#btn-vista-previa')[0].href = id;
-            $('#btn-modal-pdf')[0].href = id + '/get_pdf';
+            $('#btn-vista-previa')[0].href = id + '/public';
+            $('#btn-modal-pdf')[0].href = id + '/get_public_pdf';
         }
     }
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Request;
 
 use App\Http\Requests;
 use App\Carta;
@@ -10,8 +10,15 @@ use PDF;
 
 class PdfController extends Controller
 {
+
     public static function descargar ($carta){
         $pdf = PDF::loadHTML($carta->cuerpo);
+        $filename = strtolower(str_replace(' ','_',$carta->nombre)).'.pdf';
+        return $pdf->download($filename);
+    }
+
+    public static function descargar_publico ($carta){
+        $pdf = PDF::loadHTML($carta->cuerpo_publico);
         $filename = strtolower(str_replace(' ','_',$carta->nombre)).'.pdf';
         return $pdf->download($filename);
     }

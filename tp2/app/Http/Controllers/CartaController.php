@@ -7,6 +7,8 @@ use App\Plantilla;
 use App\User;
 use Mail;
 use Auth;
+use URL;
+use DOMDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
@@ -55,6 +57,64 @@ class CartaController extends Controller
     }
 
     /**
+    *   En base al cuerpo publico que se obtuvo del lado del cliente
+    *   Se buscan todos los campos que quieren ocultarse y se reemplazan
+    *   los valores anonimos por tantas x como letras tenga el dato.
+    *   Se mantiene tambien el estilo css para ocultar los datos.
+    *   @return nuevo_cuerpo (HTML transformado). 
+    */
+    private static function get_cuerpo_publico($cuerpo){
+        $dom = new DOMDocument();
+        libxml_use_internal_errors(true);
+        $dom->loadHTML(utf8_decode($cuerpo));
+        $dom->encoding = 'utf-8';
+        libxml_clear_errors();
+        $wrapper = "<span class='replacement active hidden-text'>";
+        $end_wrapper = "</span>";
+        for($i = 1; $span = $dom->getElementsByTagName('span')->item(0); $i++) {
+            $replacement_lenght = strlen($span->nodeValue);
+            $gibberish_replacement = $wrapper.str_repeat("x",$replacement_lenght).$end_wrapper;
+            $span->parentNode->replaceChild($dom->createTextNode($gibberish_replacement), $span);
+        }
+        $nuevo_cuerpo = $dom->saveHTML();
+        $nuevo_cuerpo = str_replace("&lt;","<",$nuevo_cuerpo);
+        $nuevo_cuerpo = str_replace("&gt;",">",$nuevo_cuerpo);
+        return $nuevo_cuerpo;
+
+    }
+
+    private static function guardar_carta($options){
+        $styles_url = URL::asset('static/css/styles.css');
+        if($options['id'])
+            $carta = Carta::find($options['id']);
+        else
+            $carta = new Carta();
+        $carta->autor_id = Auth::user()->id;
+        $carta->nombre  = Input::get('nombre');
+        $cuerpo_privado = "<!DOCTYPE html><html><head>
+                            <meta charset='UTF-8'>
+                            <title>". $carta->nombre ."</title></head><body>"
+                    . Input::get('cuerpo') .
+                    "</body></html>";
+        $carta->cuerpo  = $cuerpo_privado;
+        if (Input::get('publica') != null){
+            $carta->publica = true;
+            $carta->cuerpo_publico = "<!DOCTYPE html><html><head>
+                                        <meta charset='UTF-8'>
+                                        <link rel='stylesheet' href='". $styles_url ."'>
+                                        <title>". $carta->nombre ."</title></head><body>"
+                                        . self::get_cuerpo_publico(Input::get('cuerpo_publico')) .
+                                        "</body></html>";
+            $carta->thumbnail_publico = Input::get('thumbnail_publico') ;
+        }
+        else
+            $carta->publica = false;
+        $carta->thumbnail = Input::get('thumbnail');
+        $carta->placeholders = Input::get('placeholders');
+        $carta->save();
+    }
+
+    /**
      * Devuelve informacion de plantillas en formato json.
      *
      * @return Response
@@ -79,6 +139,18 @@ class CartaController extends Controller
     {
         $carta = Carta::where('id', $id_carta)->first();
         $pdf = PdfController::descargar($carta);
+        return $pdf;
+    }
+
+    /**
+     * Genera y retorna el PDF de la carta indicada por parametros.
+     *
+     * @return Response
+     */
+    public static function get_public_pdf($id_carta)
+    {
+        $carta = Carta::where('id', $id_carta)->first();
+        $pdf = PdfController::descargar_publico($carta);
         return $pdf;
     }
 
@@ -177,22 +249,7 @@ class CartaController extends Controller
                 ->withInput(Input::except('password'));
         } else {
             // store
-            $carta = new Carta();
-            $carta->autor_id = Auth::user()->id;
-            $carta->nombre  = Input::get('nombre');
-            $cuerpo = "<!DOCTYPE html><html><head><meta charset='UTF-8'>
-                        <title>". $carta->nombre ."</title></head><body>"
-                        . Input::get('cuerpo') .
-                        "</body></html>";
-            $carta->cuerpo  = $cuerpo;
-            if (Input::get('publica') != null)
-                $carta->publica = true;
-            else
-                $carta->publica = false;
-            $carta->thumbnail = Input::get('thumbnail');
-            $carta->plantilla_id = Input::get('plantilla_id');
-            $carta->placeholders = Input::get('placeholders');
-            $carta->save();
+            self::guardar();
 
             // PdfController::guardar(str_to_lower(str_replace(' ', '_', $carta->nombre)), $carta->cuerpo);
             // redirect
@@ -200,10 +257,6 @@ class CartaController extends Controller
             return Redirect::to('carta');
         }
     }
-
-
-
-
 
     /**
      * Display the specified resource.
@@ -219,6 +272,22 @@ class CartaController extends Controller
         // show the edit form and pass the nerd
         return View::make('carta.view')
             ->with('carta', $carta);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show_public($id)
+    {
+        // busco la Carta, se sabe que es publica
+        $carta = Carta::find($id);
+        $nombre_autor = User::find($carta->autor_id)->name;
+        return View::make('carta.content.view-public')
+            ->with('carta', $carta)
+            ->with('nombre_autor', $nombre_autor );
     }
 
     /**
@@ -262,21 +331,7 @@ class CartaController extends Controller
                 ->withInput(Input::except('password'));
         } else {
             // store
-            $carta = Carta::find($id);
-            $carta->autor_id = Auth::user()->id;
-            $carta->nombre  = Input::get('nombre');
-            $cuerpo = "<!DOCTYPE html><html><head><meta charset='UTF-8'>
-                        <title>". $carta->nombre ."</title></head><body>"
-                        . Input::get('cuerpo') .
-                        "</body></html>";
-            $carta->cuerpo  = $cuerpo;
-            if (Input::get('publica') != null)
-                $carta->publica = true;
-            else
-                $carta->publica = false;
-            $carta->thumbnail = Input::get('thumbnail');
-            $carta->placeholders = Input::get('placeholders');
-            $carta->save();
+            $this->guardar_carta(['id' => $id]);
 
             // PdfController::guardar(strtolower(str_replace(' ', '_', $carta->nombre)), $carta->cuerpo);
             // redirect

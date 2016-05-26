@@ -29,11 +29,42 @@ $(document).ready(function(){
         }
     });
 
-    function get_thumbnail(target){
-        html2canvas( target , {
-            onrendered: function(canvas) {
-                $('#thumbnail').val(canvas.toDataURL("image/png"));
-                $('#form-carta').submit();
+
+    function mostrar_campos() {
+        $('#cuerpo-carta .replacement').each(function(){
+            $(this).removeClass('active');
+            $(this).removeClass('hidden-text');
+        })
+    }
+    function ocultar_campos() {
+        $('#cuerpo-carta .replacement').each(function(){
+            $(this).addClass('active');
+            $(this).addClass('hidden-text');
+        })
+        return $('#cuerpo-carta')[0];
+    }
+
+    function completar_y_enviar_form() {
+        $('#cuerpo').val($('#cuerpo-carta')[0].innerHTML);
+        $('#placeholders').val(JSON.stringify(get_placeholders(miCarta)));
+        get_thumbnail($('#cuerpo-carta')[0], $('#thumbnail'), false);
+        setTimeout(function () {
+            if(is_publica()){
+                var cuerpo_publico = ocultar_campos();
+                $('#cuerpo_publico').val(cuerpo_publico.innerHTML);
+                get_thumbnail(cuerpo_publico, $('#thumbnail_publico'), true);
+            }
+        }, 100);
+        // $('#form-carta').submit();
+    }
+
+
+    function get_thumbnail(src, dst, enviar){
+        html2canvas( src , {
+            onrendered: function(canvas){
+                dst.val(canvas.toDataURL("image/png"));
+                if(enviar)
+                    $('#form-carta').submit();
             }
         });
     }
@@ -54,12 +85,22 @@ $(document).ready(function(){
     }
 
     /*
+    *   Devuelve true si la carta fue marcada como publica.
+    *   Caso contrario, retorna false.
+    */
+    function is_publica() {
+        if (Number($('#custom-switch').data("checked")) != 0 || $('#custom-switch')[0].checked)
+            return true;
+        else
+            return false;
+    }
+
+    /*
     *   Setea el valor del switch de carta publica,
     *   basado en su valor en el modelo.
     */
     function set_publica(){
-        var isPublic = Number($('#custom-switch').data("checked"));
-        if (isPublic != 0){
+        if (is_publica()){
             $('#custom-switch').attr('checked', 'checked') ;
         }else{
             $('#custom-switch').removeAttr('checked');
@@ -235,9 +276,7 @@ $(document).ready(function(){
 
     $('#btn-guardar-carta').click(function(e) {
         e.preventDefault();
-        $('#cuerpo').val($('#cuerpo-carta')[0].innerHTML);
-        $('#placeholders').val(JSON.stringify(get_placeholders(miCarta)));
-        get_thumbnail($('#cuerpo-carta')[0]);
+        completar_y_enviar_form();
     });
 
     //Inicialization

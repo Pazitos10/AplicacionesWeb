@@ -2,15 +2,17 @@
     <div class="row list-wrapper">
         @foreach ($cartas as $carta)
             <div class="col-md-3 item">
-                <a href="{{ URL::to('carta/' . $carta->id ) }}">
-                    @if (isset($carta->thumbnail))
-                        <div class="crop">
+                @if (isset($carta->thumbnail))
+                    <div class="crop">
+                        @if(Request::path() == 'carta/publicas')
+                            <img class="thumb-cartas" src="{{ $carta->thumbnail_publico }}" alt="">
+                        @else
                             <img class="thumb-cartas" src="{{ $carta->thumbnail }}" alt="">
-                        </div>
-                    @else
-                        <img class="img-responsive" src="http://placehold.it/700x400" alt="" />
-                    @endif
-                </a>
+                        @endif
+                    </div>
+                @else
+                    <img class="img-responsive" src="http://placehold.it/700x400" alt="" />
+                @endif
                 <div class="nombre-carta">
                     <div class="item-footer">
                         {{ $carta->nombre }}

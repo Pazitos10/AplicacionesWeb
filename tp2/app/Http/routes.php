@@ -31,6 +31,7 @@ Route::get('/', function () {
 });
 
 Route::get('carta/publicas', 'CartaController@get_publicas');
+Route::get('carta/{id}/public', 'CartaController@show_public');
 
 Route::resource('plantilla', 'PlantillaController');
 Route::resource('carta', 'CartaController');
@@ -57,6 +58,11 @@ Route::get('carta/{id_carta}/get_json_plantilla/{id_plantilla}',
 Route::get('carta/{id_carta}/get_pdf/',
         function($id_carta){
             return CartaController::get_pdf($id_carta);
+});
+
+Route::get('carta/{id_carta}/get_public_pdf/',
+        function($id_carta){
+            return CartaController::get_public_pdf($id_carta);
 });
 
 Route::post('carta/{id_carta}/send_mail', 'CartaController@send_mail');
