@@ -195,7 +195,7 @@ class CartaController extends Controller
                     'pdf' => $pdf,
                     'receiver_email' => Input::get('email'),
                     'receiver_name' => Input::get('destinatario'),
-                    'display' => $carta->nombre,
+                    'display' => $carta->nombre . '.pdf',
                     'sender_email' => $user->email,
                     'sender_name' => $user->name
                 );
