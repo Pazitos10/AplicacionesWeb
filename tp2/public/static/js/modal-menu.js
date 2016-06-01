@@ -27,7 +27,7 @@ $(document).ready(function(){
         if(estoyEnCartas){
             $('#btn-editar')[0].href =  'carta/' + id + '/edit';
             $('#form-remove')[0].action = 'carta/' + id ;
-            $('#btn-modal-mail').data('id', id);
+            $('#btn-send-mail').data('id', id);
             $('#btn-vista-previa')[0].href = 'carta/' + id;
             $('#btn-modal-pdf')[0].href += '/' + id + '/get_pdf';
         }
@@ -42,8 +42,9 @@ $(document).ready(function(){
     *   Muestra el modal para completar datos de envio por e-mail
     */
     function mostrar_modal_mail() {
-        $('#modalMenuResponsive').modal('hide');
-        $('#modalMail').modal('toggle');
+        $('#modalMail').modal('show');
+        // $('#modalMenu').modal('hide');
+        // $('#modalMail').modal('toggle');
     }
 
     /*
@@ -53,6 +54,7 @@ $(document).ready(function(){
     */
     function mostrar_modal_menu() {
         modificar_urls($(this).data('id'));
+        $('#modalMail').modal('hide');
         $('#modalMenu').modal('show');
     }
 

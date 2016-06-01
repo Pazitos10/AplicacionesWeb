@@ -33,10 +33,10 @@
                                     <span class="glyphicon glyphicon-save"></span>
                                 </a>
                                 <!-- <button type="button" class="btn btn-sm btn-primary btn-mail" id="btn-send-mail" title="Enviar por email" data-id="{{$carta->id}}"> -->
-                                <a href="{{ URL::to('carta/' . $carta->id . '/send_mail') }}" class="btn btn-sm btn-primary btn-mail" id="btn-send-mail" title="Enviar por email" data-id="{{$carta->id}}">
+                                <a class="btn btn-sm btn-primary btn-mail btn-send-mail" href="{{ URL::to('carta/' . $carta->id . '/send_mail') }}" title="Enviar por email">
+                                    <span class="glyphicon glyphicon-envelope"></span>
+                                </a>
                                 @if(Request::path() != 'carta/publicas')
-                                        <span class="glyphicon glyphicon-envelope"></span>
-                                    </button>
                                     <a class="btn btn-primary btn-sm " href="{{ URL::to('carta/' . $carta->id . '/edit') }}" title="Editar la carta">
                                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                     </a>
@@ -62,47 +62,3 @@
             </tbody>
     </table>
 </div>
-<div class="modal fade" id="modalMail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog">
-        {{ Form::open(array('url' => '', 'class' => 'form', 'method' => 'post', 'id' => 'form-send-mail')) }}
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title custom-header custom-header-sm text-center" id="myModalLabel">Enviar por E-Mail</h4>
-            </div>
-            <div class="modal-body" style="overflow:hidden">
-                <div class="col-xs-12">
-                    <div class="form-group">
-                        {!! Form::label('nombre_destinatario', 'Para:') !!}
-                        {!! Form::text('destinatario', null, ['class' => 'form-control', 'placeholder' => 'Juan Lopez']) !!}
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('to', 'Correo electronico:') !!}
-                        {!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'example@example.com']) !!}
-                    </div>
-                    <div class="form-group">
-                        <hr class="custom-hr custom-hr-centered">
-                        {{ Form::button('Enviar', array(
-                            'type' => 'submit',
-                            'title' => 'Enviar la carta por E-Mail',
-                            'class'=> 'btn btn-sm btn-success lead btn-full-width'))
-                        }}
-                    </div>
-                </div>
-
-                {{ Form::close() }}
-            </div>
-        </div>
-  </div>
-</div>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('#btn-send-mail').click(function(e){
-            e.preventDefault();
-            console.log('ehh', $(this)[0], $(this)[0].href);
-            var url = $(this)[0].href;
-            $('#form-send-mail')[0].action = url;
-            console.log($('#form-send-mail')[0].action);
-        });
-    });
-</script>

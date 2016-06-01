@@ -206,6 +206,9 @@ class CartaController extends Controller
                             ->subject('Bienvenida')
                             ->attachData($data['pdf'], $data['display']);
                     });
+
+                return redirect('/carta');
+
             }catch (Swift_TransportException $STe) {
                 // logging error
                 $string = date("Y-m-d H:i:s")  . ' - ' . $STe->getMessage() . PHP_EOL;

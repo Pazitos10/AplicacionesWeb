@@ -30,6 +30,4 @@
     @endif
 
     @include('layouts.modals')
-
-
 @endsection
