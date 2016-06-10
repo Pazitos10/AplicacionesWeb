@@ -1,8 +1,44 @@
 extends ../layout
 
 block content
-    form(action='.', method='get', class="col s12 l5")
+    form(action='/books/add', method='post', class="col s12 l5")
         .row
             div(class="input-field col s12")
-                input(id='search-term',name='search-term',type='text',placeholder='Ej.: El principito')
-                label(for='search-term') Búsqueda
+                input(id='search_term',name='search_term',type='text',placeholder='Ej.: El principito', value=termino)
+                label(for='search_term') Búsqueda
+                input(id='send', value='Buscar', type='submit')
+        .row
+            if resultados
+                h6 #[ Resultados para: #{termino}] 
+                table
+                    thead
+                        tr 
+                            td Autor
+                            td Titulo
+                            td Tapa
+                            td Acciones
+                    tbody
+                        each resultado in resultados
+                            tr
+                                td #{resultado.title}
+                                td #{resultado.authors}
+                                td #[img(src=resultado.thumbnail)]
+                                td #[button(type="button", class="btn fav-btn", data-id=resultado.id) Fav]
+            else
+                h6 #[ No se encontraron resultados para #{termino}]
+
+
+block scripts
+    script.
+        $(".fav-btn").bind('click', function(){
+            var id = $(this).data('id');
+            $.ajax({
+                url: '/books/save/' + id,
+                type: 'post'
+            }).done(function(data){
+                console.log("succeed!");
+                window.location.assign('/');
+            }).fail(function(error){
+                console.log("error!", error.responseText);
+            });
+        });
