@@ -1,0 +1,8 @@
+extends ../layout
+
+block content
+    form(action='.', method='get', class="col s12 l5")
+        .row
+            div(class="input-field col s12")
+                input(id='search-term',name='search-term',type='text',placeholder='Ej.: El principito')
+                label(for='search-term') Búsqueda

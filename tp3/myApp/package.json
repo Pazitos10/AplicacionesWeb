@@ -16,5 +16,11 @@
     "morgan": "~1.6.1",
     "pug": "^2.0.0-beta2",
     "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-express": "^0.3.5",
+    "gulp-nodemon": "^2.1.0",
+    "tiny-lr": "^0.2.1"
   }
 }

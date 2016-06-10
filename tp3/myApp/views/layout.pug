@@ -1,0 +1,21 @@
+doctype html
+html
+    head
+        title= title
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        link(rel='stylesheet', href='/css/materialize.min.css')
+        link(rel='stylesheet', href='/css/styles.css')
+        script(type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js")
+    body
+        .navbar-fixed
+            nav
+                .nav-wrapper
+                    a(href="#" class="brand-logo center") Logo
+                    ul(id="nav-mobile" class="right hide-on-med-and-down")
+                        li #[a(href="#") Buscar]
+                        li #[a(href="#") Favoritos]
+        .body-content
+            .container
+                .row
+                    block content
