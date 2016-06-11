@@ -1,5 +1,30 @@
 @charset "UTF-8";
 .body-content{
-    padding-top: 60px;
+    padding-top: 10px;
     background-color: #FFFFFF
+}
+
+.search-wrapper input{
+	width: 90%;
+}
+
+.search-wrapper i{
+	position: absolute;
+	top: 15px;
+}
+
+.item-libro{
+}
+
+.item-libro .card-title{
+	width: 100%;
+}
+
+.tapa-libro img{
+	height: auto;
+	max-height: 220px;
+}
+
+.card-action.center-align *{
+	margin: 0 !important;
 }

@@ -19,6 +19,7 @@ router.post('/add', function (req, res, next) {
     console.log("termino de busqueda", termino);
     books.search(termino, function(error, results) {
         if ( ! error ) {
+            console.log("se obtuvieron "+ results.length + " resultados");
             console.log(results);
             res.render('books/add', {title: 'Books', resultados: results, termino: termino})
         } else {
@@ -32,7 +33,6 @@ router.post('/save/:id', function (req, res, next) {
     var book_to_save = req.params.id;
     if(book_to_save){
         books.lookup(book_to_save, function(error, result) {
-            console.log(result);
             if (result){
                 console.log(result);
                 new Libro({

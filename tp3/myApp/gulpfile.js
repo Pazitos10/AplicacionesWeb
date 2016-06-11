@@ -1,28 +1,41 @@
 var gulp = require('gulp');
-var nodemon = require('gulp-nodemon');
-var server = require('gulp-express');
+var LIVERELOAD_PORT = 35729;
+var EXPRESS_ROOT = __dirname;
 var lr = require('tiny-lr')();
-var path = require('path');
+var nodemon = require('gulp-nodemon');
+var serverFiles = [
+    './public/**/*',
+    './views/**/*.pug',
+    './routes/**/*.js',
+    './**/*.js'
+]
 
-gulp.task('serve', function(){
-    console.log(event.path);
-    var fileName = require('path').relative('3000', event.path);
+function startServer() {
+    nodemon({
+        script: './bin/www',
+    }).on('restart', function () {
+      console.log('restarted!')
+    });
+}
+
+function startLivereload() {
+    lr.listen(LIVERELOAD_PORT);
+}
+
+function notifyLivereload(event) {
+    var fileName = require('path').relative(EXPRESS_ROOT, event.path);
     lr.changed({
         body: {
             files: [fileName]
         }
     });
-});
+}
 
-
+// Default task that will be run
+// when no parameter is provided
+// to gulp
 gulp.task('default', function () {
-    nodemon({
-      script: './bin/www'
-    })
-    .on('restart', function () {
-        console.log('restarted!')
-    });
-
-    lr.listen(35729);
-    gulp.watch('*', 'serve');
+    startServer();
+    startLivereload();
+    gulp.watch(serverFiles, notifyLivereload);
 });
