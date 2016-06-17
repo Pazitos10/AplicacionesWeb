@@ -3,19 +3,29 @@ html
     head
         title= title
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
-        link(rel='stylesheet', href='/css/materialize.min.css')
+        link(rel='icon', type="image/svg", href='/img/book-logo-2.svg')
+        link(rel='stylesheet', href='/css/bootstrap.min.css')
         link(rel='stylesheet', href='/css/styles.css')
-        link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+        link(href='https://fonts.googleapis.com/css?family=Rock+Salt' rel='stylesheet' type='text/css')
         script(type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js")
-        script(src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js")
+        script(src="/js/bootstrap.min.js")
+        script(src="/js/jquery.bsAlerts.min.js")
     body
-        .navbar-fixed
-            nav
-                .nav-wrapper
-                    a(href="#" class="brand-logo center") Logo
-                    ul(id="nav-mobile" class="right hide-on-med-and-down")
-                        li #[a(href="#") Buscar]
-                        li #[a(href="#") Favoritos]
+        nav.navbar.navbar-default.navbar-fixed-top
+            .container-fluid
+                .navbar-header
+                    button(type="button" class="navbar-toggle collapsed" id="btn-hamburger" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false")
+                        span(class="sr-only") Toggle navigation
+                        span( class="icon-bar")
+                        span( class="icon-bar")
+                        span( class="icon-bar")
+                    .logo: include ../public/img/book-logo-2.svg
+                    a(class="navbar-brand" href="/") Book Search 
+                .collapse.navbar-collapse#bs-example-navbar-collapse-1
+                    ul.nav.navbar-nav
+                        li.active: a(href="/libros/coleccion") Favoritos 
+                                        span.sr-only (current)
+                        li: a(href="/libros/buscar") Buscar
         .body-content
             .container
                 .row

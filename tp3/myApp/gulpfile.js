@@ -1,41 +1,37 @@
-var gulp = require('gulp');
-var LIVERELOAD_PORT = 35729;
-var EXPRESS_ROOT = __dirname;
-var lr = require('tiny-lr')();
-var nodemon = require('gulp-nodemon');
-var serverFiles = [
-    './public/**/*',
-    './views/**/*.pug',
-    './routes/**/*.js',
-    './**/*.js'
-]
-
-function startServer() {
-    nodemon({
-        script: './bin/www',
-    }).on('restart', function () {
-      console.log('restarted!')
+(function() {
+  'use strict';
+    var gulp = require('gulp'),
+        nodemon = require('gulp-nodemon'),
+        watch = require('gulp-watch'),
+        livereload = require('gulp-livereload'),
+        _paths = ['./public/**/*.*', './views/**/*.pug','./routes/*.js', '*.js'],
+        options = {'port': 35729, 'host': 'localhost', 'start': true};
+    
+    //register nodemon task
+    gulp.task('nodemon', function() {
+        nodemon({
+            script: './bin/www',
+            env: {
+                'NODE_ENV': 'development'
+            }
+        }).on('restart', function(){
+            livereload.listen(options);
+        });
+        
     });
-}
 
-function startLivereload() {
-    lr.listen(LIVERELOAD_PORT);
-}
-
-function notifyLivereload(event) {
-    var fileName = require('path').relative(EXPRESS_ROOT, event.path);
-    lr.changed({
-        body: {
-            files: [fileName]
-        }
+    // Send changes to the livereload server
+    function notifyLivereload(event) {
+        var fileName = require('path').relative(__dirname, event.path);
+        livereload.changed(fileName);
+    }
+ 
+    // Rerun the task when a file changes
+    gulp.task('watch', function() {
+        livereload.listen(options);
+        watch(_paths, notifyLivereload);
     });
-}
 
-// Default task that will be run
-// when no parameter is provided
-// to gulp
-gulp.task('default', function () {
-    startServer();
-    startLivereload();
-    gulp.watch(serverFiles, notifyLivereload);
-});
+    // The default task (called when you run `gulp` from cli)
+    gulp.task('default', ['nodemon', 'watch']);
+}());

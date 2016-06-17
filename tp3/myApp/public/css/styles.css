@@ -1,30 +1,73 @@
 @charset "UTF-8";
 .body-content{
-    padding-top: 10px;
-    background-color: #FFFFFF
+    padding-top: 80px;
+    background-color: #FFFFFF;
 }
 
-.search-wrapper input{
-	width: 90%;
+.navbar-header{
+	display: flex;
+	align-items: center;
+	justify-content: space-between; 
 }
 
-.search-wrapper i{
-	position: absolute;
-	top: 15px;
+.navbar{
+	font-family: 'Rock Salt', cursive;
+	font-size: 11px;
+}
+
+#btn-hamburger{
+	order:1;
+}
+
+.logo{
+	display: inline-block;
+    margin-right: 10px;
+}
+
+.logo svg{
+	height: 36px;
+	width: 36px;
+}
+.logo svg g{
+	fill: #ff851b;
+};
+
+.custom-input{
+	font-size: 16px !important;
+}
+
+.cabecera-tabla{
+	font-size: 16px;
+}
+.cabecera-tabla th{
+	text-align: center;
 }
 
 .item-libro{
+	overflow:hidden;
 }
 
-.item-libro .card-title{
-	width: 100%;
+.tapa-libro{
+	height: 150px;
 }
 
-.tapa-libro img{
+.item-info-xs {
 	height: auto;
-	max-height: 220px;
+	display: flex;
+	flex-direction: column;
+}
+.item-info-xs p{
+	font-size: 20px;
 }
 
-.card-action.center-align *{
-	margin: 0 !important;
+.options{
+	margin-top: 75px;
+}
+
+.options button{
+	margin-right: 10px
+}
+
+.precio{
+	font-size: 24px
 }

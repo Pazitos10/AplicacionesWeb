@@ -1,0 +1,52 @@
+extends ../layout
+
+block content
+    div(ng-app='bookSearchClient')
+        div(class="col-xs-10 col-xs-offset-1 col-lg-4 col-lg-offset-4" ng-controller="SearchBookController")
+            .container-fluid
+                div(data-alerts="alerts")
+            form(id="search-form", ng-submit="sendForm()")
+                .form-group.text-center
+                    label(for="search_term") #[h4 ¿Qué libro estás buscando?]
+                    input(id='search_term', name='search_term', type='text', 
+                            placeholder='Ej.: El principito', ng-model="form.search_term", class="form-control custom-input", valor="form.search_term", required="")
+            
+        include results.pug
+
+        include modal.pug
+
+block scripts
+    script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js")
+    script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js")
+    script(src="/js/book-search-client/client-app.js")
+    script(src="/js/book-search-client/controllers.js")
+    script.
+
+        $('.ver-btn').bind('click', function(){
+            var id = $(this).data('id');
+            $.ajax({
+                url: '/books/get/' + id,
+                type: 'get'
+            }).done(function(data){
+                console.log('meh', JSON.stringify(data.book, null, 2));
+                $('#modal-info-libro .modal-title .titulo').empty().append(data.book.title);
+                $('#modal-info-libro .modal-body .subtitulo').empty().append(data.book.subtitle);
+                $('#modal-info-libro .modal-body .descripcion').empty().append(data.book.description);
+                $('#modal-info-libro').modal('show');
+            }).fail(function(error){
+                console.log("error!", error.responseText);
+            });
+        });
+
+        $(".fav-btn").bind('click', function(){
+            var id = $(this).data('id');
+            $.ajax({
+                url: '/books/save/' + id,
+                type: 'post'
+            }).done(function(data){
+                console.log("succeed!");
+                window.location.assign('/');
+            }).fail(function(error){
+                console.log("error!", error.responseText);
+            });
+        });

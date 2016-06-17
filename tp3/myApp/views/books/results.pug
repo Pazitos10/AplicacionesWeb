@@ -1,0 +1,40 @@
+.col-xs-12.col-lg-8.col-lg-offset-2
+    if resultados && resultados.length > 0
+        br
+        h4(class="text-center") <strong>#{resultados.length}</strong> resultados para: "#{termino}"
+        table.table.table-striped
+            thead.cabecera-tabla
+                tr: th Portada
+                    th Título
+                    th.hidden-xs Precio
+            tbody
+            each resultado in resultados
+                input(type="hidden", value=resultado, id="info-venta")
+                tr
+                    if (resultado.thumbnail)
+                        td: img(src=resultado.thumbnail, class="tapa-libro")
+                    else
+                        if (resultado.imageLinks)
+                            td: img(src=resultado.imageLinks.thumbnail, class="tapa-libro")
+                        else
+                            td: img(src='http://fillmurray.com/220/314', class="tapa-libro")
+                    td.item-info-xs 
+                        p(class="card-title") #{resultado.title}
+                        .hidden-xs.options
+                            button(type="button", class="btn btn-primary ver-btn" data-id=resultado.id)
+                                <span class="glyphicon glyphicon-eye-open"></span> Ver más
+                            button(type="button", class="btn btn-info")
+                                <span class="glyphicon glyphicon-shopping-cart"></span> Comprar
+                        .visible-xs.options
+                            button(type="button", class="btn btn-warning ver-btn" data-id=resultado.id) ver más
+
+                    td(class="hidden-xs precio text-center" style="vertical-align:middle")
+                            if resultado.saleInfo
+                                if resultado.saleInfo.listPrice
+                                    p  $#{resultado.saleInfo.retailPrice.amount}
+                                else
+                                    p No disponible
+    else
+        if busqueda
+            br
+            h4(class="text-center") No se encontraron resultados para "#{termino}"
