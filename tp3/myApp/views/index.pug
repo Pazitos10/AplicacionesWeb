@@ -1,5 +1,14 @@
 extends layout
 
-block content
-  h1= title
-  p Welcome to #{title}
+block navigation_bar
+    .landing-content
+        .container
+            .row
+                .col-lg-8.col-lg-offset-2.logo-container
+                    include ../public/img/book-logo-2.svg 
+                    h1.text-center Book Search
+            .row
+                .col-lg-8.col-lg-offset-2
+                    .landing-options
+                        a(href="/libros/coleccion" class="btn btn-warning") Ver mi Colección
+                        a(href="/libros/buscar" class="btn btn-warning") Buscar un Libro

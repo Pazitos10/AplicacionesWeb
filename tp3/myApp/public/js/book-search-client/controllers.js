@@ -30,15 +30,31 @@ function ShowBookController($scope, $http, $routeParams) {
 
 function SearchBookController($scope, $http, $routeParams) {
     $scope.form = {};
+    $scope.resultados = {};
+    $scope.busqueda = false;
     $scope.sendForm = function () {
         //console.log('[SearchBookController]: ', $scope.form);
         $http.post('/books/search', $scope.form)
-            .then(function(data) {
-                console.log('Success: ', data);
-                //$location.path('/book/search');
+            .then(function(result) {
+                $scope.busqueda = true;
+                $scope.resultados = result.data.resultados;
             }, function(){
-                console.log('bookSearchClient: hubo un error');
+                console.log('SearchBookController: hubo un error');
             });
-      };
+    };
+    $scope.showBook = function(){
+        var id = this.resultado.id;
+        $http.get('/books/show/' + id)
+        .then(function(result){
+            console.log(result.data);
+            console.log('meh', JSON.stringify(result.data.book, null, 2));
+            $('#modal-info-libro .modal-title .titulo').empty().append("<em>"+result.data.book.title+"</em>");
+            $('#modal-info-libro .modal-body .subtitulo').empty().append(result.data.book.subtitle);
+            $('#modal-info-libro .modal-body .descripcion').empty().append("<h5>Descripción:</h5>"+result.data.book.description);
+            $('#modal-info-libro').modal('show');
+        }, function(error){
+            console.log("error!", error.responseText);
+        });
+    }
 }
 

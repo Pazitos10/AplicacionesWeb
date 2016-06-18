@@ -1,0 +1,12 @@
+extends ../layout
+
+block content
+	.row
+		div(ng-if="coleccion", class="col-lg-8 col-lg-offset-2 text-center")
+			h1 MI COLECCION
+		div(ng-if="!coleccion", class="col-lg-8 col-lg-offset-2 text-center")
+			h4.alert.alert-warning 
+				<strong>¡Aún no agregaste libros a tu coleccion!</strong>
+				br
+				br
+				p #[a(href="/libros/buscar" class="link-in-alert") Busca] tu libro favorito, agregá tu valoración y cargalo en tu colección para verlo acá

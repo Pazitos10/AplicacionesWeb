@@ -48,16 +48,19 @@
 }
 
 .tapa-libro{
-	height: 150px;
+	max-height: 150px;
+	max-width: 120px;
 }
 
 .item-info-xs {
 	height: auto;
 	display: flex;
 	flex-direction: column;
+	width: 70%;
 }
 .item-info-xs p{
 	font-size: 20px;
+	word-break: break-word;
 }
 
 .options{
@@ -70,4 +73,55 @@
 
 .precio{
 	font-size: 24px
+}
+
+.landing-content{
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(255,255,255,.6);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.landing-content .form-container{
+	width: 100%;
+}
+
+.landing-options{
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	padding: 10px
+}
+.landing-options a{
+	margin-right: 20px;
+}
+
+
+.logo-container{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: 'Rock Salt', cursive;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+.logo-container svg{
+	width: 70px;
+	height: 70px;
+	margin-right: 10px;
+}
+.logo-container svg g{
+	/*fill: rgba(255,255,255,.8);*/
+	fill: #ff851b;
+}
+
+.link-in-alert{
+	color:white;
+	font-weight: bold;
+	text-decoration: underline;
+}
+.link-in-alert:hover{
+	color:black;
 }
