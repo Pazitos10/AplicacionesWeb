@@ -3,10 +3,10 @@ html(ng-app='bookSearchClient')
     head
         title= title
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
-        link(rel='icon', type="image/svg", href='/img/book-logo-2.svg', color="#000")
+        link(rel='icon', type="image/svg", href='/img/logo.svg', color="#ff851b")
         link(rel='stylesheet', href='/css/bootstrap.min.css')
         link(rel='stylesheet', href='/css/styles.css')
-        link(href='https://fonts.googleapis.com/css?family=Rock+Salt' rel='stylesheet' type='text/css')
+        link(href='https://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css')
         script(src="https://code.jquery.com/jquery-2.1.1.min.js")
         script(src="/js/bootstrap.min.js")
         script(src="/js/jquery.bsAlerts.min.js")
@@ -20,11 +20,11 @@ html(ng-app='bookSearchClient')
                             span( class="icon-bar")
                             span( class="icon-bar")
                             span( class="icon-bar")
-                        .logo: include ../public/img/book-logo-2.svg
+                        .logo
                         a(class="navbar-brand" href="/") Book Search 
                     .collapse.navbar-collapse#bs-example-navbar-collapse-1
                         ul.nav.navbar-nav
-                            li.active: a(href="/libros/coleccion") Favoritos 
+                            li.active: a(href="/libros/coleccion") Colección 
                                             span.sr-only (current)
                             li: a(href="/libros/buscar") Buscar
             .body-content

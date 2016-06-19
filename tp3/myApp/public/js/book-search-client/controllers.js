@@ -33,12 +33,15 @@ function SearchBookController($scope, $http, $routeParams) {
     $scope.resultados = {};
     $scope.busqueda = false;
     $scope.sendForm = function () {
+        $scope.buscando = true;
         //console.log('[SearchBookController]: ', $scope.form);
         $http.post('/books/search', $scope.form)
             .then(function(result) {
                 $scope.busqueda = true;
+                $scope.buscando = false;
                 $scope.resultados = result.data.resultados;
             }, function(){
+                $scope.buscando = false;
                 console.log('SearchBookController: hubo un error');
             });
     };

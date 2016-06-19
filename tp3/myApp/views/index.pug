@@ -4,11 +4,13 @@ block navigation_bar
     .landing-content
         .container
             .row
-                .col-lg-8.col-lg-offset-2.logo-container
-                    include ../public/img/book-logo-2.svg 
-                    h1.text-center Book Search
+                .col-lg-8.col-lg-offset-2.col-xs-12
+                        .logo-container
+                            h1.text-center Book Search
+                        input(type="text", class="form-control", style="margin-bottom:20px")
             .row
-                .col-lg-8.col-lg-offset-2
-                    .landing-options
-                        a(href="/libros/coleccion" class="btn btn-warning") Ver mi Colección
-                        a(href="/libros/buscar" class="btn btn-warning") Buscar un Libro
+                .col-lg-8.col-lg-offset-2.col-xs-12.text-center
+                    .col-xs-6
+                        a(href="/libros/coleccion" class="btn btn-default") Ver mi Colección
+                    .col-xs-6
+                        a(href="/libros/buscar" class="btn btn-default") Buscar un Libro

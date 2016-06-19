@@ -1,127 +1,333 @@
 @charset "UTF-8";
+@keyframes fade {
+  0%,100% { opacity: 0 }
+  50% { opacity: 1 }
+}
 .body-content{
+    font-family: 'Special Elite', cursive;
     padding-top: 80px;
     background-color: #FFFFFF;
 }
 
-.navbar-header{
-	display: flex;
-	align-items: center;
-	justify-content: space-between; 
+.navbar, .logo-container{
+    font-family: 'Special Elite', cursive;
+    font-size: 16px;
 }
 
-.navbar{
-	font-family: 'Rock Salt', cursive;
-	font-size: 11px;
+.navbar-brand{
+    font-size: 18px;
+    font-weight: bold; 
 }
 
 #btn-hamburger{
-	order:1;
+    order:1;
 }
-
-.logo{
-	display: inline-block;
-    margin-right: 10px;
-}
-
-.logo svg{
-	height: 36px;
-	width: 36px;
-}
-.logo svg g{
-	fill: #ff851b;
-};
 
 .custom-input{
-	font-size: 16px !important;
+    font-size: 16px !important;
 }
 
 .cabecera-tabla{
-	font-size: 16px;
+    font-size: 16px;
 }
 .cabecera-tabla th{
-	text-align: center;
+    text-align: center;
 }
 
 .item-libro{
-	overflow:hidden;
+    overflow:hidden;
 }
 
 .tapa-libro{
-	max-height: 150px;
-	max-width: 120px;
+    max-height: 150px;
+    max-width: 120px;
 }
 
 .item-info-xs {
-	height: auto;
-	display: flex;
-	flex-direction: column;
-	width: 70%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    width: 70%;
 }
 .item-info-xs p{
-	font-size: 20px;
-	word-break: break-word;
+    font-size: 20px;
+    word-break: break-word;
 }
 
 .options{
-	margin-top: 75px;
+    margin-top: 75px;
 }
 
 .options button{
-	margin-right: 10px
+    margin-right: 10px
 }
 
 .precio{
-	font-size: 24px
+    font-size: 24px
 }
 
 .landing-content{
-	width: 100vw;
-	height: 100vh;
-	background-color: rgba(255,255,255,.6);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.landing-content .form-container{
-	width: 100%;
-}
-
-.landing-options{
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	padding: 10px
-}
-.landing-options a{
-	margin-right: 20px;
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Special Elite', cursive;
+    background-image: url('/img/background.jpg');
+    background-color: rgba(255,120,10,.5);
+    background-blend-mode: multiply;
+    background-size: cover;
+    background-position: center center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 
 .logo-container{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-family: 'Rock Salt', cursive;
-	font-weight: bold;
-	margin-bottom: 20px;
-}
-.logo-container svg{
-	width: 70px;
-	height: 70px;
-	margin-right: 10px;
-}
-.logo-container svg g{
-	/*fill: rgba(255,255,255,.8);*/
-	fill: #ff851b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
+.logo-container h1{
+    color:rgba(0,0,0,.8);
+    font-weight: bold;
+}
+
+.logo-container::before {
+    content: '';
+    width: 10px;
+    height: 70px;
+    position: absolute;
+    left: 65%;
+    bottom: 52%;
+    border-radius: 3px;
+    background-color: #333333;
+    display: inline-block;
+    transform: rotate(-67deg);
+    box-shadow: 1px 1px 7px 1px rgba(0, 0, 0, 0.25);
+}
+
+.logo-container::after {
+    content: '';
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    left: 28.8%;
+    bottom: 63%;
+    border-radius: 50%;
+    /* z-index: -1; */
+    box-shadow: 0 0 0 7px rgba(255, 200, 0, 1), 0 0 7px 7px rgba(0, 0, 0, 0.25), inset 0 0 40px 2px rgba(0, 0, 0, 0.25);
+    display: inline-block;
+    background: rgba(255,200,0,.15);
+}
+
+.logo::after {
+    content: '';
+    width: 30px;
+    height: 30px;
+    bottom: 25%;
+    left: 5%;
+    position: absolute;
+    border-radius: 50%;
+    /* z-index: -1; */
+    box-shadow: 0 0 0 2px rgba(255, 200, 0, 1), 0 0 7px 2px rgba(0, 0, 0, 0.25), inset 0 0 40px 2px rgba(0, 0, 0, 0.25);
+    display: inline-block;
+    background: rgba(255,200,0,.15);
+}
+
+.logo::before{
+    content: '';
+    width: 4px;
+    height: 25px;
+    position: absolute;
+    left: 17%;
+    bottom: 5%;
+    border-radius: 3px;
+    background-color: #333333;
+    display: inline-block;
+    transform: rotate(-67deg);
+    box-shadow: 1px 1px 7px 1px rgba(0, 0, 0, 0.25);
+}
+
+.buscando{
+    margin-top: 20px;
+    text-align: center;
+    opacity: 1;
+    animation: fade 2s linear infinite;
+}
+.buscando .logo::after{
+    bottom: 5%;
+    left: 35%;
+}
+.buscando .logo::before{
+    bottom: -3%;
+    left: 49%;
+}
+
+@media (min-width: 350px) {
+    .logo-container::before {
+        left: 64.5%;
+        bottom: 52%;
+    }
+    .logo-container::after{
+        left: 32.8%;
+    }
+    .logo::after{
+        left: 5%;
+        top: 7px;
+    }
+    
+    .logo::before{
+        left: 16%;
+        top:22px;
+    }
+    
+    .buscando .logo::after{
+        left: 36%;
+        top: 71%;
+    }
+    .buscando .logo::before{
+        left: 49%;
+        top: 83%;
+    }
+
+}
+
+@media (min-width: 375px) {
+    .logo-container::before {
+        left: 64%;
+        bottom: 52%;
+    }
+    .logo-container::after{
+        left: 32.8%;
+    }
+    .logo::after{
+        left: 4.5%;
+    }
+    .logo::before{
+        left: 15%;
+    }
+    .buscando .logo::after{
+        left: 37%;
+    }
+    .buscando .logo::before{
+        left:49.1%;
+    }
+}
+
+@media (min-width: 425px) {
+    .logo-container::before {
+        left: 34%;
+        bottom: 36%;
+        transform: rotate(-67deg);
+    }
+    .logo-container::after {
+        left: 5%;
+        bottom: 50%;
+    }
+    .logo::after{
+        left: 4%;
+    }
+    .logo::before{
+        left: 13%;
+    }
+    .buscando .logo::after{
+        left: 38.5%;
+    }
+    .buscando .logo::before{
+        left: 49.5%;
+    }
+}
+
+@media (min-width: 768px) {
+    .logo-container::before {
+        left: 42%;
+        bottom: 34%;
+        transform: rotate(-67deg);
+    }
+    .logo-container::after {
+        left: 27%;
+        bottom: 50%;
+    }
+    .logo::after {
+        bottom: 25%;
+        left: 2%;
+    }
+    .logo::before{
+        left: 7%;
+        bottom: 5%;
+    }
+    .buscando .logo::after{
+        left: 43.5%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .logo-container::before {
+        left: 44%;
+    }
+    .logo-container::after {
+        left: 32%;
+    }
+    .logo::after{
+        left:1.7%;
+    }
+    .logo::before{
+        left:5.4%;
+    }
+    .buscando .logo::after{
+        left: 44.8%;
+    }
+
+}
+
+@media (min-width: 1366px) {
+    .logo-container::before {
+        left: 42%;
+    }
+    .logo-container::after {
+        left: 27%;
+    }
+    .logo::after{
+        left:1.2%;
+    }
+    .logo::before{
+        left:4%;
+    }
+
+    .buscando .logo::after{
+        left: 39.5%;
+    }
+}
+/*TODO: dar vuelta mango de lupa en landing page*/
+
+@media (min-width: 1440px) {
+    .logo-container::before{
+        left: 42.5%;
+    }
+    .logo-container::after{
+        left:27.5%;
+    }
+    .logo::after{
+        left:1.2%;
+    }
+    .logo::before{
+        left:3.8%;
+    }
+}
+
+
+.logo-container * {
+    font-size: 60px;
+}
+
+
 .link-in-alert{
-	color:white;
-	font-weight: bold;
-	text-decoration: underline;
+    color:white;
+    font-weight: bold;
+    text-decoration: underline;
 }
 .link-in-alert:hover{
-	color:black;
+    color:black;
 }
+

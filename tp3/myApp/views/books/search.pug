@@ -10,7 +10,10 @@ block content
                     label(for="search_term") #[h4 ¿Qué libro estás buscando?]
                     input(id='search_term', name='search_term', type='text', 
                             placeholder='Ej.: El principito', ng-model="form.search_term", class="form-control custom-input", valor="form.search_term", required="")
-        
+            div(ng-show="buscando" ng-cloak)
+                .buscando
+                    .logo
+                    h4 Buscando
         include results.pug
 
     include modal.pug

@@ -1,5 +1,5 @@
 .col-xs-12.col-lg-8.col-lg-offset-2
-    div(ng-if="resultados && resultados.length > 0")
+    div(ng-if="resultados && resultados.length > 0" ng-cloak)
         br
         h4.text-center <strong>{{resultados.length}}</strong> resultados para "{{form.search_term}}"
         br
@@ -28,6 +28,6 @@
                                 ${{resultado.saleInfo.retailPrice.amount}}
                             p(ng-if="!resultado.saleInfo")
                                 No disponible
-    div(ng-if="resultados && resultados.length === 0 && busqueda")
+    div(ng-if="resultados && resultados.length === 0 && busqueda" ng-cloak)
         br
         h4.text-center No se encontraron resultados para "{{form.search_term}}"
