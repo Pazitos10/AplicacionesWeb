@@ -1,4 +1,4 @@
-.col-xs-12.col-lg-8.col-lg-offset-2
+div(class="col-xs-12 col-lg-8 col-lg-offset-2", ng-controller="ShowBookController")
     div(ng-if="resultados && resultados.length > 0" ng-cloak)
         br
         h4.text-center <strong>{{resultados.length}}</strong> resultados para "{{form.search_term}}"
@@ -18,7 +18,7 @@
                         .hidden-xs.options
                             button(type="button", class="btn btn-primary ver-btn",ng-attr-data-id="{{resultado.id}}", ng-click="showBook()")
                                 <span class="glyphicon glyphicon-eye-open"></span> Ver más
-                            button(type="button", class="btn btn-info")
+                            a(ng-if="resultado.saleInfo.retailPrice", type="button", class="btn btn-info", href="https://play.google.com/store/books/details?id={{resultado.id}}&amp;rdid=book-{{resultado.id}}&amp;rdot=1&amp;source=gbs_atb&amp;pcampaignid=books_booksearch_atb'")
                                 <span class="glyphicon glyphicon-shopping-cart"></span> Comprar
                         .visible-xs.options
                             button(type="button", class="btn btn-warning ver-btn", ng-attr-data-id="{{resultado.id}}", ng-click="showBook()") ver más
@@ -26,8 +26,8 @@
                     td(class="hidden-xs precio text-center" style="vertical-align:middle")
                             p(ng-if="resultado.saleInfo && resultado.saleInfo.retailPrice").
                                 ${{resultado.saleInfo.retailPrice.amount}}
-                            p(ng-if="!resultado.saleInfo")
-                                No disponible
+                            p(ng-if="!resultado.saleInfo.retailPrice").
+                             No disponible
     div(ng-if="resultados && resultados.length === 0 && busqueda" ng-cloak)
         br
         h4.text-center No se encontraron resultados para "{{form.search_term}}"

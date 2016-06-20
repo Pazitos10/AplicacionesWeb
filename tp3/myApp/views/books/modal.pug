@@ -6,8 +6,19 @@ div(id="modal-info-libro" class="modal fade" tabindex="-1" role="dialog")
                     span( aria-hidden="true") &times;
                 h4( class="modal-title"): .titulo
             .modal-body
-                p.subtitulo
-                p.descripcion
+                ul(class="nav nav-tabs")
+                    li( class="active")
+                        a(href="#info" data-toggle="tab" aria-expanded="true") Compra
+                    li(class="")
+                        a(href="#descripcion" data-toggle="tab" aria-expanded="false") Descripción
+                #myTabContent.tab-content
+                    .tab-pane.fade.active.in#info.text-center
+                        img(src="", class="thumb")
+                        .compra
+                        table.info.table.table-responsive.table-striped.text-left
+                            tbody
+                    .tab-pane.fade#descripcion
+                        p.descripcion
             .modal-footer
                 button( type="button" class="btn btn-default" data-dismiss="modal") Close
                 button( type="button" class="btn btn-primary") Save changes
