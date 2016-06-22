@@ -1,15 +1,14 @@
 extends ../layout
 
 block content
+    input(type="hidden", value=search_term, id="hidden_search_term")
     div(ng-controller="SearchBookController")
         div(class="col-xs-10 col-xs-offset-1 col-lg-4 col-lg-offset-4")
-            .container-fluid
-                div(data-alerts="alerts")
             form(id="search-form", ng-submit="sendForm()")
                 .form-group.text-center
                     label(for="search_term") #[h4 ¿Qué libro estás buscando?]
                     input(id='search_term', name='search_term', type='text', 
-                            placeholder='Ej.: El principito', ng-model="form.search_term", class="form-control custom-input", valor="form.search_term", required="")
+                            placeholder='Ej.: El principito', ng-model="form.search_term", class="form-control custom-input", required="", value="")
             div(ng-show="buscando" ng-cloak)
                 .buscando
                     .logo
@@ -19,17 +18,15 @@ block content
     include modal.pug
 
 block scripts
-    script.
-        
-        $(".fav-btn").bind('click', function(){
-            var id = $(this).data('id');
-            $.ajax({
-                url: '/books/save/' + id,
-                type: 'post'
-            }).done(function(data){
-                console.log("succeed!");
-                window.location.assign('/');
-            }).fail(function(error){
-                console.log("error!", error.responseText);
-            });
-        });
+        //- $(".fav-btn").bind('click', function(){
+        //-     var id = $(this).data('id');
+        //-     $.ajax({
+        //-         url: '/books/save/' + id,
+        //-         type: 'post'
+        //-     }).done(function(data){
+        //-         console.log("succeed!");
+        //-         window.location.assign('/');
+        //-     }).fail(function(error){
+        //-         console.log("error!", error.responseText);
+        //-     });
+        //- });

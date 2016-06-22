@@ -1,18 +1,21 @@
 div(class="col-xs-12 col-lg-8 col-lg-offset-2", ng-controller="ShowBookController")
-    div(ng-if="resultados && resultados.length > 0" ng-cloak)
+    div(ng-if="resultados.length > 0" ng-cloak)
         br
         h4.text-center <strong>{{resultados.length}}</strong> resultados para "{{form.search_term}}"
         br
-        table.table.table-striped
+        table( class="table table-striped" ng-controller="SaveBookController")
             thead.cabecera-tabla
                 tr: th Portada
                     th Título
                     th.hidden-xs Precio
             tbody
                 tr(ng-repeat="resultado in resultados")
-                    td(ng-if="resultado.thumbnail"): img(ng-src="{{resultado.thumbnail}}", class="tapa-libro")
-                    td(ng-if="!resultado.thumbnail && resultado.imageLinks"): img(ng-src="resultado.imageLinks.thumbnail", class="tapa-libro")
-                    td(ng-if="!resultado.thumbnail && !resultado.imageLinks"): img(ng-src='http://fillmurray.com/220/314', class="tapa-libro")
+                    td(ng-if="resultado.thumbnail")
+                        span(class="overlay libro-item", ng-click="saveBook(resultado.id)" , id="overlay-libro-{{resultado.id}}", title='Guardar en coleccion')
+                        img(ng-src="{{resultado.thumbnail}}", class="tapa-libro")
+                    td(ng-if="!resultado.thumbnail && !resultado.imageLinks")
+                        span(class="overlay libro-item", ng-click="saveBook(resultado.id)" , id="overlay-libro-{{resultado.id}}", title='Guardar en coleccion')
+                        img(ng-src='http://placehold.it/120/150?text=No%20Disponible', class="tapa-libro")
                     td.item-info-xs 
                         p {{resultado.title}}
                         .hidden-xs.options
@@ -24,10 +27,20 @@ div(class="col-xs-12 col-lg-8 col-lg-offset-2", ng-controller="ShowBookControlle
                             button(type="button", class="btn btn-warning ver-btn", ng-attr-data-id="{{resultado.id}}", ng-click="showBook()") ver más
 
                     td(class="hidden-xs precio text-center" style="vertical-align:middle")
-                            p(ng-if="resultado.saleInfo && resultado.saleInfo.retailPrice").
-                                ${{resultado.saleInfo.retailPrice.amount}}
-                            p(ng-if="!resultado.saleInfo.retailPrice").
-                             No disponible
-    div(ng-if="resultados && resultados.length === 0 && busqueda" ng-cloak)
+                            span(ng-if="resultado.saleInfo.retailPrice", class="precio-background")
+                                p.precio-vta.
+                                    ${{resultado.saleInfo.retailPrice.amount}}
+                            span(ng-if="!resultado.saleInfo.retailPrice")
+                                p.precio-vta.no-disponible.
+                                    No disponible
+    div(ng-if="resultados.length === 0 && es_busqueda" ng-cloak)
         br
         h4.text-center No se encontraron resultados para "{{form.search_term}}"
+
+    script.
+        $('.libro-item').each(function(){
+            console.log($(this));
+            $(this).bind('click', function(){
+                console.log('guardo', $(this).data('libro-id'));
+            });
+        });

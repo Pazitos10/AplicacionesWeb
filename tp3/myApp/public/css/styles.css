@@ -3,6 +3,13 @@
   0%,100% { opacity: 0 }
   50% { opacity: 1 }
 }
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('../fonts/glyphicons-halflings-regular.ttf') format('truetype');
+  src: url("../fonts/glyphicons-halflings-regular.woff") format('woff');
+  src: url('../fonts/glyphicons-halflings-regular.woff2') format('woff2');
+}
+
 .body-content{
     font-family: 'Special Elite', cursive;
     padding-top: 80px;
@@ -168,6 +175,35 @@
     left: 49%;
 }
 
+.precio .precio-background{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.precio .precio-background-modal{
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.precio .precio-background-modal::after,
+.precio .precio-background::after{
+    content: "";
+    display: inline-block;
+    background: rgba(249, 236, 49, 0.5);
+    height: 36px;
+    width: 100px;
+    z-index: 0;
+    position: absolute;
+    right: 6%;
+    -webkit-transform: rotate(24deg) skewY(-24deg);
+    transform: rotate(18deg) skewY(-24deg);
+}
+
+.precio .precio-background-modal::after{
+    right: 34%;
+}
+
 @media (min-width: 350px) {
     .logo-container::before {
         left: 64.5%;
@@ -217,6 +253,9 @@
     .buscando .logo::before{
         left:49.1%;
     }
+    .precio .precio-background-modal::after{
+        right: 36%;
+    }
 }
 
 @media (min-width: 425px) {
@@ -241,6 +280,9 @@
     .buscando .logo::before{
         left: 49.5%;
     }
+    .precio .precio-background-modal::after{
+        right: 38%;
+    }
 }
 
 @media (min-width: 768px) {
@@ -263,6 +305,9 @@
     }
     .buscando .logo::after{
         left: 43.5%;
+    }
+    .precio .precio-background-modal::after{
+        right: 41%;
     }
 }
 
@@ -357,12 +402,46 @@
     align-items: center;
 }
 
-#modal-info-libro .compra .precio {
-    background: gold;
-}
-
 #modal-info-libro .thumb{
     text-align: center;
     width: 200px;
     margin-top: 10px;
+}
+
+span.overlay {
+    /*background: center center no-repeat rgba(0,0,0,.75);*/
+    background: center center no-repeat rgba(0,0,0,.60);
+    border-radius: 3px;
+    height: 150px;
+    position: absolute;
+    width: 120px;
+    z-index: 10;
+    -webkit-box-shadow: 0px 0px 4px #000;
+    -moz-box-shadow: 0px 0px 4px  #000;
+    box-shadow: 0px 0px 4px  #000;
+    opacity: 0;
+    transition: opacity .25s ease;
+}
+span.overlay:hover {
+    opacity: 1;
+}
+span.overlay:hover::before{
+    font-family: 'Glyphicons Halflings';
+    content: "\e166";
+    text-shadow: 0px 0px 5px black;
+    height: 100%;
+    border-radius: 5px;
+    font-size: 24px;
+    color: white;
+    position: absolute;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.precio .precio-vta{
+    z-index: 1;
+    font-weight: bold;
 }
