@@ -6,10 +6,11 @@ html(ng-app='bookSearchClient')
         link(rel='icon', type="image/svg", href='/img/logo.svg', color="#ff851b")
         link(rel='stylesheet', href='/css/bootstrap.min.css')
         link(rel='stylesheet', href='/css/styles.css')
+        link(rel="stylesheet" href="http://s.mlcdn.co/animate.css")
         link(href='https://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css')
         script(src="https://code.jquery.com/jquery-2.1.1.min.js")
-        script(src="/js/bootstrap.min.js")
-        script(src="/js/jquery.bsAlerts.min.js")
+        script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js")
+        script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js")
     body
         block navigation_bar
             nav.navbar.navbar-default.navbar-fixed-top
@@ -32,9 +33,10 @@ html(ng-app='bookSearchClient')
                     .row
                         block content
         
-        script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js")
-        script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js")
+        
+        script(src="/js/bootstrap.min.js")
+        script(src="/js/jquery.bsAlerts.min.js")
         script(src="/js/book-search-client/client-app.js")
         script(src="/js/book-search-client/controllers.js")
-        script(src="/js/book-search-client/services.js")
+        script(src="/js/jssor.slider.mini.js")
         block scripts

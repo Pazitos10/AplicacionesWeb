@@ -2,14 +2,16 @@ var mongoose = require('mongoose');
 var Libro = mongoose.model('Libro');
 var books = require('google-books-search');
 
+
+function get_libros(filtro) {
+    var condicion = filtro ? {'data.title': new RegExp(filtro,'i') } : {};
+    return Libro.find(condicion); //.select('data.title -_id');
+}
+
 exports.books = function(req, res, next) {
-    var titulos = [];
-    Libro.find({}, function(err, libros) {
-        libros.forEach(function(libro){
-            titulos.push(libro.data.title);
-        })
-        res.json({ books: titulos});  
-    });
+    get_libros().exec().then(function (libros) {
+        res.json({ books: libros });
+    })
 }
 
 exports.show = function(req, res, next) {
@@ -17,7 +19,6 @@ exports.show = function(req, res, next) {
     if(book_id){
         books.lookup(book_id, function(error, result) {
             res.json({ book: result });
-            //res.status(200).send({ book: result });
         });
     }else
         res.json({ book: "error: especificar un id de libro correcto"});
@@ -25,16 +26,16 @@ exports.show = function(req, res, next) {
 
 exports.search = function (req, res, next) {
     if (req.method === "GET"){
-        res.json({ resultados: [] });
-        //res.render('books/search', { title: 'Books', termino: '', resultados: [], busqueda: false });
+        res.json({ resultados: [], resultados_db: [] });
     } else {
-        //console.log("Server: ",req);
         var termino = req.body.search_term;
         var options = {'limit': 40};
-        books.search(termino, options, function(error, results) {
-            if ( ! error )
-                //res.render('books/search', {title: 'Books', resultados: results, termino: termino, busqueda: true})
-                res.json({resultados: results});
+        get_libros(termino).exec().then(function (resultados_db) {
+            books.search(termino, options, function(error, results) {
+                if ( ! error ){
+                    res.json({resultados: results, resultados_db: resultados_db});
+                }
+            });
         });
     }
 }

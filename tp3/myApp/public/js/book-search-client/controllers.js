@@ -87,6 +87,7 @@ function SearchBookController($scope, $http, $routeParams) {
                 $scope.es_busqueda = true;
                 $scope.buscando = false;
                 $scope.resultados = result.data.resultados;
+                $scope.resultados_db = result.data.resultados_db;
             }, function(){
                 $scope.buscando = false;
                 console.log('SearchBookController: hubo un error');

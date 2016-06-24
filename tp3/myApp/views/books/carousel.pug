@@ -1,0 +1,36 @@
+div(id="libros-slide",class="carousel slide carousel-coleccion",data-ride="carousel")
+    ol.carousel-indicators
+      li(data-target="#libros-slide", data-slide-to="0", class="active")
+      li(data-target="#libros-slide", data-slide-to="1")
+      li(data-target="#libros-slide", data-slide-to="2")
+
+    div(class="carousel-inner", role="listbox")
+        div(ng-repeat="resultado_db in resultados_db", class="item db-slide", ng-class="{'item active': $first}", data-id="{{resultado_db.data.id}}")
+            img(ng-src="{{resultado_db.data.imageLinks.medium}}", alt="", width="120", height="150", onload="change_name()")
+            input(type="hidden", class="hidden-caption", value="{{resultado_db.data.title}}")
+
+    <!-- Controls -->
+    a(class="left carousel-control", href="#libros-slide", role="button", data-slide="prev")
+        span(class="glyphicon glyphicon-chevron-left", aria-hidden="true")
+        span(class="sr-only") Previous
+
+    a(class="right carousel-control", href="#libros-slide", role="button" data-slide="next")
+        span(class="glyphicon glyphicon-chevron-right", aria-hidden="true")
+        span(class="sr-only") Next
+
+p.carousel-description.text-center
+
+script.
+    $('.carousel').bind('slide.bs.carousel', function (e) {
+        $('.carousel-description').removeClass('animated fadeIn');
+    });
+    $('.carousel').bind('slid.bs.carousel', function (e) {
+        $('.carousel-description').addClass('animated fadeIn');
+        change_name();
+    });
+
+    function change_name(){
+        $('.carousel-description')[0]
+            .innerHTML = $('.item.active').find('.hidden-caption').val();
+    }
+        

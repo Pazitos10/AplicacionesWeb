@@ -46,6 +46,8 @@
 }
 
 .tapa-libro{
+    height: 150px;
+    width: 120px;
     max-height: 150px;
     max-width: 120px;
 }
@@ -444,4 +446,36 @@ span.overlay:hover::before{
 .precio .precio-vta{
     z-index: 1;
     font-weight: bold;
+}
+
+.carousel-coleccion{
+    min-height: 200px;
+}
+
+.carousel-coleccion .carousel-inner{
+    height: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel-coleccion .carousel-control{
+    color: black
+}
+
+.carousel-coleccion .carousel-control.left,
+.carousel-coleccion .carousel-control.right{
+    background: transparent;
+}
+
+.carousel-coleccion .carousel-indicators{
+    display: none;
+}
+
+.carousel-description{
+    color: black;
+    position: relative;
+    width: 100%;
+    margin-top: 10px;
 }
