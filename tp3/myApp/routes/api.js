@@ -24,6 +24,26 @@ exports.show = function(req, res, next) {
         res.json({ book: "error: especificar un id de libro correcto"});
 }
 
+exports.like = function(req, res, next) {
+    var book_id = req.params.id;
+    vote(book_id, 1);
+}
+
+exports.dislike = function(req, res, next) {
+    var book_id = req.params.id;
+    vote(book_id, 0);
+}
+
+function vote(id, incremento) {
+    if(id){
+        Libro.update({'data.id': id}, {$inc: {votos_total: 1, votos_positivos: incremento}} , function (err, raw) {
+              if (err) return handleError(err);
+              console.log('The raw response from Mongo was ', raw);
+            });
+    }else
+        res.json({ book: "error: especificar un id de libro correcto"});
+}
+
 exports.search = function (req, res, next) {
     if (req.method === "GET"){
         res.json({ resultados: [], resultados_db: [] });
@@ -45,14 +65,14 @@ exports.save = function (req, res, next) {
     if(book_to_save){
         books.lookup(book_to_save, function(error, result) {
             if (result){
-/*                new Libro({
-                    valoracion : 5,
-                    precio: 1000.50,
+                new Libro({
+                    votos_positivos : 0,
+                    votos_total : 0,
                     data: result
                 }).save(function(err, libro, count){
-                    //console.log(libro, "Guardado!");
+                    console.log(libro, "Guardado!");
                 })
-*/              res.json({msg: "Libro Guardado!"})
+              res.json({msg: "Libro Guardado!"})
             }else
                 res.json({msg: "Error: no se encontro el id: "+ book_to_save })
         });

@@ -15,7 +15,7 @@ function SaveBookController($scope, $http, $location) {
     $scope.form = {};
     $scope.saveBook = function (id) {
         console.log('llame a guardar', id);
-        $http.post('/books/save', $scope.form)
+        $http.post('/books/save/'+id, $scope.form)
             .success(function(data) {
                 $location.path('/');
             });
