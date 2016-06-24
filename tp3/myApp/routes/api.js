@@ -26,22 +26,16 @@ exports.show = function(req, res, next) {
 
 exports.like = function(req, res, next) {
     var book_id = req.params.id;
-    vote(book_id, 1);
+    Libro.findOneAndUpdate({'data.id': book_id}, {$inc: {votos_total: 1, votos_positivos: 1}}, {new: true}, function(err, result){
+            return res.json({modified: true, type: 'like', book: result}); 
+    });
 }
 
 exports.dislike = function(req, res, next) {
     var book_id = req.params.id;
-    vote(book_id, 0);
-}
-
-function vote(id, incremento) {
-    if(id){
-        Libro.update({'data.id': id}, {$inc: {votos_total: 1, votos_positivos: incremento}} , function (err, raw) {
-              if (err) return handleError(err);
-              console.log('The raw response from Mongo was ', raw);
-            });
-    }else
-        res.json({ book: "error: especificar un id de libro correcto"});
+    Libro.findOneAndUpdate({'data.id': book_id}, {$inc: {votos_total: 1, votos_positivos: 0}}, {new: true}, function(err, result){
+            return res.json({modified: true, type: 'dislike', book: result}); 
+    });
 }
 
 exports.search = function (req, res, next) {
