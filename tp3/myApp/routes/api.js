@@ -27,7 +27,7 @@ exports.show = function(req, res, next) {
 exports.later = function(req, res, next) {
     var book_id = req.params.id;
     Libro.findOneAndUpdate({'data.id': book_id}, {$inc: {later: 1}}, {new: true}, function(err, result){
-        return res.json({modified: true, type: 'later', book: result});
+            return res.json({modified: true, type: 'later', book: result}); 
     });
 }
 
@@ -35,14 +35,14 @@ exports.later = function(req, res, next) {
 exports.like = function(req, res, next) {
     var book_id = req.params.id;
     Libro.findOneAndUpdate({'data.id': book_id}, {$inc: {votos_total: 1, votos_positivos: 1}}, {new: true}, function(err, result){
-        return res.json({modified: true, type: 'like', book: result});
+            return res.json({modified: true, type: 'like', book: result}); 
     });
 }
 
 exports.dislike = function(req, res, next) {
     var book_id = req.params.id;
     Libro.findOneAndUpdate({'data.id': book_id}, {$inc: {votos_total: 1, votos_positivos: 0}}, {new: true}, function(err, result){
-        return res.json({modified: true, type: 'dislike', book: result});
+            return res.json({modified: true, type: 'dislike', book: result}); 
     });
 }
 
@@ -65,33 +65,19 @@ exports.search = function (req, res, next) {
 exports.save = function (req, res, next) {
     var book_to_save = req.params.id;
     if(book_to_save){
-        books.lookup(book_to_save, function(err, result) {
-            //Me fijo que el libro no exista ya en la base de datos
-            if (err) {
-                console.log("Error ", err);
-            } else {
-                if (!result) {
-                    var libro = Libro.find({'data.id': book_to_save}, function (err, result) {
-                        if (result) {
-                            new Libro({
-                                votos_positivos: 0,
-                                votos_total: 0,
-                                data: result
-                            }).save(function (err, libro, count) {
-                                console.log(libro, "Guardado!");
-                            });
-                            res.json({msg: "Libro Guardado!"})
-                        } else
-                            res.json({msg: "Error: no se encontro el id: " + book_to_save})
-
-
-                    });
-                } else {
-                    res.json({msg: "El Libro ya se encuentra en tu colección"});
-                }
-            }
+        books.lookup(book_to_save, function(error, result) {
+            if (result){
+                new Libro({
+                    votos_positivos : 0,
+                    votos_total : 0,
+                    data: result
+                }).save(function(err, libro, count){
+                    console.log(libro, "Guardado!");
+                })
+              res.json({msg: "Libro Guardado!"})
+            }else
+                res.json({msg: "Error: no se encontro el id: "+ book_to_save })
         });
-    } else {
-        res.json({msg: "Error: especificar un id de libro correcto"});
-    }
+    }else
+        res.json({msg: "Error: especificar un id de libro correcto" });
 }
