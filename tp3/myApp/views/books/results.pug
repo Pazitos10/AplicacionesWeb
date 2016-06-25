@@ -27,12 +27,12 @@ div(class="col-xs-12 col-lg-8 col-lg-offset-2", ng-controller="ShowBookControlle
                 tbody
                     tr(ng-repeat="resultado in resultados")
                         td(ng-if="resultado.thumbnail")
-                            span(class="overlay libro-item", ng-click="saveBook(resultado.id)" , id="overlay-libro-{{resultado.id}}", title='Guardar en coleccion')
+                            span(class="overlay libro-item save", ng-click="saveBook(resultado.id)" , id="overlay-libro-{{resultado.id}}", title='Guardar en coleccion')
                             img(ng-src="{{resultado.thumbnail}}", class="tapa-libro")
                         td(ng-if="!resultado.thumbnail && !resultado.imageLinks")
-                            span(class="overlay libro-item", ng-click="saveBook(resultado.id)" , id="overlay-libro-{{resultado.id}}", title='Guardar en coleccion')
+                            span(class="overlay libro-item save", ng-click="saveBook(resultado.id)" , id="overlay-libro-{{resultado.id}}", title='Guardar en coleccion')
                             img(ng-src='http://placehold.it/120/150?text=No%20Disponible', class="tapa-libro")
-                        td.item-info-xs 
+                        td.item-info-xs
                             p {{resultado.title}}
                             .hidden-xs.options
                                 button(type="button", class="btn btn-primary ver-btn",ng-attr-data-id="{{resultado.id}}", ng-click="showBook()")
