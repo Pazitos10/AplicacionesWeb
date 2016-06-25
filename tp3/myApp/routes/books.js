@@ -13,5 +13,6 @@ router.post('/save/:id', api.save);
 
 router.post('/vote/like/:id', api.like);
 router.post('/vote/dislike/:id', api.dislike);
+router.post('/vote/later/:id', api.later);
 
 module.exports = router;

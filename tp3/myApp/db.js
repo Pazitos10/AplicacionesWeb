@@ -5,6 +5,7 @@ var Libro = new Schema({
 	id: Schema.Types.ObjectId,
 	votos_positivos: Schema.Types.Number,
 	votos_total: Schema.Types.Number,
+	later: Schema.Types.Number,
 	data: Schema.Types.Mixed
 });
 

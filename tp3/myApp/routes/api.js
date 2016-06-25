@@ -24,6 +24,14 @@ exports.show = function(req, res, next) {
         res.json({ book: "error: especificar un id de libro correcto"});
 }
 
+exports.later = function(req, res, next) {
+    var book_id = req.params.id;
+    Libro.findOneAndUpdate({'data.id': book_id}, {$inc: {later: 1}}, {new: true}, function(err, result){
+            return res.json({modified: true, type: 'later', book: result}); 
+    });
+}
+
+
 exports.like = function(req, res, next) {
     var book_id = req.params.id;
     Libro.findOneAndUpdate({'data.id': book_id}, {$inc: {votos_total: 1, votos_positivos: 1}}, {new: true}, function(err, result){
