@@ -5,8 +5,9 @@ div(id="libros-slide",class="carousel slide carousel-coleccion",data-ride="carou
       li(data-target="#libros-slide", data-slide-to="2")
 
     div(class="carousel-inner", role="listbox")
-        div(ng-repeat="resultado_db in resultados_db", class="item db-slide", ng-class="{'item active': $first}", data-id="{{resultado_db.data.id}}")
-            img(ng-src="{{resultado_db.data.thumbnail}}", alt="", width="120", height="150", onload="change_name()")
+        div(ng-repeat="resultado_db in resultados_db", class="item db-slide", ng-class="{'item active': $first}", data-id="{{resultado_db.data.id}}") p()
+            span(class="overlay libro-item vote", ng-click="like(resultado.id)" , id="overlay-libro-{{resultado.id}}", title='Votar')
+            img(ng-src="{{resultado_db.data.thumbnail}}", alt="Portada", width="120", height="150", onload="change_name()")
             input(type="hidden", class="hidden-caption", value="{{resultado_db.data.title}}")
 
     <!-- Controls -->

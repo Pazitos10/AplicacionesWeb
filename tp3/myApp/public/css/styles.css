@@ -438,7 +438,6 @@ span.overlay:hover {
 }
 span.overlay:hover::before{
     font-family: 'Glyphicons Halflings';
-    content: "\e166";
     text-shadow: 0px 0px 5px black;
     height: 100%;
     border-radius: 5px;
@@ -450,6 +449,14 @@ span.overlay:hover::before{
     align-items: center;
     justify-content: center;
     width: 100%;
+}
+
+span.overlay.save:hover::before{
+    content: "\e166";
+}
+
+span.overlay.vote:hover::before{
+    content: "\e126 \e125";
 }
 
 .precio .precio-vta{
