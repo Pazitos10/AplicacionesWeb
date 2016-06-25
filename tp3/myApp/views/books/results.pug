@@ -1,29 +1,29 @@
 div(class="col-xs-12 col-lg-8 col-lg-offset-2", ng-controller="ShowBookController")
-    div(ng-if="resultados_db.length > 0" ng-cloak)
-        hr
-        .row
-            .col-lg-6.col-lg-offset-3.col-xs-12
-                h4.text-center <strong>{{resultados_db.length}}</strong> coincidencias en tu colección para "{{form.search_term}}"
-                include carousel.pug
-                br
-                br
-    div(ng-if="resultados_db.length == 0" ng-cloak)
-        hr
-        .row
-            .col-lg-6.col-lg-offset-3.col-xs-12
-                h4.text-center No se encontraron coincidencias en tu colección para "{{form.search_term}}"
+    //- div(ng-if="resultados_db.length > 0" ng-cloak)
+    //-     hr
+    //-     .row
+    //-         .col-lg-6.col-lg-offset-3.col-xs-12
+    //-             h4.text-center <strong>{{resultados_db.length}}</strong> coincidencias en tu colección para "{{form.search_term}}"
+    //-             include carousel.pug
+    //-             br
+    //-             br
+    //- div(ng-if="resultados_db.length == 0" ng-cloak)
+    //-     hr
+    //-     .row
+    //-         .col-lg-6.col-lg-offset-3.col-xs-12
+    //-             h4.text-center No se encontraron coincidencias en tu colección para "{{form.search_term}}"
 
     div(ng-if="resultados.length > 0" ng-cloak)
+        br
+        h4.text-center <strong>{{resultados.length}}</strong> resultados para "{{form.search_term}}"
         hr
         .row
-            br
-            h4.text-center <strong>{{resultados.length}}</strong> resultados para "{{form.search_term}}" fuera de esta aplicación
-            br
-            table( class="table table-striped" ng-controller="SaveBookController")
+            table( class="table table-striped")
                 thead.cabecera-tabla
                     tr: th Portada
                         th Título
                         th.hidden-xs Precio
+                        th.hidden-xs Puntaje
                 tbody
                     tr(ng-repeat="resultado in resultados")
                         td(ng-if="resultado.thumbnail")
@@ -43,12 +43,29 @@ div(class="col-xs-12 col-lg-8 col-lg-offset-2", ng-controller="ShowBookControlle
                                 button(type="button", class="btn btn-warning ver-btn", ng-attr-data-id="{{resultado.id}}", ng-click="showBook()") ver más
 
                         td(class="hidden-xs precio text-center" style="vertical-align:middle")
-                                span(ng-if="resultado.saleInfo.retailPrice", class="precio-background")
+                                span(ng-if="resultado.saleInfo.retailPrice")
                                     p.precio-vta.
                                         ${{resultado.saleInfo.retailPrice.amount}}
                                 span(ng-if="!resultado.saleInfo.retailPrice")
                                     p.precio-vta.no-disponible.
                                         No disponible
+                        td(class="hidden-xs", style="vertical-align: middle")
+                            .puntaje(ng-controller="RateBookController")
+                                //- div(ng-repeat="resultado_db in resultados_db")
+                                //-     h4(ng-click="rate('positive', resultado.id)", ng-model="pos", ng-init="pos=resultado_db.book_id === resultado.id ? resultado_db.rate_pos : 0")
+                                //-         <span class="glyphicon glyphicon-thumbs-up"></span> {{pos}} 
+                                //-     h4(ng-click="rate('later', resultado.id)", ng-model="later", ng-init="later= resultado_db.book_id === resultado.id ? resultado_db.rate_later : 0")
+                                //-         <span class="glyphicon glyphicon-time"></span> {{later}}
+                                //-     h4(ng-click="rate('negative', resultado.id)", ng-model="neg", ng-init="neg=resultado_db.book_id === resultado.id ? resultado_db.rate_neg : 0")
+                                //-         <span class="glyphicon glyphicon-thumbs-down"></span> {{neg}}
+                                //- div(ng-if="resultados_db.length === 0")
+                                h4(ng-click="rate('positive', resultado.id)", ng-model="pos", ng-init="pos= resultado.rate_pos ? resultado.rate_pos : 0")
+                                    <span class="glyphicon glyphicon-thumbs-up"></span> {{pos}} 
+                                h4(ng-click="rate('later', resultado.id)", ng-model="later", ng-init="later= resultado.rate_later ? resultado.rate_later : 0")
+                                    <span class="glyphicon glyphicon-time"></span> {{later}}
+                                h4(ng-click="rate('negative', resultado.id)", ng-model="neg", ng-init="neg= resultado.rate_neg ? resultado.rate_neg : 0")
+                                    <span class="glyphicon glyphicon-thumbs-down"></span> {{neg}}        
+
     div(ng-if="resultados.length === 0 && es_busqueda" ng-cloak)
         hr
         br

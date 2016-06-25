@@ -2,7 +2,8 @@ angular.module('bookSearchClient', ["ngRoute"])
 .controller('IndexController', IndexController)
 .controller('SearchBookController', SearchBookController)
 .controller('ShowBookController', ShowBookController)
-.controller('SaveBookController', SaveBookController);
+.controller('SaveBookController', SaveBookController)
+.controller('RateBookController', RateBookController);
 
 function IndexController($scope, $http) {
     $http.get('/books/collection')
@@ -82,12 +83,27 @@ function SearchBookController($scope, $http, $routeParams) {
     $scope.form.search_term = $('#hidden_search_term').val();
     $scope.sendForm = function () {
         $scope.buscando = true;
+        console.log('por hacer post');
         $http.post('/books/search', $scope.form)
             .then(function(result) {
                 $scope.es_busqueda = true;
                 $scope.buscando = false;
                 $scope.resultados = result.data.resultados;
                 $scope.resultados_db = result.data.resultados_db;
+                $scope.resultados.forEach(function (result, i) {
+                    var filtrado = $scope.resultados_db.filter(function (result_db) {
+                        return result_db.book_id === result.id;
+                    });
+                    if (filtrado[0]){
+                        result.rate_pos = filtrado[0].rate_pos;
+                        result.rate_neg = filtrado[0].rate_neg;
+                        result.rate_later = filtrado[0].rate_later; 
+                    }else {
+                        result.rate_pos = 0;
+                        result.rate_neg = 0;
+                        result.rate_later = 0;
+                    }
+                });
             }, function(){
                 $scope.buscando = false;
                 console.log('SearchBookController: hubo un error');
@@ -97,3 +113,32 @@ function SearchBookController($scope, $http, $routeParams) {
         $scope.sendForm();
 }
 
+function RateBookController($scope, $http, $routeParams) {
+/*    $scope.pos = 0;
+    $scope.neg = 0;
+    $scope.later = 0;*/
+    $scope.rate = function (type, book_id) {
+        var url; 
+        if(type === 'positive'){
+            $scope.pos += 1;
+            url = '/books/vote/like/';
+            console.log('rate_pos', book_id);            
+        }else{
+            if (type === 'negative'){
+                console.log('rate_neg', book_id);
+                $scope.neg += 1;
+                url = '/books/vote/dislike/';
+            }else{
+                console.log('rate_later', book_id);
+                $scope.later += 1;
+                url = '/books/vote/later/';
+            }
+        }
+        $http.post(url+ book_id)
+        .then(function(result) {
+            console.log('result ', result);
+        }, function(){
+            console.log('error');
+        })
+    }
+}

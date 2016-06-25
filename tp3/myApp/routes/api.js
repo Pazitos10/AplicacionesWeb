@@ -4,7 +4,7 @@ var books = require('google-books-search');
 
 
 function get_libros(filtro) {
-    var condicion = filtro ? {'data.title': new RegExp(filtro,'i') } : {};
+    var condicion = filtro ? {'title': new RegExp(filtro,'i') } : {};
     return Libro.find(condicion); //.select('data.title -_id');
 }
 
@@ -26,23 +26,41 @@ exports.show = function(req, res, next) {
 
 exports.later = function(req, res, next) {
     var book_id = req.params.id;
-    Libro.findOneAndUpdate({'data.id': book_id}, {$inc: {later: 1}}, {new: true}, function(err, result){
-            return res.json({modified: true, type: 'later', book: result}); 
+    Libro.findOneAndUpdate({'book_id': book_id}, {$inc: {rate_later: 1}}, {new: true, upsert:true}, function(err, local_result){
+        books.lookup(book_id, function(error, result) {
+            local_result.price = result.saleInfo.retailPrice ? result.saleInfo.retailPrice.amount : -1;
+            local_result.isbn = result.industryIdentifiers[1].identifier;
+            local_result.title = result.title;
+            local_result.save(); 
+            res.json({book: local_result}); 
+        });
     });
 }
 
 
 exports.like = function(req, res, next) {
     var book_id = req.params.id;
-    Libro.findOneAndUpdate({'data.id': book_id}, {$inc: {votos_total: 1, votos_positivos: 1}}, {new: true}, function(err, result){
-            return res.json({modified: true, type: 'like', book: result}); 
+    Libro.findOneAndUpdate({'book_id': book_id}, {$inc: {rate_pos: 1}}, {new: true, upsert:true}, function(err, local_result){
+        books.lookup(book_id, function(error, result) {
+            local_result.price = result.saleInfo.retailPrice ? result.saleInfo.retailPrice.amount : -1;
+            local_result.isbn = result.industryIdentifiers[1].identifier;
+            local_result.title = result.title;
+            local_result.save(); 
+            res.json({book: local_result}); 
+        });
     });
 }
 
 exports.dislike = function(req, res, next) {
     var book_id = req.params.id;
-    Libro.findOneAndUpdate({'data.id': book_id}, {$inc: {votos_total: 1, votos_positivos: 0}}, {new: true}, function(err, result){
-            return res.json({modified: true, type: 'dislike', book: result}); 
+    Libro.findOneAndUpdate({'book_id': book_id}, {$inc: {rate_neg: 1}}, {new: true, upsert:true}, function(err, local_result){
+        books.lookup(book_id, function(error, result) {
+            local_result.price = result.saleInfo.retailPrice ? result.saleInfo.retailPrice.amount : -1;
+            local_result.isbn = result.industryIdentifiers[1].identifier;
+            local_result.title = result.title;
+            local_result.save(); 
+            res.json({book: local_result}); 
+        });
     });
 }
 
@@ -62,7 +80,7 @@ exports.search = function (req, res, next) {
     }
 }
 
-exports.save = function (req, res, next) {
+/*exports.save = function (req, res, next) {
     var book_to_save = req.params.id;
     if(book_to_save){
         books.lookup(book_to_save, function(error, result) {
@@ -80,4 +98,4 @@ exports.save = function (req, res, next) {
         });
     }else
         res.json({msg: "Error: especificar un id de libro correcto" });
-}
+}*/

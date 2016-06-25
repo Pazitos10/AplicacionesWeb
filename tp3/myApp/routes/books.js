@@ -9,7 +9,7 @@ router.get('/search', api.search);
 router.get('/show/:id', api.show);
 
 router.post('/search', api.search);
-router.post('/save/:id', api.save);
+//router.post('/save/:id', api.save);
 
 router.post('/vote/like/:id', api.like);
 router.post('/vote/dislike/:id', api.dislike);

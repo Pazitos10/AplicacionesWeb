@@ -71,6 +71,15 @@
     margin-right: 10px
 }
 
+.puntaje{
+    height: 128px;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .precio{
     font-size: 24px
 }
