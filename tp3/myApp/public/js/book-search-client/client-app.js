@@ -1,4 +1,4 @@
-angular.module('bookSearchClient',['ngRoute','contollers'])
+angular.module('bookSearchClient',['ngRoute'])
 .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.
         when('/', {

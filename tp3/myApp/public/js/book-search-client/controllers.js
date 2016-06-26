@@ -1,4 +1,4 @@
-angular.module('bookSearchClient', ["ngRoute"])
+angular.module('bookSearchClient')
 .controller('IndexController', IndexController)
 .controller('SearchBookController', SearchBookController)
 .controller('ShowBookController', ShowBookController)
@@ -23,17 +23,18 @@ function SaveBookController($scope, $http, $location) {
     };
 }
 
-function ShowBookController($scope, $http, $routeParams) {
+function ShowBookController($scope, $http) {
     $scope.showBook = function(){
-        var id = this.resultado.id;
+        var id = this.resultado.id; 
         $http.get('/books/show/' + id)
             .then(fill_book_data, function(error){
                 console.log("error!", error.responseText);
             });
+
     }
 
     function fill_book_data(result){
-        console.log(JSON.stringify(result.data.book, null, 2));
+        //console.log(JSON.stringify(result.data.book, null, 2));
         var book = result.data.book;
         var $title = $('#modal-info-libro .modal-title .titulo');
         var modal_body_selector = '#modal-info-libro .modal-body ';
@@ -71,19 +72,18 @@ function ShowBookController($scope, $http, $routeParams) {
             markup_compra = '<h4 class="precio text-center"> No disponible </h4><br><br>';
         }
         $('.compra').append(markup_compra);
-        $('#modal-info-libro').modal('show');
+        $('#modal-info-libro ').modal('show');
     }
 
 }
 
-function SearchBookController($scope, $http, $routeParams) {
+function SearchBookController($scope, $http) {
     $scope.form = {};
     $scope.resultados = [];
     $scope.es_busqueda = false;
     $scope.form.search_term = $('#hidden_search_term').val();
     $scope.sendForm = function () {
         $scope.buscando = true;
-        console.log('por hacer post');
         $http.post('/books/search', $scope.form)
             .then(function(result) {
                 $scope.es_busqueda = true;
@@ -113,10 +113,7 @@ function SearchBookController($scope, $http, $routeParams) {
         $scope.sendForm();
 }
 
-function RateBookController($scope, $http, $routeParams) {
-/*    $scope.pos = 0;
-    $scope.neg = 0;
-    $scope.later = 0;*/
+function RateBookController($scope, $http) {
     $scope.rate = function (type, book_id) {
         var url; 
         if(type === 'positive'){

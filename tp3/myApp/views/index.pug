@@ -10,13 +10,6 @@ block navigation_bar
                     form(action="/libros/buscar/", id="search-form", method="post")
                         input(id='search_term', name='search_term', type='text', 
                                 placeholder='Ej.: El principito', class="form-control custom-input", required="", style="margin-bottom:20px")
-            .row
-                .col-lg-8.col-lg-offset-2.col-xs-12.text-center
-                    .col-xs-6
-                        a(href="/libros/coleccion" class="btn btn-default") Ver mi Colección
-                    .col-xs-6
-                        a(href="/libros/buscar" class="btn btn-default") Buscar un Libro
-
     script.
         $('#search_term').keydown(function(e){
             if (e.keyCode === 13){

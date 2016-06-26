@@ -1,18 +1,4 @@
 div(class="col-xs-12 col-lg-8 col-lg-offset-2", ng-controller="ShowBookController")
-    //- div(ng-if="resultados_db.length > 0" ng-cloak)
-    //-     hr
-    //-     .row
-    //-         .col-lg-6.col-lg-offset-3.col-xs-12
-    //-             h4.text-center <strong>{{resultados_db.length}}</strong> coincidencias en tu colección para "{{form.search_term}}"
-    //-             include carousel.pug
-    //-             br
-    //-             br
-    //- div(ng-if="resultados_db.length == 0" ng-cloak)
-    //-     hr
-    //-     .row
-    //-         .col-lg-6.col-lg-offset-3.col-xs-12
-    //-             h4.text-center No se encontraron coincidencias en tu colección para "{{form.search_term}}"
-
     div(ng-if="resultados.length > 0" ng-cloak)
         br
         h4.text-center <strong>{{resultados.length}}</strong> resultados para "{{form.search_term}}"
@@ -27,11 +13,9 @@ div(class="col-xs-12 col-lg-8 col-lg-offset-2", ng-controller="ShowBookControlle
                 tbody
                     tr(ng-repeat="resultado in resultados")
                         td(ng-if="resultado.thumbnail")
-                            span(class="overlay libro-item save", ng-click="saveBook(resultado.id)" , id="overlay-libro-{{resultado.id}}", title='Guardar en coleccion')
                             img(ng-src="{{resultado.thumbnail}}", class="tapa-libro")
                         td(ng-if="!resultado.thumbnail && !resultado.imageLinks")
-                            span(class="overlay libro-item save", ng-click="saveBook(resultado.id)" , id="overlay-libro-{{resultado.id}}", title='Guardar en coleccion')
-                            img(ng-src='http://placehold.it/120/150?text=No%20Disponible', class="tapa-libro")
+                            img(ng-src='http://placehold.it/120x150?text=No%20Disponible', class="tapa-libro")
                         td.item-info-xs
                             p {{resultado.title}}
                             .hidden-xs.options
@@ -40,6 +24,8 @@ div(class="col-xs-12 col-lg-8 col-lg-offset-2", ng-controller="ShowBookControlle
                                 a(ng-if="resultado.saleInfo.retailPrice", type="button", class="btn btn-info", href="https://play.google.com/store/books/details?id={{resultado.id}}&amp;rdid=book-{{resultado.id}}&amp;rdot=1&amp;source=gbs_atb&amp;pcampaignid=books_booksearch_atb'")
                                     <span class="glyphicon glyphicon-shopping-cart"></span> Comprar
                             .visible-xs.options
+                                .puntaje-wrapper
+                                    include puntaje.pug
                                 button(type="button", class="btn btn-warning ver-btn", ng-attr-data-id="{{resultado.id}}", ng-click="showBook()") ver más
 
                         td(class="hidden-xs precio text-center" style="vertical-align:middle")
@@ -49,24 +35,11 @@ div(class="col-xs-12 col-lg-8 col-lg-offset-2", ng-controller="ShowBookControlle
                                 span(ng-if="!resultado.saleInfo.retailPrice")
                                     p.precio-vta.no-disponible.
                                         No disponible
-                        td(class="hidden-xs", style="vertical-align: middle")
-                            .puntaje(ng-controller="RateBookController")
-                                //- div(ng-repeat="resultado_db in resultados_db")
-                                //-     h4(ng-click="rate('positive', resultado.id)", ng-model="pos", ng-init="pos=resultado_db.book_id === resultado.id ? resultado_db.rate_pos : 0")
-                                //-         <span class="glyphicon glyphicon-thumbs-up"></span> {{pos}} 
-                                //-     h4(ng-click="rate('later', resultado.id)", ng-model="later", ng-init="later= resultado_db.book_id === resultado.id ? resultado_db.rate_later : 0")
-                                //-         <span class="glyphicon glyphicon-time"></span> {{later}}
-                                //-     h4(ng-click="rate('negative', resultado.id)", ng-model="neg", ng-init="neg=resultado_db.book_id === resultado.id ? resultado_db.rate_neg : 0")
-                                //-         <span class="glyphicon glyphicon-thumbs-down"></span> {{neg}}
-                                //- div(ng-if="resultados_db.length === 0")
-                                h4(ng-click="rate('positive', resultado.id)", ng-model="pos", ng-init="pos= resultado.rate_pos ? resultado.rate_pos : 0")
-                                    <span class="glyphicon glyphicon-thumbs-up"></span> {{pos}} 
-                                h4(ng-click="rate('later', resultado.id)", ng-model="later", ng-init="later= resultado.rate_later ? resultado.rate_later : 0")
-                                    <span class="glyphicon glyphicon-time"></span> {{later}}
-                                h4(ng-click="rate('negative', resultado.id)", ng-model="neg", ng-init="neg= resultado.rate_neg ? resultado.rate_neg : 0")
-                                    <span class="glyphicon glyphicon-thumbs-down"></span> {{neg}}        
-
+                        td(class="hidden-xs puntaje-large", style="vertical-align: middle")
+                            include puntaje.pug      
     div(ng-if="resultados.length === 0 && es_busqueda" ng-cloak)
         hr
         br
         h4.text-center No se encontraron resultados para "{{form.search_term}}"
+
+    include modal.pug
