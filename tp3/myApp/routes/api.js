@@ -60,7 +60,7 @@ exports.search = function (req, res, next) {
 function vote(book_id, res, vote_field) {
     Libro.findOneAndUpdate({'book_id': book_id}, {$inc: vote_field}, {new: true, upsert:true}, function(err, local_result){
         books.lookup(book_id, function(error, result) {
-            local_result.price = result.saleInfo.retailPrice ? result.saleInfo.retailPrice.amount : -1;
+            local_result.price = result.saleInfo && result.saleInfo.retailPrice ? result.saleInfo.retailPrice.amount : -1;
             local_result.isbn = result.industryIdentifiers[1].identifier;
             local_result.title = result.title;
             local_result.save(); 
