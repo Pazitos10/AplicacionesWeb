@@ -103,6 +103,11 @@ function SearchBookController($scope, $http) {
                         result.rate_neg = 0;
                         result.rate_later = 0;
                     }
+                    console.log(result);
+                });
+                //Ordeno por votos positivos
+                $scope.resultados.sort(function(a, b){
+                    return (b.rate_pos - a.rate_pos);
                 });
             }, function(){
                 $scope.buscando = false;
