@@ -6,4 +6,8 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
+router.get('/profile', function(req, res, next) {
+  res.send('Falta mostrar perfil del usuario');
+});
+
 module.exports = router;

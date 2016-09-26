@@ -4,3 +4,5 @@ tp3/myApp/node_modules
 tp3/myApp/dump/libreria/*
 tp_final/NodeTube/node_modules
 tp_final/NodeTube/data
+.idea/
+tp3/myApp/.idea/
