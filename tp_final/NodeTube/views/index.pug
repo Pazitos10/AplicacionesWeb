@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  section.home
+    .container 
+      .row.header 
+        .col-lg-2 
+          <a href="/" class="logo"> Node<span class="thin">Tube</span></a>
+        .col-lg-8
+          input(type="text", class="form-control", placeholder="Buscar")
+        .col-lg-2.cta
+          if (!user)
+            a(href="#", class="custom-cta" , data-toggle="modal", data-target="#loginModal") Login
+          if (user)
+            a(href="/profile") #{user.username}
+            a(href="/logout") Logout
+      .row
+        .col-lg-12
+          .video-list
+            - for (var x = 0; x < 6; x++)
+              div.col-md-2.col-lg-2.video-item
+                <img id="thumbnail" class="" src='http://fillmurray.com/196/110' alt='' />
+                <a class="title", href="#">title</a>
+                br
+                <a class="uploader", href="#" >uploaderX</a>
+                <p>999.999 views · 5 mins ago</p>
+
