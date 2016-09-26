@@ -5,8 +5,8 @@ var passportLocalMongoose = require('passport-local-mongoose');
 var Account = new Schema({
   username: String,
   password: String,
-  videos: [{type: Schema.Types.ObjectId, ref: VideoSchema, default: []}],
-  playlists: [{type: Schema.Types.ObjectId, ref: PlayListSchema, default: []}],
+  videos: [{type: Schema.Types.ObjectId, ref: 'Video', default: []}],
+  playlists: [{type: Schema.Types.ObjectId, ref: 'PlayList', default: []}],
   disabled: {type: Boolean, default: false}
 },{ timestamps: true });
 
