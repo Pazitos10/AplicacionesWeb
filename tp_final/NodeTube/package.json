@@ -5,7 +5,7 @@
   "author": "Bruno Pazos <pazosbruno@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pazitos10/AplicacionesWeb/tp_final"
+    "url": "https://github.com/pazitos10/AplicacionesWeb"
   },
   "scripts": {
     "start": "node ./bin/www"
