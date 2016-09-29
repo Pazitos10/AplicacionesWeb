@@ -1,0 +1,59 @@
+<section>
+  <div class="page-header">
+    <h1>{{vm.empresa._id ? 'Editar Empresa' : 'Nueva Empresa'}}</h1>
+  </div>
+  <div class="col-md-12">
+    <form name="vm.form.empresaForm" class="form-horizontal" ng-submit="vm.save(vm.form.empresaForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="razonSocial">Razón Social</label>
+          <input name="name" type="text" ng-model="vm.empresa.razonSocial" id="razonSocial" class="form-control"
+                 placeholder="Razón Social de la Empresa" required>
+          <div ng-messages="vm.form.empresaForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Ingrese Razón Social</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="cuit">CUIT</label>
+          <input name="cuit" type="text" ng-model="vm.empresa.cuit" id="cuit" class="form-control"
+                 placeholder="CUIT de la Empresa" required>
+          <div ng-messages="vm.form.empresaForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Ingrese CUIT</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="domicilio">Domicilio</label>
+          <input name="domicilio" type="text" ng-model="vm.empresa.domicilio" id="domicilio" class="form-control"
+                 placeholder="Domicilio de la Empresa" required>
+          <div ng-messages="vm.form.empresaForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Ingrese Domicilio</p>
+          </div>
+        </div>
+        <!--
+        <div class="form-group" show-errors>
+          <label class="control-label" for="domicilio">Localidad</label>
+          <select name="localidad" ng-model="vm.localidad.descripcion" id="localidad" class="form-control"
+                 placeholder="Localidad de la Empresa" required>
+          <div ng-messages="vm.form.empresaForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Ingrese Localidad</p>
+          </div>
+        </div>
+        -->
+        <div class="form-group" show-errors>
+          <label class="control-label" for="domicilio">Teléfono</label>
+          <input name="telefono" type="text" ng-model="vm.empresa.telefono" id="telefono" class="form-control"
+                 placeholder="Teléfono de la Empresa" required>
+          <div ng-messages="vm.form.empresaForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Ingrese Teléfono</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-default">{{vm.empresa._id ? 'Update' : 'Create'}}</button>
+        </div>
+        <div ng-show="vm.error" class="text-danger">
+          <strong ng-bind="vm.error"></strong>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>
