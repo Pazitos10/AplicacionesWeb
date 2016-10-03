@@ -1,0 +1,1 @@
+{"_id":{"$oid":"57e90d9431d2014f1b5bb3da"},"user":{"$oid":"57e7d990c0093b880bc2eca5"},"created":{"$date":"2016-09-26T11:59:16.104Z"},"telefono":"0280154265147","domicilio":"Calle 1234","cuit":"30661507698","razonSocial":"Mi Empresa","__v":0}

@@ -1,0 +1,3 @@
+{"_id":{"$oid":"57e5886c13525ef509e0a043"},"provincia":{"_id":{"$oid":"57e585bd13525ef509e0a042"},"description":"Chubut"},"descripcion":"Puerto Madryn"}
+{"_id":{"$oid":"57e589b313525ef509e0a044"},"provincia":{"_id":{"$oid":"57e585bd13525ef509e0a042"},"description":"Chubut"},"descripcion":"Trelew"}
+{"_id":{"$oid":"57e58a1013525ef509e0a045"},"provincia":{"_id":{"$oid":"57e585bd13525ef509e0a042"},"description":"Chubut"},"descripcion":"Rawson"}
