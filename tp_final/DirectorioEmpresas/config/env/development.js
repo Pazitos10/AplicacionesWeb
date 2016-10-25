@@ -34,6 +34,10 @@ module.exports = {
   app: {
     title: defaultEnvConfig.app.title + ' - Development Environment'
   },
+  googlePlaces: {
+    apiKey: process.env.GOOGLE_PLACES_API_KEY,
+    outputFormat: 'json',
+  },
   facebook: {
     clientID: process.env.FACEBOOK_ID || 'APP_ID',
     clientSecret: process.env.FACEBOOK_SECRET || 'APP_SECRET',

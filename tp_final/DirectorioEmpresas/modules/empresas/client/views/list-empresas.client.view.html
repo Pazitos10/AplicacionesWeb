@@ -7,16 +7,16 @@
        ui-sref="empresas.view({ empresaId: empresa._id })"
        class="list-group-item">
       <small class="list-group-item-text">
-        Posted on
+        Posteado:
         <span ng-bind="empresa.created | date:'mediumDate'"></span>
-        by
+        por:
         <span ng-if="empresa.user" ng-bind="empresa.user.displayName"></span>
-        <span ng-if="!empresa.user">Deleted User</span>
+        <span ng-if="!empresa.user">Borrar empresa</span>
       </small>
       <h4 class="list-group-item-heading" ng-bind="empresa.name"></h4>
     </a>
   </div>
   <div class="alert alert-warning text-center" ng-if="vm.empresas.$resolved && !vm.empresas.length">
-    No Empresas yet, why don't you <a ui-sref="empresas.create">create one</a>?
+    No hay Empresas aún, ¿Por qué no <a ui-sref="empresas.create">creas una</a>?
   </div>
 </section>
