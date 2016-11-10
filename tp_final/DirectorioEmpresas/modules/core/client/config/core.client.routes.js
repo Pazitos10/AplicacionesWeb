@@ -1,7 +1,7 @@
 'use strict';
 
 // Setting up route
-angular.module('core').config(['$stateProvider', '$urlRouterProvider',
+angular.module('core',['uiGmapgoogle-maps','nemLogging']).config(['$stateProvider', '$urlRouterProvider',
   function ($stateProvider, $urlRouterProvider) {
 
     // Redirect to 404 when route not found
@@ -39,4 +39,10 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
       }
     });
   }
-]);
+]).config(function (uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+        //key: 'PUT YOUR KEY HERE',
+        v: '3.17',
+        //libraries: 'weather,geometry,visualization'
+    });
+});

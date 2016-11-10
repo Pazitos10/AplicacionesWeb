@@ -34,6 +34,8 @@
   <!-- Application CSS Files -->
   {% for cssFile in cssFiles %}<link rel="stylesheet" href="{{cssFile}}">{% endfor %}
   <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 </head>
 
 <body class="ng-cloak">
@@ -54,13 +56,20 @@
 
   <!--Application JavaScript Files-->
   {% for jsFile in jsFiles %}<script type="text/javascript" src="{{jsFile}}"></script>{% endfor %}
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="http://rawgit.com/nmccready/angular-simple-logger/master/dist/angular-simple-logger.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-google-maps/2.2.1/angular-google-maps.min.js"></script>
+
+
   <script src="https://maps.googleapis.com/maps/api/js" async defer></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script type="text/javascript">
     $(document).ready(function () {
       var enableGeolocation = function(){
+        //navigator.geolocation.watchPosition(mostrarUbicacion, verificarError);
         if (navigator.geolocation)
-          navigator.geolocation.watchPosition(mostrarUbicacion, verificarError);
+          navigator.geolocation.getCurrentPosition(mostrarUbicacion, verificarError)
         else
           $('#map').innerHTML = 'Geolocation is not supported by this browser.';
       };
@@ -74,6 +83,8 @@
       };
 
       var mostrarUbicacion = function (position) {
+        //console.log(position.coords.latitude, position.coords.longitude);
+        window.position = position;
         var map = new google.maps.Map(document.getElementById('map'), {
           center: { lat: position.coords.latitude, lng: position.coords.longitude } ,
           scrollwheel: false,

@@ -27,7 +27,7 @@ module.exports = function (app) {
   app.route('/search_img').post(function (req, res, next) {
     var photoreference = req.body.photoreference;
     console.log('photoreference', photoreference);
-    googleplaces.imageFetch({ photoreference: photoreference }, 
+    googleplaces.imageFetch({ photoreference: photoreference },
       function(error, response) {
         return res.json({ 'src': response });
       }

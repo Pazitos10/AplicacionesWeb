@@ -5,11 +5,20 @@
     </div>
     <div class="col-lg-4 col-xs-12">
       <form class="search-form" ng-submit="search()">
-        <input ng-model="search_term" class="form-control search-input" type="text" placeholder="Buscar">
+        <input ng-model="search_term" class="form-control search-input" type="text">
+        <div class="search-filter">
+          <i ng-click="set_filter('all')" id="all" class="material-icons" alt="todos">assignment</i>
+          <i ng-click="set_filter('store')" id="store" class="material-icons" alt="negocios">store</i>
+          <i ng-click="set_filter('car')" id="car" class="material-icons" alt="transporte">directions_car</i>
+          <i ng-click="set_filter('hotel')" id="hotel" class="material-icons" alt="hospedaje">hotel</i>
+          <i ng-click="set_filter('restaurant')" id="restaurant" class="material-icons" alt="restaurant">local_dining</i>
+          <i ng-click="set_filter('gas_station')" id="gas_station" class="material-icons" alt="combustible">local_gas_station</i>
+          <i ng-click="set_filter('health')" id="health" class="material-icons" alt="hospitales">local_hospital</i>
+        </div>
       </form>
-      <div class="results">
+      <!-- <div class="results">
         <div class="result-item" ng-repeat="result in search_results">
-          <img ng-src="{{result.img_src}}" alt="" class="col-lg-2 result-img">
+          <img ng-if="result.img_src" ng-src="{{result.img_src}}" alt="" class="col-xs-2 result-img">
           <div class="result-description">
             <h5>{{result.name}}</h5>
             <span class="text-muted">
@@ -20,6 +29,104 @@
               </span>
           </div>
         </div>
+      </div> -->
+      <div class="results">
+        <div class="result-item">
+          <img alt="" class="col-xs-2 result-img" src="http://placehold.it/50/50">
+          <div class="result-description">
+            <h5 class="ng-binding">Saavedra Carmen Angelica</h5>
+            <span class="text-muted">
+              <span class="pull-left" ng-if="!result.opening_hours.open_now">Cerrado</span>
+              <span class="pull-right ng-binding">
+                 <span class="glyphicon glyphicon-star"></span>
+              </span>
+          </span></div>
+        </div>
+        <div class="result-item">
+          <img alt="" class="col-xs-2 result-img" src="http://placehold.it/50/50">
+          <div class="result-description">
+            <h5 class="ng-binding">Saavedra Carmen Angelica</h5>
+            <span class="text-muted">
+              <span class="pull-left" ng-if="!result.opening_hours.open_now">Cerrado</span>
+              <span class="pull-right ng-binding">
+                 <span class="glyphicon glyphicon-star"></span>
+              </span>
+          </span></div>
+        </div>
+        <div class="result-item">
+          <img alt="" class="col-xs-2 result-img" src="http://placehold.it/50/50">
+          <div class="result-description">
+            <h5 class="ng-binding">Saavedra Carmen Angelica</h5>
+            <span class="text-muted">
+              <span class="pull-left" ng-if="!result.opening_hours.open_now">Cerrado</span>
+              <span class="pull-right ng-binding">
+                 <span class="glyphicon glyphicon-star"></span>
+              </span>
+          </span></div>
+        </div>
+        <div class="result-item">
+          <img alt="" class="col-xs-2 result-img" src="http://placehold.it/50/50">
+          <div class="result-description">
+            <h5 class="ng-binding">Saavedra Carmen Angelica</h5>
+            <span class="text-muted">
+              <span class="pull-left" ng-if="!result.opening_hours.open_now">Cerrado</span>
+              <span class="pull-right ng-binding">
+                 <span class="glyphicon glyphicon-star"></span>
+              </span>
+          </span></div>
+        </div>
+        <div class="result-item">
+          <img alt="" class="col-xs-2 result-img" src="http://placehold.it/50/50">
+          <div class="result-description">
+            <h5 class="ng-binding">Maná</h5>
+            <span class="text-muted">
+              <span class="pull-left" ng-if="!result.opening_hours.open_now">Cerrado</span>
+              <span class="pull-right ng-binding">
+                 <span class="glyphicon glyphicon-star"></span>
+              </span>
+          </span></div>
+        </div>
+        <div class="result-item">
+          <img alt="" class="col-xs-2 result-img" src="http://placehold.it/50/50">
+          <div class="result-description">
+            <h5 class="ng-binding">La Casa del Pan</h5>
+            <span class="text-muted"><span class="pull-left" ng-if="!result.opening_hours.open_now">Cerrado</span>
+              <span class="pull-right ng-binding">
+                 <span class="glyphicon glyphicon-star"></span>
+              </span>
+          </span></div>
+        </div>
+        <div class="result-item">
+          <img alt="" class="col-xs-2 result-img" src="http://placehold.it/50/50">
+          <div class="result-description">
+            <h5 class="ng-binding">Mercado el Pelado II</h5>
+            <span class="text-muted"><span class="pull-left" ng-if="!result.opening_hours.open_now">Cerrado</span>
+              <span class="pull-right ng-binding">
+                 <span class="glyphicon glyphicon-star"></span>
+              </span>
+          </span></div>
+        </div>
+        <div class="result-item">
+          <img alt="" class="col-xs-2 result-img" src="http://placehold.it/50/50">
+          <div class="result-description">
+            <h5 class="ng-binding">Autoservicio Patricia</h5>
+            <span class="text-muted"><span class="pull-left" ng-if="result.opening_hours.open_now">Abierto</span><!-- end ngIf: result.opening_hours.open_now -->
+              <span class="pull-right ng-binding">
+                 <span class="glyphicon glyphicon-star"></span>
+              </span>
+          </span></div>
+        </div>
+        <div class="result-item">
+          <img alt="" class="col-xs-2 result-img" src="http://placehold.it/50/50">
+          <div class="result-description">
+            <h5 class="ng-binding">Verduleria Agustin</h5>
+            <span class="text-muted"><span class="pull-left" ng-if="!result.opening_hours.open_now">Cerrado</span>
+              <span class="pull-right ng-binding">
+                 <span class="glyphicon glyphicon-star"></span>
+              </span>
+          </span></div>
+        </div>
+
       </div>
     </div>
   </div>
