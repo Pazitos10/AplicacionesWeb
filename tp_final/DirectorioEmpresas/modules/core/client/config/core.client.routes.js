@@ -40,9 +40,9 @@ angular.module('core',['uiGmapgoogle-maps','nemLogging']).config(['$stateProvide
     });
   }
 ]).config(function (uiGmapGoogleMapApiProvider) {
-    uiGmapGoogleMapApiProvider.configure({
-        //key: 'PUT YOUR KEY HERE',
-        v: '3.17',
-        //libraries: 'weather,geometry,visualization'
-    });
+  uiGmapGoogleMapApiProvider.configure({
+    //key: 'PUT YOUR KEY HERE',
+    v: '3.17'
+    //libraries: 'weather,geometry,visualization'
+  });
 });

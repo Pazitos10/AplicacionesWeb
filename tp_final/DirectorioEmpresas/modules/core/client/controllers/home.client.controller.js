@@ -71,7 +71,7 @@ angular.module('core')
       var placeholder = 'Buscar en ';
       var categoria = $('.material-icons#'+filter).attr('alt');
       $('.search-input').attr('placeholder', placeholder+categoria);
-    }
+    };
 
     $scope.set_filter('all');
   }
