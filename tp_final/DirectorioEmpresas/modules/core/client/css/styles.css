@@ -1,14 +1,19 @@
 *::-webkit-scrollbar {
-    width: 6px!important;
-    height: 6px!important;
+  width: 6px!important;
+  height: 6px!important;
+  background-color: rgba(0,0,0,.05);
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: rgba(0,0,0,.2);
+  background-color: rgba(0,0,0,.2);
 }
 
 *::-webkit-scrollbar-track {
-    background: rgba(255,255,255,.08);
+  background: rgba(255,255,255,.008);
+}
+
+.navbar-default .navbar-toggle{
+  border-color:transparent;
 }
 
 .material-icons {
@@ -36,80 +41,123 @@
   font-feature-settings: 'liga';
 }
 
+.material-icons.md-12 { font-size: 12px; }
+.material-icons.md-14 { font-size: 14px; }
+.material-icons.md-16 { font-size: 16px; }
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+.material-icons.md-75p {font-size: 75% };
+/* Rules for using icons as black on a light background. */
+.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+/* Rules for using icons as white on a dark background. */
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+.label-90{
+  font-size: 90%;
+}
+
 .alert.alert-warning a{
-	color: #333333;
+  color: #333333;
 }
 
 .logo img{
-	width: 40px;
-    height: 40px;
-    display: inline-block;
+  width: 40px;
+  height: 40px;
+  display: inline-block;
 }
 
 .logo {
-	display: flex;
-    padding: 0;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    font-size: 30px;
-    font-family: 'lobster', cursive;
+  display: flex;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 30px;
+  font-family: 'lobster', cursive;
+  text-shadow: 1px 1px 1px rgba(0,0,0,.5);
 }
 .logo:hover,.logo:visited,.logo:active,.logo:focus{
-    color: white !important;
+  color: white !important;
 }
 
 .location-disabled{
-    background-color: rgba(0,0,0,.8);
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background-color: rgba(0,0,0,.8);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #enable-geolocation-btn{
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .home{
-	margin-top: 30px;
+  margin-top: 30px;
 }
 
 
 .home .search-container .results {
-    margin-top: 10px;
-    max-height: 420px;
-    overflow-y: scroll;
+  margin-top: 10px;
+  max-height: 420px;
+  overflow-y: scroll;
 }
 
 .home .search-container .result-item {
-    padding-bottom: 5px;
-    margin-bottom: 5px;
-    height: 80px;
-    padding: 10px 0;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  padding: 5px;
 }
 
-.home .search-container .result-item .result-img {
-    width: 50px;
-    height: 50px;
-    padding: 0;
-    margin-right: 5px;
-    border-radius: 3px;
+.home .search-container .result-item:hover {
+  background-color: rgba(0,0,0,.08);
 }
 
 .home .search-container .result-item:last-child {
-    padding-bottom: 0;
-    border-bottom: none;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
-.home .search-container .result-item .result-description h5{
-    margin-top: 0;
+.home .search-container .result-item .result-description {
+  width: 100%;
+  padding: 0;
+  margin-left: 10px;
+}
+
+.home .search-container .result-item .result-description h5 {
+  margin-top: 0;
+  font-weight: bold;
+}
+
+.home .search-container .result-item .result-description .description-labels {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.home .search-container .result-item .result-img {
+  border-radius: 3px;
+  padding: 0;
+  max-width: 50px;
+  max-height: 50px;
+}
+
+.home .search-container .result-item .result-description .rating{
+  display: flex;
+  align-items: center;
 }
 
 .search-container{
-    display: flex;
-    justify-content: center;
-    flex-direction: column-reverse;
+  display: flex;
+  justify-content: center;
+  flex-direction: column-reverse;
 }
 
 .search-filter{
@@ -119,16 +167,21 @@
   color: rgba(0,0,0,.2);
 }
 
-.search-filter .active{
+.search-filter .active {
   /*border-bottom: 3px solid rgba(0,0,0,.2);*/
   /*color: #2c3e50;*/
   color: #00edd9;
   /*text-shadow: 0px 0px 5px rgba(0,0,0,.1)*/
 }
 
+.search-filter .material-icons {
+  cursor:pointer;
+}
+
+
 
 @media (min-width: 1024px){
-    .search-container{
-        flex-direction: row;
-    }
+  .search-container{
+    flex-direction: row;
+  }
 }

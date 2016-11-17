@@ -18,10 +18,12 @@ module.exports = function (app) {
 
   app.route('/search_term').post(function(req, res, next) {
     console.log(googleplaces);
-    googleplaces.nearBySearch(req.body, function (error, response) {
+    //googleplaces.nearBySearch(req.body, function (error, response) {
+    googleplaces.textSearch(req.body, function (error, response) {
       if (error) return res.json({ 'error': error, 'results': [] });
       return res.json({ 'results': response.results });
     });
+
   });
 
   app.route('/search_img').post(function (req, res, next) {

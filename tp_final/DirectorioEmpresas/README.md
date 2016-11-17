@@ -18,3 +18,5 @@ Esta aplicación permitirá el registro, geolocalización y búsqueda de empresa
 * **Búsqueda de empresas**. Permitirá la búsqueda de empresas por categorías y las mostrará en el mapa, junto con la información adicional que se haya obtenido de los servicios web detallados anteriormente
 
 ![](https://k60.kn3.net/2/5/8/D/9/F/EB3.png)
+
+![](https://k60.kn3.net/A/F/9/8/A/9/8EE.png)
