@@ -12,6 +12,14 @@
   background: rgba(255,255,255,.008);
 }
 
+a{
+  color: #00edd9;
+}
+
+a:hover{
+  color: #00edd9;
+}
+
 .navbar-default .navbar-toggle{
   border-color:transparent;
 }
@@ -60,6 +68,9 @@
 .label-90{
   font-size: 90%;
 }
+.label-100{
+  font-size: 100%;
+}
 
 .alert.alert-warning a{
   color: #333333;
@@ -101,11 +112,15 @@
   margin-top: 30px;
 }
 
+.home .search-container .no-results-msg {
+  margin: 10px 0 10px 0;
+}
 
 .home .search-container .results {
   margin-top: 10px;
   max-height: 420px;
   overflow-y: scroll;
+  margin-bottom: 10px;
 }
 
 .home .search-container .result-item {
@@ -184,4 +199,104 @@
   .search-container{
     flex-direction: row;
   }
+}
+
+
+.result-detail {
+  min-height: 520px;
+  /*max-height: 520px;*/
+  /*background: rgba(0,0,0,.1);*/
+  border-radius: 3px;
+  overflow: hidden;
+  /*visibility: hidden;*/
+}
+
+.result-detail .result-detail-img {
+  height: 230px;
+  width: 100%;
+  overflow: hidden;
+  z-index: -2;
+  position: relative;
+  top: -30px;
+  background: rgba(0,0,0,.2)
+}
+
+
+.result-detail .result-detail-img img {
+  position: relative;
+  top: -263px;
+  left: 0px;
+  width: auto;
+  height: auto;
+}
+
+.result-detail .detail-text{
+  padding: 16px 24px 20px;
+  position: relative;
+  top: -30px;
+  width: 100%;
+  background-color: rgba(0,0,0,.05);
+}
+
+.result-detail .detail-text .title{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.result-detail .detail-text .subtitle{
+  border-bottom: 2px solid rgba(0,0,0,.1);
+  padding-bottom: 20px;
+  word-break: break-word;
+}
+
+.result-detail .place-info ul{
+  list-style-type: none;
+  padding: 30px 0 5px 0;
+}
+
+.result-detail .place-info ul li{
+  display: flex;
+  align-items: center;
+  padding: 2px 0 2px 0;
+}
+
+.result-detail .subtitle .material-icons,
+.result-detail .place-info .material-icons{
+  margin-right: 10px;
+  color: #00edd9;
+}
+
+
+.hide-btn {
+  height: 30px;
+  width: 30px;
+  padding: 5px;
+  color: white;
+  text-shadow: 0px 0px 4px black;
+  background-color: transparent;
+  border-color:transparent;
+}
+
+.show-horarios-btn {
+  height: 24px;
+  width: 24px;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  border-color:transparent;
+}
+
+.show-horarios-btn .material-icons{
+  color: #dbdbdb !important;
+  margin-right: 0 !important;
+}
+
+.invisible {
+  display: none;
+}
+
+.horarios-info {
+  padding-left: 30px;
+  padding-right: 30px;
 }

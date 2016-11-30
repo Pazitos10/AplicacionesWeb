@@ -1,5 +1,6 @@
 'use strict';
 var GooglePlaces = require('googleplaces');
+var translate = require('google-translate-api');
 var config = require('../../../../config/env/development.js');
 var googleplaces = new GooglePlaces(config.googlePlaces.apiKey, config.googlePlaces.outputFormat);
 
@@ -17,13 +18,17 @@ module.exports = function (app) {
   app.route('/*').get(core.renderIndex);
 
   app.route('/search_term').post(function(req, res, next) {
-    console.log(googleplaces);
-    //googleplaces.nearBySearch(req.body, function (error, response) {
     googleplaces.textSearch(req.body, function (error, response) {
       if (error) return res.json({ 'error': error, 'results': [] });
       return res.json({ 'results': response.results });
     });
+  });
 
+  app.route('/search_details').post(function (req, res, next) {
+    googleplaces.placeDetailsRequest({ reference: req.body.reference } ,function(error, response){
+      console.log(response);
+      return res.json({ 'details': response });
+    });
   });
 
   app.route('/search_img').post(function (req, res, next) {
@@ -34,5 +39,15 @@ module.exports = function (app) {
         return res.json({ 'src': response });
       }
     );
+  });
+
+  app.route('/translate').post(function (req, res, next) {
+    var term = req.body.term;
+    translate(term, { from:'en', to: 'es' }).then(function (result) {
+      return res.json({ 'result_text': result.text });
+    }).catch(function (err) {
+      console.error(err);
+      return res.json({ 'result_text': '' });
+    });
   });
 };

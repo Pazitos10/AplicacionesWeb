@@ -4,34 +4,73 @@
       <div id="map" style="width:100%;height:520px;border-radius:4px"></div>
     </div>
     <div class="col-lg-4 col-xs-12">
-      <form class="search-form" ng-submit="search()">
-        <input ng-model="search_term" class="form-control search-input" type="text">
-        <div class="search-filter">
-          <i ng-click="set_filter('all')" id="all" class="material-icons" alt="todos">assignment</i>
-          <i ng-click="set_filter('store')" id="store" class="material-icons" alt="negocios">store</i>
-          <i ng-click="set_filter('car')" id="car" class="material-icons" alt="transporte">directions_car</i>
-          <i ng-click="set_filter('hotel')" id="hotel" class="material-icons" alt="hospedaje">hotel</i>
-          <i ng-click="set_filter('food')" id="food" class="material-icons" alt="alimentos">local_dining</i>
-          <i ng-click="set_filter('gas_station')" id="gas_station" class="material-icons" alt="combustible">local_gas_station</i>
-          <i ng-click="set_filter('health')" id="health" class="material-icons" alt="hospitales">local_hospital</i>
-        </div>
-      </form>
-      <div class="results">
-        <div class="result-item" ng-click="item_clicked($index)" ng-repeat="result in search_results">
+      <div class="search-form-wrapper">
+        <form class="search-form" ng-submit="search()">
+          <input ng-model="search_term" class="form-control search-input" type="text">
+          <div class="search-filter">
+            <i ng-click="set_filter('all')" id="all" class="material-icons" alt="todos">assignment</i>
+            <i ng-click="set_filter('store')" id="store" class="material-icons" alt="negocios">store</i>
+            <i ng-click="set_filter('car')" id="car" class="material-icons" alt="transporte">directions_car</i>
+            <i ng-click="set_filter('hotel')" id="hotel" class="material-icons" alt="hospedaje">hotel</i>
+            <i ng-click="set_filter('food')" id="food" class="material-icons" alt="alimentos">local_dining</i>
+            <i ng-click="set_filter('gas_station')" id="gas_station" class="material-icons" alt="combustible">local_gas_station</i>
+            <i ng-click="set_filter('health')" id="health" class="material-icons" alt="hospitales">local_hospital</i>
+          </div>
+        </form>
+        <p ng-if="!search_results.length > 0" class="text-center text-muted no-results-msg" ng-bind="no_results_msg"></p>
+        <div class="results" ng-if="search_results.length > 0">
+          <div class="result-item" ng-click="item_clicked($index)" ng-repeat="result in search_results">
 
-          <img ng-if="result.img_src" ng-src="{{result.img_src}}" alt="" class="result-img">
-          <div class="result-description">
-            <h5>{{result.name}}</h5>
-            <span class="text-muted description-labels">
-              <label class="pull-left label label-success label-90" ng-if="result.opening_hours.open_now">Abierto</label>
-              <label class="pull-left label label-default label-90" ng-if="!result.opening_hours.open_now">Cerrado</label>
-              <label class="pull-right label label-info label-90" ng-if="result.rating">
-                {{result.rating}} <i class="material-icons md-75p">star</i>
-              </label>
+            <img ng-if="result.img_src" ng-src="{{result.img_src}}" alt="" class="result-img">
+            <div class="result-description">
+              <h5>{{result.name}}</h5>
+              <span class="text-muted description-labels">
+                <label class="pull-left label label-success label-90" ng-if="result.opening_hours.open_now">Abierto</label>
+                <label class="pull-left label label-default label-90" ng-if="!result.opening_hours.open_now">Cerrado</label>
+                <label class="pull-right label label-info label-90" ng-if="result.rating">
+                  {{result.rating}} <i class="material-icons md-75p">star</i>
+                </label>
+            </div>
           </div>
         </div>
       </div>
-
+      <div class="result-detail invisible">
+        <button class="pull-left hide-btn" type="button" name="hide_detail" ng-click="hide_detail()">
+          <i class="material-icons md-18">arrow_back</i>
+        </button>
+        <a class="result-detail-img-link" href=""><div class="result-detail-img"></div></a>
+        <div class="detail-text">
+          <div class="title">
+            <h4 class="pull-left" id="name"></h4>
+            <label class="pull-right label label-info label-100" id="rating-label">
+               <span id="rating"></span><i class="material-icons md-75p">star</i>
+            </label>
+          </div>
+          <div class="subtitle">
+            <h5><i class="material-icons md-16">local_offer</i><span id="tipos"></span></h5>
+          </div>
+          <div class="place-info">
+            <ul>
+              <li><i class="material-icons">room</i><span id="direccion"></span></li>
+              <li><i class="material-icons">explore</i><a id="url" href="">Sitio Web</a></li>
+              <li><i class="material-icons">call</i><span id="telefono"></span></li>
+              <li>
+                <i class="material-icons">schedule</i>
+                <span id="horarios">Cerrado</span>
+                <button class="show-horarios-btn" type="button" name="button" ng-click="toggle_horarios()">
+                  <i class="material-icons">keyboard_arrow_down</i>
+                </button>
+              </li>
+            </ul>
+            <div class="horarios-info invisible">
+              <table class="horarios-table">
+                <tbody class="horarios-body">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
