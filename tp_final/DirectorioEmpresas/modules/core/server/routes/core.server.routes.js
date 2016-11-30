@@ -18,7 +18,7 @@ module.exports = function (app) {
   app.route('/*').get(core.renderIndex);
 
   app.route('/search_term').post(function(req, res, next) {
-    googleplaces.textSearch(req.body, function (error, response) {
+    googleplaces.nearBySearch(req.body, function (error, response) {
       if (error) return res.json({ 'error': error, 'results': [] });
       return res.json({ 'results': response.results });
     });
