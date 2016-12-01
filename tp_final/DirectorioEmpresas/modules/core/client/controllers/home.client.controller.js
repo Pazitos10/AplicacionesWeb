@@ -173,9 +173,10 @@ angular.module('core')
         $('#url')[0].innerHTML = place.website || 'Sitio web no disponible';
         $('#telefono')[0].innerHTML = place.formatted_phone_number || 'No disponible';
         $('#horarios')[0].innerHTML = $scope.get_estado(place);
-        if(place.rating)
+        if(place.rating){
+          $('#rating-label').show();
           $('#rating')[0].innerHTML = place.rating;
-        else
+        }else
           $('#rating-label').hide();
         $scope.translate_types(place);
         place = $scope.get_image(place);

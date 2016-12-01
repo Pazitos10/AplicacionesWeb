@@ -20,3 +20,13 @@ Esta aplicación permitirá el registro, geolocalización y búsqueda de empresa
 ![](https://k60.kn3.net/2/5/8/D/9/F/EB3.png)
 
 ![](https://k60.kn3.net/A/F/9/8/A/9/8EE.png)
+
+![](https://k61.kn3.net/5/B/C/7/F/9/5DC.png)
+
+### Diseño responsivo
+
+![](https://k60.kn3.net/E/E/9/0/9/0/53C.png)
+
+![](https://k61.kn3.net/A/0/1/8/B/0/C6D.png)
+
+![](https://k61.kn3.net/1/5/B/D/D/C/7F3.png)
