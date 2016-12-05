@@ -1,21 +1,25 @@
 'use strict';
 
 angular.module('core')
-.controller('HomeController', ['$http', '$scope', 'Authentication', 'uiGmapGoogleMapApi',
-  function ($http, $scope, Authentication, uiGmapGoogleMapApi) {
-    //Inicializamos variables
-    $scope.authentication = Authentication; // provee el contexto de Autenticacion.
+.controller('HomeController', ['$http', '$scope', 'Authentication',
+  'uiGmapGoogleMapApi', function ($http, $scope, Authentication, uiGmapApi) {
+
+    /** Inicializamos variables */
+    $scope.authentication = Authentication; // provee el ctx de Autenticacion.
     $scope.search_term = '';
     $scope.search_results = [];
     $scope.selected_filter = 'all';
-    $scope.no_results_msg = 'Elegí la categoría y encontra el lugar que estas buscando';
     $scope.horarios = [];
+    $scope.position = {};
+    $scope.current_review = {};
+    $scope.no_results_msg = 'Elegí una categoría'+
+                            ' y encontra el lugar que estas buscando';
 
-    /*
+    /**
       Busca una imagen para un lugar y se la agrega a sus propiedades.
       Devuelve el lugar modificado
     */
-    $scope.get_image = function(place){
+    $scope.getImage = function(place){
       if (place.photos) {
         $http({
           method: 'POST',
@@ -26,21 +30,19 @@ angular.module('core')
         }).then(function (response){
           place.img_src = response.data.src;
         }, function(response){
-          console.log('get_image(): Error al solicitar la imagen.');
+          console.log('getImage(): Error al solicitar la imagen.');
         });
       }else{
-        place.img_src = 'http://www.creatuestilo.com/wp-content/themes/tempest/images/no.image.50x50.png';
+        place.img_src = 'https://goo.gl/9ETYB1';
       }
       return place;
     };
 
-    /*
-      Busca informacion basica para un lugar
-    */
+    /** Busca informacion basica de un lugar */
     $scope.search = function(){
-      var latlng = String(window.position.coords.latitude) +','+ String(window.position.coords.longitude);
+      var latlng = String($scope.position.coords.latitude) +','+
+                    String($scope.position.coords.longitude);
       var filter = $scope.selected_filter;
-      //bsas: '-34.6131500,-58.3772300'
       $http({
         method: 'POST',
         url: '/search_term',
@@ -53,15 +55,15 @@ angular.module('core')
       }).then(function successCallback(response) {
         if(response.data.results.length <= 0)
           $scope.no_results_msg = 'No se encontraron resultados :(';
-        $scope.search_results = response.data.results.map($scope.get_image);
+        $scope.search_results = response.data.results.map($scope.getImage);
       }, function errorCallback(response) {
         console.log('search(): Error al realizar la busqueda.');
       });
     };
 
-    /* Configura el filtro (categoria) a utilizar para la busqueda */
-    $scope.set_filter = function (filter) {
-      $scope.selected_filter = $scope.get_filter_types(filter);
+    /** Configura el filtro (categoria) a utilizar para la busqueda */
+    $scope.setFilter = function (filter) {
+      $scope.selected_filter = $scope.getFilterTypes(filter);
       $('.material-icons').removeClass('active');
       $('.material-icons#'+filter).addClass('active');
       var placeholder = 'Buscar en ';
@@ -69,17 +71,17 @@ angular.module('core')
       $('.search-input').attr('placeholder', placeholder+categoria);
     };
 
-    /*
+    /**
       Identifica cuando un item de la lista de resultados es seleccionado,
       pone un marcador en el mapa en las coordenadas del lugar y
       muestra informacion detallada del mismo.
     */
-    $scope.item_clicked = function (item_index) {
+    $scope.itemClicked = function (item_index) {
       var place = $scope.search_results[item_index];
       var lat = place.geometry.location.lat;
       var lng = place.geometry.location.lng;
       var position = { lat: lat, lng: lng };
-      uiGmapGoogleMapApi.then(function(maps) {
+      uiGmapApi.then(function(maps) {
         var map = new maps.Map(document.getElementById('map'), {
           center: position ,
           scrollwheel: false,
@@ -91,22 +93,33 @@ angular.module('core')
           title: place.name
         });
       });
-      $scope.show_detail(place);
+      $scope.showDetail(place);
     };
 
-    /*
-      Obtiene las keywords necesarias para buscar un lugar de acuerdo a una categoria.
+    /**
+      Obtiene las keywords necesarias para buscar un lugar de acuerdo
+      a una categoria.
     */
-    $scope.get_filter_types = function (filter) {
+    $scope.getFilterTypes = function (filter) {
       var filter_types = {
-        'store': 'store|bicycle_store|book_store|cafe|clothing_store|convenience_store|department_store|electronics_store|florist|furniture_store|grocery_or_supermarket|hair_care|hardware_store|home_goods_store|jewelry_store|laundry|liquor_store|locksmith|night_club|pet_store|pharmacy|post_office|shoe_store|shopping_mall|veterinary_care',
-        'car': 'airport|bus_station|car_dealer|car_rental|car_repair|car_wash|parking|rv_park|subway_station|taxi_stand|train_station|travel_agency',
+        'store': 'store|bicycle_store|book_store|cafe|clothing_store|'+
+                'convenience_store|department_store|electronics_store|florist|'+
+                'furniture_store|grocery_or_supermarket|hair_care|'+
+                'hardware_store|home_goods_store|jewelry_store|laundry|'+
+                'liquor_store|locksmith|night_club|pet_store|pharmacy|'+
+                'post_office|shoe_store|shopping_mall|veterinary_care',
+        'car': 'airport|bus_station|car_dealer|car_rental|car_repair|car_wash|'+
+              'parking|rv_park|subway_station|taxi_stand|train_station|'+
+              'travel_agency',
         'hotel': 'campground|lodging',
-        'food': 'casino|food|grocery_or_supermarket|liquor_store|meal_delivery|meal_takeaway|night_club|shopping_mall',
+        'food': 'casino|food|grocery_or_supermarket|liquor_store|'+
+                'meal_delivery|meal_takeaway|night_club|shopping_mall',
         'gas_station': 'gas_station',
-        'health': 'dentist|doctor|fire_station|funeral_home|health|hospital|police|pharmacy|physiotherapist|veterinary_care',
+        'health': 'dentist|doctor|fire_station|funeral_home|health|hospital|'+
+                  'police|pharmacy|physiotherapist|veterinary_care',
         'religion': 'church|hindu_temple|mosque|place_of_worship|synagogue',
-        'repair': 'electrician|general_contractor|lawyer|locksmith|painter|plumber|roofing_contractor'
+        'repair': 'electrician|general_contractor|lawyer|locksmith|painter|'+
+                  'plumber|roofing_contractor'
       };
 
       if (filter !== 'all')
@@ -115,28 +128,21 @@ angular.module('core')
         return Object.values(filter_types).join('|');
     };
 
-    /*
-      Activa/Muestra el resumen detallado del lugar.
-    */
-    $scope.show_detail = function (place){
+    /** Activa/Muestra el resumen detallado del lugar. */
+    $scope.showDetail = function (place){
       $('.result-detail').removeClass('invisible');
       $('.search-form-wrapper').addClass('invisible');
-      $scope.search_details(place);
+      $scope.searchDetails(place);
     };
 
-    /*
-      Desactiva/Oculta el resumen detallado del lugar.
-    */
-    $scope.hide_detail = function () {
+    /** Desactiva/Oculta el resumen detallado del lugar. */
+    $scope.hideDetail = function () {
       $('.result-detail').addClass('invisible');
       $('.search-form-wrapper').removeClass('invisible');
     };
 
-    /*
-      Traduce los tipos/categorias a los cuales esta asociado un lugar.
-    */
-    $scope.translate_types = function (place) {
-      //traduce solo los tipos
+    /** Traduce los tipos/categorias a los cuales esta asociado un lugar. */
+    $scope.translateTypes = function (place) {
       place.tipos = [];
       place.types.map(function (type){
         $http({
@@ -149,15 +155,15 @@ angular.module('core')
           place.tipos.push(response.data.result_text);
           $('#tipos')[0].innerHTML = place.tipos.join(', ');
         }, function errorCallback(response) {
-          console.log('translate_types(): Error al obtener traducciones.');
+          console.log('translateTypes(): Error al obtener traducciones.');
         });
       });
     };
 
-    /*
+    /**
       Busca informacion detallada de un lugar y la muestra en pantalla.
     */
-    $scope.search_details = function (place) {
+    $scope.searchDetails = function (place) {
       $http({
         method: 'POST',
         url: '/search_details',
@@ -166,32 +172,61 @@ angular.module('core')
         }
       }).then(function successCallback(response) {
         place.details = response.data.details.result;
-        //console.log(place);
         $('#name')[0].innerHTML = place.name;
-        $('#direccion')[0].innerHTML = place.formatted_address || place.vicinity || 'Dirección no disponible';
+        $('#direccion')[0].innerHTML = place.formatted_address ||
+                                    place.vicinity || 'Dirección no disponible';
         $('#url')[0].href = place.website || '#';
         $('#url')[0].innerHTML = place.website || 'Sitio web no disponible';
-        $('#telefono')[0].innerHTML = place.formatted_phone_number || 'No disponible';
-        $('#horarios')[0].innerHTML = $scope.get_estado(place);
+        $('#telefono')[0].innerHTML = place.formatted_phone_number ||
+                                      'No disponible';
+        $('#horarios')[0].innerHTML = $scope.getEstado(place);
         if(place.rating){
           $('#rating-label').show();
           $('#rating')[0].innerHTML = place.rating;
         }else
           $('#rating-label').hide();
-        $scope.translate_types(place);
-        place = $scope.get_image(place);
-        $('.result-detail-img').css('background', 'url(' + place.img_src + ') no-repeat center center rgba(0,0,0,.2)');
-        $('.result-detail-img-link')[0].href = place.img_src;
+        $scope.translateTypes(place);
+        place = $scope.getImage(place);
+        $('.result-detail-img').css('background',
+          'url(' + place.img_src + ') no-repeat center center rgba(0,0,0,.2)');
+        $scope.getReviews(place);
       }, function errorCallback(response) {
-        console.log('search_details(): Error al obtener detalles.');
+        console.log('searchDetails(): Error al obtener detalles.');
       });
     };
 
-    /* Obtiene el estado de un lugar/organizacion: Abierto, Cerrado o No disponible. */
-    $scope.get_estado = function (place) {
+    $scope.getReviews = function(place) {
+      var avatar = 'http://fillmurray.com/50/50';
+      $scope.reviews = place.details.reviews;
+      $scope.reviews.forEach(function (review) {
+        review.profile_photo_url = review.profile_photo_url || avatar;
+      });
+      $scope.current_review = $scope.reviews[0];
+    };
+
+    $scope.getNextReview = function() {
+        var current_index = $scope.reviews.indexOf($scope.current_review);
+        if (current_index < $scope.reviews.length - 1)
+          $scope.current_review = $scope.reviews[current_index + 1];
+        if (current_index === $scope.reviews.length - 1)
+          $scope.current_review = $scope.reviews[0];
+    }
+
+    $scope.getPreviousReview = function() {
+      var current_index = $scope.reviews.indexOf($scope.current_review);
+      if (current_index === 0)
+        $scope.current_review = $scope.reviews[$scope.reviews.length - 1];
+      if (current_index > 0)
+        $scope.current_review = $scope.reviews[current_index - 1];
+    }
+
+    /**
+      Obtiene el estado de un lugar: Abierto, Cerrado o No disponible.
+    */
+    $scope.getEstado = function (place) {
       if (place.opening_hours){
         $('.show-horarios-btn').show();
-        $scope.set_dias_y_horarios(place.details.opening_hours.weekday_text);
+        $scope.setDiasYHorarios(place.details.opening_hours.weekday_text);
         return (place.opening_hours.open_now) ? 'Abierto': 'Cerrado';
       }else{
         $('.show-horarios-btn').hide();
@@ -199,10 +234,10 @@ angular.module('core')
       }
     };
 
-    /*
+    /**
       Setea los dias y horarios de atencion de un lugar y lo muestra en pantalla.
     */
-    $scope.set_dias_y_horarios = function (weekday_text) {
+    $scope.setDiasYHorarios = function (weekday_text) {
       $('.horarios-body').empty();
       weekday_text.map(function (value){
         $http({
@@ -215,24 +250,61 @@ angular.module('core')
           var horario = response.data.result_text;
           $('.horarios-body').append('<tr><td>'+horario+'</td></tr>');
         }, function errorCallback(response) {
-          console.log('set_dias_y_horarios(): Error al obtener traducciones.');
+          console.log('setDiasYHorarios(): Error al obtener traducciones.');
         });
       });
     };
 
-    /*
+    /**
       Muestra/Oculta detalles de horarios semanales en la informacion del lugar.
     */
-    $scope.toggle_horarios = function () {
+    $scope.toggleHorarios = function () {
       $('.horarios-info').toggleClass('invisible');
-      var arrow = $('.show-horarios-btn .material-icons')[0].innerHTML;
+      var icons = $('.show-horarios-btn .material-icons')[0];
+      var arrow = icons.innerHTML;
       if (arrow === 'keyboard_arrow_down')
-        $('.show-horarios-btn .material-icons')[0].innerHTML = 'keyboard_arrow_up';
+        icons.innerHTML = 'keyboard_arrow_up';
       else
-        $('.show-horarios-btn .material-icons')[0].innerHTML = 'keyboard_arrow_down';
+        icons.innerHTML = 'keyboard_arrow_down';
 
     };
 
-    $scope.set_filter('all'); //Seteamos el filtro inicial a 'Todos'
+
+    /** Verifica el error provocado al inicializar el mapa */
+    $scope.verificarError = function (error) {
+      if (error.code === error.PERMISSION_DENIED) {
+        $('#map').addClass('location-disabled');
+        $('#map')[0].innerHTML = '<p class="text-center">'+
+          'Debe habilitar el acceso a la ubicación para continuar</p></div>';
+        $('.search-input').attr('disabled','');
+      }
+    };
+
+    /** Inicializa una instancia del mapa y lo centra en la posicion obtenida */
+    $scope.initMap = function (position) {
+      $scope.position = position;
+      var lat = $scope.position.coords.latitude;
+      var lng = $scope.position.coords.longitude;
+      var opt = { scrollwheel: false, zoom: 8, center: { lat: lat, lng: lng } };
+      if ($('#map')[0]) {
+        uiGmapApi.then(function(maps) {
+          new maps.Map($('#map')[0], opt);
+        });
+        $('#map').removeClass('location-disabled');
+        $('.search-input').removeAttr('disabled');
+      }
+    };
+
+    /** Obtiene la ubicacion del usuario */
+    $scope.obtenerUbicacion = function () {
+      var geo = navigator.geolocation;
+      if (geo)
+        geo.getCurrentPosition($scope.initMap, $scope.verificarError);
+      else
+        $('#map').innerHTML = 'Geolocation is not supported by this browser.';
+    };
+
+    $scope.setFilter('all'); //Seteamos el filtro inicial a 'Todos'
+    $scope.obtenerUbicacion();
   }
 ]);

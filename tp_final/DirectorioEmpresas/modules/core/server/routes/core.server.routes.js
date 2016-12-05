@@ -2,7 +2,8 @@
 var GooglePlaces = require('googleplaces');
 var translate = require('google-translate-api');
 var config = require('../../../../config/env/development.js');
-var googleplaces = new GooglePlaces(config.googlePlaces.apiKey, config.googlePlaces.outputFormat);
+var googleplaces = new GooglePlaces(config.googlePlaces.apiKey,
+                                    config.googlePlaces.outputFormat);
 
 module.exports = function (app) {
   // Root routing
@@ -19,21 +20,23 @@ module.exports = function (app) {
 
   app.route('/search_term').post(function(req, res, next) {
     googleplaces.nearBySearch(req.body, function (error, response) {
-      if (error) return res.json({ 'error': error, 'results': [] });
+      if (error){
+        console.log('ERROR:', error);
+        return res.json({ 'results': [] });
+      }
       return res.json({ 'results': response.results });
     });
   });
 
   app.route('/search_details').post(function (req, res, next) {
     googleplaces.placeDetailsRequest({ reference: req.body.reference } ,function(error, response){
-      console.log(response);
+      if (error) console.error(error);
       return res.json({ 'details': response });
     });
   });
 
   app.route('/search_img').post(function (req, res, next) {
     var photoreference = req.body.photoreference;
-    console.log('photoreference', photoreference);
     googleplaces.imageFetch({ photoreference: photoreference },
       function(error, response) {
         return res.json({ 'src': response });

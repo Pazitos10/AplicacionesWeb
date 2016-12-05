@@ -41,8 +41,7 @@ angular.module('core',['uiGmapgoogle-maps','nemLogging']).config(['$stateProvide
   }
 ]).config(function (uiGmapGoogleMapApiProvider) {
   uiGmapGoogleMapApiProvider.configure({
-    //key: 'PUT YOUR KEY HERE',
-    v: '3.17'
+    key: 'AIzaSyCw9LL7k3OLBDW6Ryn28D3qtDwp0yjReCA'
     //libraries: 'weather,geometry,visualization'
   });
 });

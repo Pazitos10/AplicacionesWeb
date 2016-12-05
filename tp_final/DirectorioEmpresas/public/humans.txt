@@ -3,13 +3,11 @@
 
 # TEAM
 
-    <name> -- <role> -- <twitter>
-
-# THANKS
-
-    <name>
+    Bruno Alfredo Pazos -- Developer -- @pazitos10
+    Matías Hernán Iglesias -- Developer -- @matiashiglesias
 
 # TECHNOLOGY COLOPHON
 
     HTML5, CSS3
-    jQuery, Modernizr
+    javascript, meanjs, jQuery, AngularJS, gulpjs, npm,
+    google-translate-api, google-maps-api, google-places-api, mongodb

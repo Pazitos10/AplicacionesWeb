@@ -8,18 +8,18 @@
         <form class="search-form" ng-submit="search()">
           <input ng-model="search_term" class="form-control search-input" type="text">
           <div class="search-filter">
-            <i ng-click="set_filter('all')" id="all" class="material-icons" alt="todos">assignment</i>
-            <i ng-click="set_filter('store')" id="store" class="material-icons" alt="negocios">store</i>
-            <i ng-click="set_filter('car')" id="car" class="material-icons" alt="transporte">directions_car</i>
-            <i ng-click="set_filter('hotel')" id="hotel" class="material-icons" alt="hospedaje">hotel</i>
-            <i ng-click="set_filter('food')" id="food" class="material-icons" alt="comida">local_dining</i>
-            <i ng-click="set_filter('gas_station')" id="gas_station" class="material-icons" alt="combustible">local_gas_station</i>
-            <i ng-click="set_filter('health')" id="health" class="material-icons" alt="salud">local_hospital</i>
+            <i ng-click="setFilter('all')" id="all" class="material-icons" alt="todos">assignment</i>
+            <i ng-click="setFilter('store')" id="store" class="material-icons" alt="negocios">store</i>
+            <i ng-click="setFilter('car')" id="car" class="material-icons" alt="transporte">directions_car</i>
+            <i ng-click="setFilter('hotel')" id="hotel" class="material-icons" alt="hospedaje">hotel</i>
+            <i ng-click="setFilter('food')" id="food" class="material-icons" alt="comida">local_dining</i>
+            <i ng-click="setFilter('gas_station')" id="gas_station" class="material-icons" alt="combustible">local_gas_station</i>
+            <i ng-click="setFilter('health')" id="health" class="material-icons" alt="salud">local_hospital</i>
           </div>
         </form>
         <p ng-if="!search_results.length > 0" class="text-center text-muted no-results-msg" ng-bind="no_results_msg"></p>
         <div class="results" ng-if="search_results.length > 0">
-          <div class="result-item" ng-click="item_clicked($index)" ng-repeat="result in search_results">
+          <div class="result-item" ng-click="itemClicked($index)" ng-repeat="result in search_results">
 
             <img ng-if="result.img_src" ng-src="{{result.img_src}}" alt="" class="result-img">
             <div class="result-description">
@@ -35,10 +35,25 @@
         </div>
       </div>
       <div class="result-detail invisible">
-        <button class="pull-left hide-btn" type="button" name="hide_detail" ng-click="hide_detail()">
+        <button class="pull-left hide-btn" type="button" name="hide_detail" ng-click="hideDetail()">
           <i class="material-icons md-18">arrow_back</i>
         </button>
-        <a class="result-detail-img-link" href=""><div class="result-detail-img"></div></a>
+
+        <div class="result-detail-img"></div>
+        <div class="reviews" ng-model="current_review">
+          <i class="material-icons reviews-controls" ng-click="getPreviousReview()">keyboard_arrow_left</i>
+          <div class="review-container">
+            <img class="review-avatar" ng-src="{{current_review.profile_photo_url}}" alt="" />
+            <div class="review-description">
+              <span class="review-author text-muted">
+                {{current_review.author_name}} - {{current_review.rating}} <i class="material-icons md-14">star</i>
+              </span>
+              <p class="review-text"> {{current_review.text}} </p>
+              <a href="{{current_review.author_url}}">Ver más</a>
+            </div>
+          </div>
+          <i class="material-icons reviews-controls" ng-click="getNextReview()">keyboard_arrow_right</i>
+        </div>
         <div class="detail-text">
           <div class="title">
             <h4 class="pull-left" id="name"></h4>
@@ -57,7 +72,7 @@
               <li>
                 <i class="material-icons">schedule</i>
                 <span id="horarios">Cerrado</span>
-                <button class="show-horarios-btn" type="button" name="button" ng-click="toggle_horarios()">
+                <button class="show-horarios-btn" type="button" name="button" ng-click="toggleHorarios()">
                   <i class="material-icons">keyboard_arrow_down</i>
                 </button>
               </li>

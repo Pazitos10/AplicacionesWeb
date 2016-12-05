@@ -34,3 +34,7 @@
   min-height: 150px;
   max-height: 150px;
 }
+
+.auth-social-networks img {
+  width: 50px;
+}

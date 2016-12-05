@@ -183,10 +183,7 @@ a:hover{
 }
 
 .search-filter .active {
-  /*border-bottom: 3px solid rgba(0,0,0,.2);*/
-  /*color: #2c3e50;*/
   color: #00edd9;
-  /*text-shadow: 0px 0px 5px rgba(0,0,0,.1)*/
 }
 
 .search-filter .material-icons {
@@ -204,11 +201,8 @@ a:hover{
 
 .result-detail {
   min-height: 520px;
-  /*max-height: 520px;*/
-  /*background: rgba(0,0,0,.1);*/
   border-radius: 3px;
   overflow: hidden;
-  /*visibility: hidden;*/
 }
 
 .result-detail .result-detail-img {
@@ -218,16 +212,78 @@ a:hover{
   z-index: -2;
   position: relative;
   top: -30px;
-  background: rgba(0,0,0,.2)
+  background: rgba(0,0,0,.2);
+  box-shadow: 0px 18px 64px rgba(0,0,0,.5) inset;
+  display: flex;
 }
 
 
-.result-detail .result-detail-img img {
+/*.result-detail .result-detail-img img {
   position: relative;
   top: -263px;
   left: 0px;
   width: auto;
   height: auto;
+}*/
+
+.result-detail .reviews {
+  background: rgba(0,0,0,.8);
+  height: 80px;
+  width: 100%;
+  color: white;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  top: -30px;
+}
+
+.result-detail .reviews .reviews-controls {
+  align-self: center;
+}
+
+.result-detail .reviews .review-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-height: 100%;
+}
+
+.result-detail .reviews .review-container .review-avatar{
+  height: 50px;
+  width: auto;
+  border-radius: 50%;
+}
+
+
+
+.result-detail .reviews .review-container .review-description{
+  margin-left: 5px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.result-detail .reviews .review-container .review-description .review-author{
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.result-detail .reviews .review-container .review-description .review-text{
+  padding: 0;
+  visibility: hidden;
+}
+
+@media (min-width: 375px){
+  .result-detail .reviews .review-container .review-description .review-text{
+    visibility: visible;
+  }
 }
 
 .result-detail .detail-text{
