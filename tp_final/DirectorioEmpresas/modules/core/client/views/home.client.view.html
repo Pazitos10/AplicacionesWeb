@@ -40,7 +40,7 @@
         </button>
 
         <div class="result-detail-img"></div>
-        <div class="reviews" ng-model="current_review">
+        <div class="reviews" ng-model="current_review" ng-if="current_review">
           <i class="material-icons reviews-controls" ng-click="getPreviousReview()">keyboard_arrow_left</i>
           <div class="review-container">
             <img class="review-avatar" ng-src="{{current_review.profile_photo_url}}" alt="" />

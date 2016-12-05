@@ -8,6 +8,7 @@ Esta aplicación permitirá el registro, geolocalización y búsqueda de empresa
 
 ![](https://k60.kn3.net/B/6/2/3/D/0/9D8.png)
 
+
 * **Detección automática de ubicación** del usuario utilizando HTML5. Al ingresar el usuario en el sistema mostrará su ubicación en el mapa
 * **CRUD de Empresas**. Permtirá la gestión de Empresas
 * **CRUD de Categorías**. Permitirá la gestión de Categorías
@@ -17,12 +18,15 @@ Esta aplicación permitirá el registro, geolocalización y búsqueda de empresa
 
 ![](https://k60.kn3.net/A/F/9/8/A/9/8EE.png)
 
-![](https://k61.kn3.net/5/B/C/7/F/9/5DC.png)
+![](https://k61.kn3.net/B/8/F/8/7/7/F2E.png)
+
+![](https://k61.kn3.net/7/4/1/1/9/A/9C2.png)
+
 
 ### Diseño responsivo
 
-![](https://k60.kn3.net/E/E/9/0/9/0/53C.png)
+![](https://k61.kn3.net/5/A/6/8/B/4/9A6.png)
 
-![](https://k61.kn3.net/A/0/1/8/B/0/C6D.png)
+![](https://k60.kn3.net/C/E/0/F/0/3/47A.png)
 
-![](https://k61.kn3.net/1/5/B/D/D/C/7F3.png)
+![](https://k61.kn3.net/1/5/D/1/F/8/516.png)

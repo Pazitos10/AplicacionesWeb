@@ -11,7 +11,6 @@ angular.module('core')
     $scope.selected_filter = 'all';
     $scope.horarios = [];
     $scope.position = {};
-    $scope.current_review = {};
     $scope.no_results_msg = 'Elegí una categoría'+
                             ' y encontra el lugar que estas buscando';
 
@@ -195,30 +194,39 @@ angular.module('core')
       });
     };
 
+    /**
+      Obtiene las reseñas para un lugar y setea la primera.
+    */
     $scope.getReviews = function(place) {
       var avatar = 'http://fillmurray.com/50/50';
       $scope.reviews = place.details.reviews;
       $scope.reviews.forEach(function (review) {
         review.profile_photo_url = review.profile_photo_url || avatar;
       });
-      $scope.current_review = $scope.reviews[0];
+      $scope.current_review = $scope.reviews[0] || {};
     };
 
+    /**
+      Slider: obtiene la siguiente reseña
+    */
     $scope.getNextReview = function() {
-        var current_index = $scope.reviews.indexOf($scope.current_review);
-        if (current_index < $scope.reviews.length - 1)
-          $scope.current_review = $scope.reviews[current_index + 1];
-        if (current_index === $scope.reviews.length - 1)
-          $scope.current_review = $scope.reviews[0];
-    }
+      var current_index = $scope.reviews.indexOf($scope.current_review);
+      if (current_index < $scope.reviews.length - 1)
+        $scope.current_review = $scope.reviews[current_index + 1];
+      if (current_index === $scope.reviews.length - 1)
+        $scope.current_review = $scope.reviews[0];
+    };
 
+    /**
+      Slider: obtiene la anterior reseña
+    */
     $scope.getPreviousReview = function() {
       var current_index = $scope.reviews.indexOf($scope.current_review);
       if (current_index === 0)
         $scope.current_review = $scope.reviews[$scope.reviews.length - 1];
       if (current_index > 0)
         $scope.current_review = $scope.reviews[current_index - 1];
-    }
+    };
 
     /**
       Obtiene el estado de un lugar: Abierto, Cerrado o No disponible.
