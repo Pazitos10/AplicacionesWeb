@@ -36,13 +36,13 @@ module.exports = {
     }
   },
   facebook: {
-    clientID: process.env.FACEBOOK_ID || 'APP_ID',
-    clientSecret: process.env.FACEBOOK_SECRET || 'APP_SECRET',
+    clientID: process.env.FACEBOOK_ID || '1344140158951680',
+    clientSecret: process.env.FACEBOOK_SECRET || 'bcd5be563285b9f97b641726a40a87b2',
     callbackURL: '/api/auth/facebook/callback'
   },
   twitter: {
-    clientID: process.env.TWITTER_KEY || 'CONSUMER_KEY',
-    clientSecret: process.env.TWITTER_SECRET || 'CONSUMER_SECRET',
+    clientID: process.env.TWITTER_KEY || '0sI44xs0YfhAuaD4TmLsP1gtz',
+    clientSecret: process.env.TWITTER_SECRET || 'QB0r4NH3B3WlIlldXCbZxwOLDvZtvKSwmT9CfSW49NScoJ8MSZ',
     callbackURL: '/api/auth/twitter/callback'
   },
   google: {
