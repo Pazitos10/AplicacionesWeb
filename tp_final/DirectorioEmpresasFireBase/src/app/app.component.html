@@ -1,3 +1,57 @@
+<div ng-cloak>
+  <md-toolbar color="primary">
+    <img src="./assets/img/logo.svg" alt="" height="100%">
+
+    <span class="logo">Directorio de Empresas</span>
+    <button md-icon-button [md-menu-trigger-for]="menu">
+      <md-icon>more_vert</md-icon>
+    </button>
+  </md-toolbar>
+  <md-menu x-position="before" #menu="mdMenu">
+    <button md-menu-item>Crear cuenta</button>
+    <button md-menu-item>Iniciar sesi&oacute;n</button>
+  </md-menu>
+
+  <md-card>
+    <md-grid-list cols="4" rowHeight="100px">
+      <md-grid-tile [colspan]="3" [rowspan]="1"
+                    [style.background]="lightblue">
+        MAPA
+      </md-grid-tile>
+      <md-grid-tile [colspan]="1" [rowspan]="1"
+                    [style.background]="lightblue">
+        <form class="search-form" ng-submit="search()">
+          <md-input placeholder="Término de búsqueda"></md-input>
+          <div id="search-filters">
+            <md-button-toggle-group multiple>
+              <md-button-toggle *ngFor="let categoria of categorias" [id]="categoria.id" [title]="categoria.titulo" class="filter">
+                <md-icon>{{categoria.icono}}</md-icon>
+              </md-button-toggle>
+            </md-button-toggle-group>
+
+            <!--
+            <md-icon id="all" alt="todos">assignment</md-icon>
+            <i (click)="setFilter('all')" id="all" class="m" alt="todos">assignment</i>
+            <i (click)="setFilter('store')" id="store" class="material-icons" alt="negocios">store</i>
+            <i (click)="setFilter('car')" id="car" class="material-icons" alt="transporte">directions_car</i>
+            <i (click)="setFilter('hotel')" id="hotel" class="material-icons" alt="hospedaje">hotel</i>
+            <i (click)="setFilter('food')" id="food" class="material-icons" alt="comida">local_dining</i>
+            <i (click)="setFilter('gas_station')" id="gas_station" class="material-icons" alt="combustible">local_gas_station</i>
+            <i (click)="setFilter('health')" id="health" class="material-icons" alt="salud">local_hospital</i>
+            -->
+          </div>
+        </form>
+      </md-grid-tile>
+
+    </md-grid-list>
+  </md-card>
+
+  <span class="done">
+    <button md-fab>
+      <md-icon>check circle</md-icon>
+    </button>
+  </span>
+</div>
 <h1>
   {{title}}
 </h1>
@@ -6,3 +60,4 @@
     {{item.$value}}
   </li>
 </ul>
+
