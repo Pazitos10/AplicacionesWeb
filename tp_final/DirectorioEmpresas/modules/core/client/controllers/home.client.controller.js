@@ -293,10 +293,21 @@ angular.module('core')
       $scope.position = position;
       var lat = $scope.position.coords.latitude;
       var lng = $scope.position.coords.longitude;
-      var opt = { scrollwheel: false, zoom: 8, center: { lat: lat, lng: lng } };
+      var opt = { scrollwheel: false, zoom: 15, center: { lat: lat, lng: lng } };
       if ($('#map')[0]) {
         uiGmapApi.then(function(maps) {
-          new maps.Map($('#map')[0], opt);
+          var map = new maps.Map($('#map')[0], opt);
+          var circle = new maps.Circle({
+            map: map,
+            radius: 500, // 2 miles in metres
+            strokeColor: '#009bc9',
+            strokeOpacity: 0.8,
+            strokeWeight: 1,
+            fillColor: '#ffffff',
+            fillOpacity: 0.30,
+            center: { lat: lat, lng: lng }
+          });
+          //circle.bindTo('center', 'position');
         });
         $('#map').removeClass('location-disabled');
         $('.search-input').removeAttr('disabled');

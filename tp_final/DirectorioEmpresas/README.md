@@ -1,7 +1,7 @@
-#Directorio de Empresas
+# Directorio de Empresas
 Esta aplicación permitirá el registro, geolocalización y búsqueda de empresas por distintas categorías. Hará uso de un servidor de nodeJS para realizar la geolocalización de las empresas registradas y de servicios web de Google para mostrar información adicional como reseñas realizadas por otros usuarios en [Google Places](https://developers.google.com/places/?hl=es)
 
-##Features
+## Features
 * **Gestión de usuarios**. Permitirá registro de usuarios mediante el uso de distintas redes sociales, así como de usuarios propios del sistema
 
 ![](https://k61.kn3.net/C/3/1/5/0/1/3A4.png)
@@ -20,7 +20,7 @@ Esta aplicación permitirá el registro, geolocalización y búsqueda de empresa
 
 ![](https://k61.kn3.net/B/8/F/8/7/7/F2E.png)
 
-![](https://k61.kn3.net/7/4/1/1/9/A/9C2.png)
+<!-- ![](https://k61.kn3.net/7/4/1/1/9/A/9C2.png) -->
 
 
 ### Diseño responsivo
