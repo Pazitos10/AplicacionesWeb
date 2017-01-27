@@ -21,29 +21,12 @@
     </md-grid-tile>
     <md-grid-tile [colspan]="1" [rowspan]="1"
                   [style.background]="lightblue">
-      <form class="search-form" ng-submit="search()">
-        <md-input placeholder="Término de búsqueda"></md-input>
-        <div id="search-filters">
-          <md-button-toggle-group multiple>
-            <md-button-toggle *ngFor="let categoria of categorias" [id]="categoria.id" [title]="categoria.titulo" class="filter">
-              <md-icon>{{categoria.icono}}</md-icon>
-            </md-button-toggle>
-          </md-button-toggle-group>
-        </div>
-      </form>
+      <app-empresa-filter>Iniciando</app-empresa-filter>
     </md-grid-tile>
     <md-grid-tile [colspan]="1" [rowspan]="1"
                   [style.background]="lightblue">
 
-      <md-list>
-        <md-list-item *ngFor="let empresa of empresas | async">
-          <img md-list-avatar src="..." alt="...">
-          <h3 md-line> {{empresa.razonSocial}} </h3>
-          <p md-line>
-            <span class="direccion">{{empresa.direccion}}, {{empresa.localidad}}</span>
-          </p>
-        </md-list-item>
-      </md-list>
+      <app-empresa-list></app-empresa-list>
     </md-grid-tile>
   </md-grid-list>
 

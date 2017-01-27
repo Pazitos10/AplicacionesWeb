@@ -7,6 +7,8 @@ import { AngularFireModule } from 'angularfire2';
 import { AppComponent } from './app.component';
 import { MaterialModule } from '@angular/material';
 import { AgmCoreModule } from 'angular2-google-maps/core';
+import { EmpresaListComponent } from './empresa-list/empresa-list.component';
+import { EmpresaFilterComponent } from './empresa-filter/empresa-filter.component';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyAf_LM_hH28h-FVezIh40XFQtg60lkzcw4",
@@ -18,7 +20,9 @@ export const firebaseConfig = {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    EmpresaListComponent,
+    EmpresaFilterComponent
   ],
   imports: [
     BrowserModule,

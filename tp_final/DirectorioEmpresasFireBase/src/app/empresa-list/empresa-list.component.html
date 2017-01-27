@@ -1,0 +1,9 @@
+<md-list>
+  <md-list-item *ngFor="let empresa of empresas | async">
+    <img md-list-avatar src="./assets/img/building-icon.png" alt="Logo">
+    <h3 md-line> {{empresa.razonSocial}} </h3>
+    <p md-line>
+      <span class="direccion">{{empresa.direccion}}, {{empresa.localidad}}</span>
+    </p>
+  </md-list-item>
+</md-list>

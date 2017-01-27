@@ -1,0 +1,10 @@
+<form class="search-form" ng-submit="search()">
+  <md-input placeholder="Término de búsqueda"></md-input>
+  <div id="search-filters">
+    <md-button-toggle-group multiple>
+      <md-button-toggle *ngFor="let categoria of categorias" [id]="categoria.id" [title]="categoria.titulo" class="filter">
+        <md-icon>{{categoria.icono}}</md-icon>
+      </md-button-toggle>
+    </md-button-toggle-group>
+  </div>
+</form>
