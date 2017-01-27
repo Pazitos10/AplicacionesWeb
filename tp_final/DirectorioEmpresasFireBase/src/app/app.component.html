@@ -12,39 +12,40 @@
     <button md-menu-item>Iniciar sesi&oacute;n</button>
   </md-menu>
 
-  <md-card>
-    <md-grid-list cols="4" rowHeight="100px">
-      <md-grid-tile [colspan]="3" [rowspan]="1"
-                    [style.background]="lightblue">
-        MAPA
-      </md-grid-tile>
-      <md-grid-tile [colspan]="1" [rowspan]="1"
-                    [style.background]="lightblue">
-        <form class="search-form" ng-submit="search()">
-          <md-input placeholder="Término de búsqueda"></md-input>
-          <div id="search-filters">
-            <md-button-toggle-group multiple>
-              <md-button-toggle *ngFor="let categoria of categorias" [id]="categoria.id" [title]="categoria.titulo" class="filter">
-                <md-icon>{{categoria.icono}}</md-icon>
-              </md-button-toggle>
-            </md-button-toggle-group>
+  <md-grid-list cols="4">
+    <md-grid-tile [colspan]="3" [rowspan]="2"
+                  [style.background]="lightblue">
+      <sebm-google-map [latitude]="lat" [longitude]="lng">
+        <sebm-google-map-marker [latitude]="lat" [longitude]="lng" [label]="'Titulo'"></sebm-google-map-marker>
+      </sebm-google-map>
+    </md-grid-tile>
+    <md-grid-tile [colspan]="1" [rowspan]="1"
+                  [style.background]="lightblue">
+      <form class="search-form" ng-submit="search()">
+        <md-input placeholder="Término de búsqueda"></md-input>
+        <div id="search-filters">
+          <md-button-toggle-group multiple>
+            <md-button-toggle *ngFor="let categoria of categorias" [id]="categoria.id" [title]="categoria.titulo" class="filter">
+              <md-icon>{{categoria.icono}}</md-icon>
+            </md-button-toggle>
+          </md-button-toggle-group>
+        </div>
+      </form>
+    </md-grid-tile>
+    <md-grid-tile [colspan]="1" [rowspan]="1"
+                  [style.background]="lightblue">
 
-            <!--
-            <md-icon id="all" alt="todos">assignment</md-icon>
-            <i (click)="setFilter('all')" id="all" class="m" alt="todos">assignment</i>
-            <i (click)="setFilter('store')" id="store" class="material-icons" alt="negocios">store</i>
-            <i (click)="setFilter('car')" id="car" class="material-icons" alt="transporte">directions_car</i>
-            <i (click)="setFilter('hotel')" id="hotel" class="material-icons" alt="hospedaje">hotel</i>
-            <i (click)="setFilter('food')" id="food" class="material-icons" alt="comida">local_dining</i>
-            <i (click)="setFilter('gas_station')" id="gas_station" class="material-icons" alt="combustible">local_gas_station</i>
-            <i (click)="setFilter('health')" id="health" class="material-icons" alt="salud">local_hospital</i>
-            -->
-          </div>
-        </form>
-      </md-grid-tile>
-
-    </md-grid-list>
-  </md-card>
+      <md-list>
+        <md-list-item *ngFor="let empresa of empresas | async">
+          <img md-list-avatar src="..." alt="...">
+          <h3 md-line> {{empresa.razonSocial}} </h3>
+          <p md-line>
+            <span class="direccion">{{empresa.direccion}}, {{empresa.localidad}}</span>
+          </p>
+        </md-list-item>
+      </md-list>
+    </md-grid-tile>
+  </md-grid-list>
 
   <span class="done">
     <button md-fab>
@@ -52,12 +53,6 @@
     </button>
   </span>
 </div>
-<h1>
-  {{title}}
-</h1>
-<ul>
-  <li class="text" *ngFor="let item of items | async">
-    {{item.$value}}
-  </li>
-</ul>
+
+
 

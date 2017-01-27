@@ -1,5 +1,9 @@
 {
   "rules": {
+    "empresas" : {
+      ".read": true,
+      ".write": "auth != null"
+    },
     "items" : {
       ".read": true,
       ".write": "auth != null"
