@@ -1,0 +1,22 @@
+{
+  "empresas" : {
+    "empresa1" : {
+      "cuit" : 121213,
+      "direccion" : "Belgrano 744",
+      "latitud" : -43.2994485,
+      "localidad" : "Rawson",
+      "longitud" : -65.1217766,
+      "provincia" : "Chubut",
+      "razonSocial" : "Hospedaje Sampedro"
+    },
+    "empresa2" : {
+      "cuit" : 121212,
+      "direccion" : "Alejandro Conesa 24",
+      "latitud" : -43.299485,
+      "localidad" : "Rawson",
+      "longitud" : -65.1064557,
+      "provincia" : "Chubut",
+      "razonSocial" : "El Fideo Feliz"
+    }
+  }
+}
