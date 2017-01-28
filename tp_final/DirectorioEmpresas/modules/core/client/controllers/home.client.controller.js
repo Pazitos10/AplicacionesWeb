@@ -11,6 +11,8 @@ angular.module('core')
     $scope.selected_filter = 'all';
     $scope.horarios = [];
     $scope.position = {};
+    $scope.search_radius = 500;
+    $scope.search_radius_text = '500m';
     $scope.no_results_msg = 'Elegí una categoría'+
                             ' y encontra el lugar que estas buscando';
 
@@ -48,7 +50,7 @@ angular.module('core')
         data: {
           name: $scope.search_term,
           location: latlng,
-          radius: 2000,
+          radius: $scope.search_radius,
           types: (filter !== 'all') ? filter : ''
         }
       }).then(function successCallback(response) {
@@ -60,14 +62,20 @@ angular.module('core')
       });
     };
 
+
+    $scope.update_search_placeholder = function() {
+      var placeholder = 'Buscar en ';
+      placeholder += $scope.categoria+' a '+$scope.search_radius_text;
+      $('.search-input').attr('placeholder', placeholder);
+    };
+
     /** Configura el filtro (categoria) a utilizar para la busqueda */
     $scope.setFilter = function (filter) {
       $scope.selected_filter = $scope.getFilterTypes(filter);
       $('.material-icons').removeClass('active');
       $('.material-icons#'+filter).addClass('active');
-      var placeholder = 'Buscar en ';
-      var categoria = $('.material-icons#'+filter).attr('alt');
-      $('.search-input').attr('placeholder', placeholder+categoria);
+      $scope.categoria = $('.material-icons#'+filter).attr('alt');
+      $scope.update_search_placeholder();
     };
 
     /**
@@ -293,24 +301,27 @@ angular.module('core')
       $scope.position = position;
       var lat = $scope.position.coords.latitude;
       var lng = $scope.position.coords.longitude;
-      var opt = { scrollwheel: false, zoom: 15, center: { lat: lat, lng: lng } };
+      var center = { lat: lat, lng: lng };
+      var opt = { scrollwheel: false, zoom: 15, center: center };
       if ($('#map')[0]) {
         uiGmapApi.then(function(maps) {
-          var map = new maps.Map($('#map')[0], opt);
-          var circle = new maps.Circle({
-            map: map,
-            radius: 500, // 2 miles in metres
+          $scope.map = new maps.Map($('#map')[0], opt);
+          $scope.circle = new maps.Circle({
+            map: $scope.map,
+            radius: $scope.search_radius, // 2 miles in metres
             strokeColor: '#009bc9',
             strokeOpacity: 0.8,
             strokeWeight: 1,
             fillColor: '#ffffff',
             fillOpacity: 0.30,
-            center: { lat: lat, lng: lng }
+            center: center
           });
           //circle.bindTo('center', 'position');
+          $scope.setSearchRadius(500, '500m');
         });
         $('#map').removeClass('location-disabled');
         $('.search-input').removeAttr('disabled');
+
       }
     };
 
@@ -321,6 +332,21 @@ angular.module('core')
         geo.getCurrentPosition($scope.initMap, $scope.verificarError);
       else
         $('#map').innerHTML = 'Geolocation is not supported by this browser.';
+    };
+
+    $scope.update_map_zoom = function () {
+      var zoom_levels = { '500m': 15, '1km': 14, '5km': 12, '10km': 11, '20km': 10 };
+      $scope.map.setZoom(zoom_levels[$scope.search_radius_text]);
+      $scope.circle.setRadius($scope.search_radius);
+    };
+
+    $scope.setSearchRadius = function (radius, radius_text){
+      $scope.search_radius = radius;
+      $scope.search_radius_text = radius_text;
+      $('.radius-option').removeClass('active');
+      $('.radius-option#radius-'+radius).addClass('active');
+      $scope.update_search_placeholder();
+      $scope.update_map_zoom();
     };
 
     $scope.setFilter('all'); //Seteamos el filtro inicial a 'Todos'

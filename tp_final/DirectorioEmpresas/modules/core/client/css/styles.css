@@ -169,6 +169,22 @@ a:hover{
   align-items: center;
 }
 
+.radius-options-container{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0px
+}
+
+.radius-option{
+  color: #ccc;
+  cursor: pointer;
+}
+
+.radius-option.active{
+  color: #00edd9;
+}
+
+
 .search-container{
   display: flex;
   justify-content: center;
@@ -178,7 +194,7 @@ a:hover{
 .search-filter{
   display:flex;
   justify-content: space-between;
-  padding: 10px 0;
+  padding-bottom: 10px;
   color: rgba(0,0,0,.2);
 }
 

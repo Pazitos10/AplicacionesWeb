@@ -7,6 +7,13 @@
       <div class="search-form-wrapper">
         <form class="search-form" ng-submit="search()">
           <input ng-model="search_term" class="form-control search-input" type="text">
+          <div class="radius-options-container">
+            <span ng-click="setSearchRadius(500, '500m')" id="radius-500" class="radius-option">500m</span>
+            <span ng-click="setSearchRadius(1000, '1km')" id="radius-1000" class="radius-option">1km</span>
+            <span ng-click="setSearchRadius(5000, '5km')" id="radius-5000" class="radius-option">5km</span>
+            <span ng-click="setSearchRadius(10000, '10km')" id="radius-10000" class="radius-option">10km</span>
+            <span ng-click="setSearchRadius(20000, '20km')" id="radius-20000" class="radius-option">20km</span>
+          </div>
           <div class="search-filter">
             <i ng-click="setFilter('all')" id="all" class="material-icons" alt="todos">assignment</i>
             <i ng-click="setFilter('store')" id="store" class="material-icons" alt="negocios">store</i>
