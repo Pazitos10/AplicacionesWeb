@@ -15,7 +15,6 @@ angular.module('core')
     $scope.search_radius_text = '500m';
     $scope.no_results_msg = 'Elegí una categoría'+
                             ' y encontra el lugar que estas buscando';
-
     /**
       Busca una imagen para un lugar y se la agrega a sus propiedades.
       Devuelve el lugar modificado
@@ -89,14 +88,11 @@ angular.module('core')
       var lng = place.geometry.location.lng;
       var position = { lat: lat, lng: lng };
       uiGmapApi.then(function(maps) {
-        var map = new maps.Map(document.getElementById('map'), {
-          center: position ,
-          scrollwheel: false,
-          zoom: 18
-        });
-        var marker = new maps.Marker({
+        $scope.map.setCenter(position);
+        $scope.map.setZoom(18);
+        $scope.marker = new maps.Marker({
           position: position,
-          map: map,
+          map: $scope.map,
           title: place.name
         });
       });
@@ -146,6 +142,12 @@ angular.module('core')
     $scope.hideDetail = function () {
       $('.result-detail').addClass('invisible');
       $('.search-form-wrapper').removeClass('invisible');
+      $scope.marker.setMap(null);
+      $scope.update_map_zoom();
+      var lat = $scope.position.coords.latitude;
+      var lng = $scope.position.coords.longitude;
+      var center = { lat: lat, lng: lng };
+      $scope.map.setCenter(center);
     };
 
     /** Traduce los tipos/categorias a los cuales esta asociado un lugar. */
