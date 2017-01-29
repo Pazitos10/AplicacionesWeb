@@ -24,19 +24,9 @@ a:hover{
   border-color:transparent;
 }
 
-#custom-navbar {
-  display: flex !important;
-  align-items: flex-end;
-}
-
-.custom-navbar-left{
-  flex-grow: 1;
-}
-
 .custom-navbar-right{
-  margin:0;
+  padding-top:10px;
 }
-
 
 .material-icons {
   font-family: 'Material Icons';
