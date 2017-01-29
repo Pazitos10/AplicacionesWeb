@@ -1,26 +1,51 @@
 <section>
   <div class="page-header">
-    <h1 ng-bind="vm.empresa.razonSocial"></h1>
   </div>
-  <div class="pull-right"
-       ng-show="vm.empresa.isCurrentUserOwner">
-    <a class="btn btn-primary"
-       ui-sref="empresas.edit({ empresaId: vm.empresa._id })">
-      <i class="glyphicon glyphicon-edit"></i>
-    </a>
-    <a class="btn btn-primary" ng-click="vm.remove()">
-      <i class="glyphicon glyphicon-trash"></i>
-    </a>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h1>
+        <span ng-bind="vm.empresa.razonSocial"></span>
+        <span class="pull-right"
+             ng-show="vm.empresa.isCurrentUserOwner">
+          <a class="btn btn-primary"
+             ui-sref="empresas.edit({ empresaId: vm.empresa._id })">
+            <i class="glyphicon glyphicon-edit"></i>
+          </a>
+          <a class="btn btn-primary" ng-click="vm.remove()">
+            <i class="glyphicon glyphicon-trash"></i>
+          </a>
+        </span>
+      </h1>
+    </div>
+    <div class="panel-body">
+      <table class="table">
+        <tbody>
+        <tr ng-if="vm.authentication.user">
+          <th>CUIT</th>
+          <td><span ng-bind="vm.empresa.cuit"></span></td>
+        </tr>
+        <tr>
+          <th>Domicilio</th>
+          <td><span ng-bind="vm.empresa.domicilio"></span></td>
+        </tr>
+        <tr>
+          <th>Teléfono</th>
+          <td><span ng-bind="vm.empresa.telefono"></span></td>
+        </tr>
+        <tr>
+          <th>Sitio web</th>
+          <td><a ng-href="{{vm.empresa.website}}">{{vm.empresa.website}}</a></td>
+        </tr>
+        <tr ng-if="vm.authentication.user">
+          <th>Creado el</th>
+          <td><span ng-bind="vm.empresa.created | date:'mediumDate'"></span></td>
+        </tr>
+        <tr ng-if="vm.authentication.user">
+          <th>Creado por</th>
+          <td><span ng-bind="vm.empresa.user.displayName"></span></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-  <small>
-    <em class="text-muted">
-      Posted on
-      <span ng-bind="vm.empresa.created | date:'mediumDate'"></span>
-      by
-      <span ng-if="vm.empresa.user"
-            ng-bind="vm.empresa.user.displayName"></span>
-      <span ng-if="!vm.empresa.user">Deleted User</span>
-    </em>
-  </small>
-  <p class="lead" ng-bind="vm.empresa.content"></p>
 </section>

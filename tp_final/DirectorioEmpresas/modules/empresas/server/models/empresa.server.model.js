@@ -52,7 +52,7 @@ var EmpresaSchema = new Schema({
     website: {
       type: String,
       default: '',
-      required: 'Ingrese Sitio Web de la Empresa',
+      required: false,
       trim: true
     },
   created: {
