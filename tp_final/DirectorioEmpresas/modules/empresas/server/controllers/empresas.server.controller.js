@@ -17,8 +17,8 @@ var path = require('path'),
 var serviceAccount = require(path.resolve('./serviceAccountKey.json'));
 
 firebase.initializeApp({
-    credential: firebase.credential.cert(serviceAccount),
-    databaseURL: 'https://directorioempresas-74f45.firebaseio.com'
+  credential: firebase.credential.cert(serviceAccount),
+  databaseURL: 'https://directorioempresas-74f45.firebaseio.com'
 });
 
 /**
@@ -94,24 +94,22 @@ exports.delete = function (req, res) {
  */
 exports.list = function (req, res) {
   var empresas = firebase.database().ref('/empresas');
-  empresas.on("value", function(snapshot) {
-      var results = [];
-      var nombre_empresa = "";
-      var datos_empresa = {};
-      snapshot.forEach(function(data){
-        //snapshot es un objeto con objetos, necesitamos devolver una lista.
-        nombre_empresa = data.key;
-        datos_empresa = data.val();
-        results.push({ nombre_empresa: datos_empresa});
-      });
-      res.json(results);
+  empresas.on('value', function(snapshot) {
+    var results = [];
+    var nombre_empresa = '';
+    var datos_empresa = {};
+    snapshot.forEach(function(data){
+      //snapshot es un objeto con objetos, necesitamos devolver una lista.
+      nombre_empresa = data.key;
+      datos_empresa = data.val();
+      results.push({ nombre_empresa: datos_empresa });
+    });
+    res.json(results);
   }, function (errorObject) {
-      return res.status(400).send({
-          message: errorObject.code
-      });
-
+    return res.status(400).send({
+      message: errorObject.code
+    });
   });
-  console.log("termine");
   /*
   Empresa.find().sort('-created').populate('user', 'displayName').exec(function (err, empresas) {
     if (err) {
