@@ -66,8 +66,9 @@
   getEmpresa.$inject = ['$stateParams', 'EmpresasService'];
 
   function getEmpresa($stateParams, EmpresasService) {
+    console.log($stateParams); //TODO: el parametro empresaId no viene cargado
     return EmpresasService.get({
-      empresaId: $stateParams.empresaId
+      empresaId: $stateParams.empresaId //va a fallar!
     }).$promise;
   }
 
