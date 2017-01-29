@@ -49,18 +49,18 @@ module.exports = {
     callbackURL: '/api/auth/twitter/callback'
   },
   google: {
-    clientID: process.env.GOOGLE_ID || 'APP_ID',
-    clientSecret: process.env.GOOGLE_SECRET || 'APP_SECRET',
+    clientID: process.env.GOOGLE_ID || '384507057866-biqqq27v6n5hfa5qpaabv1e9uqqc25lp.apps.googleusercontent.com',
+    clientSecret: process.env.GOOGLE_SECRET || 'xHNVcao_bw-sVkR4fFHfGFeG',
     callbackURL: '/api/auth/google/callback'
   },
   linkedin: {
-    clientID: process.env.LINKEDIN_ID || 'APP_ID',
-    clientSecret: process.env.LINKEDIN_SECRET || 'APP_SECRET',
+    clientID: process.env.LINKEDIN_ID || '78b69jyl7rf6y6',
+    clientSecret: process.env.LINKEDIN_SECRET || '6HghqWTGVzaQL4kg',
     callbackURL: '/api/auth/linkedin/callback'
   },
   github: {
-    clientID: process.env.GITHUB_ID || 'APP_ID',
-    clientSecret: process.env.GITHUB_SECRET || 'APP_SECRET',
+    clientID: process.env.GITHUB_ID || 'ca9ef21753596da214b2',
+    clientSecret: process.env.GITHUB_SECRET || 'e5d2a78f8ca367f37272954deb37e23cc95873ee',
     callbackURL: '/api/auth/github/callback'
   },
   paypal: {
