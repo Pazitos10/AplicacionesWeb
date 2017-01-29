@@ -93,12 +93,18 @@ exports.delete = function (req, res) {
  * List of Empresas
  */
 exports.list = function (req, res) {
-    console.log("PASO POR ACA");
-  console.log("DALE");
   var empresas = firebase.database().ref('/empresas');
-  empresas.limitToFirst(1).on("value", function(snapshot) {
-      console.log(snapshot.val());
-      res.jsonp(snapshot);
+  empresas.on("value", function(snapshot) {
+      var results = [];
+      var nombre_empresa = "";
+      var datos_empresa = {};
+      snapshot.forEach(function(data){
+        //snapshot es un objeto con objetos, necesitamos devolver una lista.
+        nombre_empresa = data.key;
+        datos_empresa = data.val();
+        results.push({ nombre_empresa: datos_empresa});
+      });
+      res.json(results);
   }, function (errorObject) {
       return res.status(400).send({
           message: errorObject.code
