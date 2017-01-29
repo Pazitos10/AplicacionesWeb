@@ -81,7 +81,7 @@ exports.delete = function (req, res) {
  * List of Empresas
  */
 exports.list = function (req, res) {
-  Empresa.find().sort('-created').populate('user', 'displayName').exec(function (err, empresas) {
+  Empresa.find().sort([['razonSocial','ascending']]).populate('user', 'displayName').exec(function (err, empresas) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
