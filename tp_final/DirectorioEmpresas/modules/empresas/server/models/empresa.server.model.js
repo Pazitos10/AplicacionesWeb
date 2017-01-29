@@ -27,7 +27,7 @@ var EmpresaSchema = new Schema({
   cuit: {
     type: String,
     default: '',
-    required: 'Ingrese CUIT de la Empresa',
+    required: false,
     trim: true
   },
   domicilio: {
@@ -46,15 +46,38 @@ var EmpresaSchema = new Schema({
   telefono: {
     type: String,
     default: '',
-    required: 'Ingrese Teléfono de la Empresa',
+    required: false,
     trim: true
   },
-    website: {
-      type: String,
-      default: '',
-      required: false,
-      trim: true
-    },
+  website: {
+    type: String,
+    default: '',
+    required: false,
+    trim: true
+  },
+  icon : {
+    type: String,
+    default: '',
+    required: false,
+    trim: true,
+  }, //Google Icon
+  place_id : {
+    type: String,
+    default: '',
+    required: false,
+    trim: true,
+  }, //Google Place Id
+  google_id : {
+    type: String,
+    default: '',
+    required: false,
+    trim: true,
+  }, //Google Id
+  categorias: {
+    type: [String],
+    default: [],
+    required: false
+  },
   created: {
     type: Date,
     default: Date.now
