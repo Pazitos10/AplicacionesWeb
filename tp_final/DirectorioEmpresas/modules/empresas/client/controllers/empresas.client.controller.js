@@ -20,7 +20,7 @@
 
     // Remove existing Empresa
     function remove() {
-      if ($window.confirm('Are you sure you want to delete?')) {
+      if ($window.confirm('¿Está seguro que desea eliminar esta Empresa?')) {
         vm.empresa.$remove($state.go('empresas.list'));
       }
     }

@@ -4,13 +4,23 @@ Esta aplicación permitirá el registro, geolocalización y búsqueda de empresa
 ## Features
 * **Gestión de usuarios**. Permitirá registro de usuarios mediante el uso de distintas redes sociales, así como de usuarios propios del sistema
 
-![](https://k61.kn3.net/C/3/1/5/0/1/3A4.png)
+![](https://k61.kn3.net/A/C/8/F/A/6/521.png)
 
-![](https://k60.kn3.net/B/6/2/3/D/0/9D8.png)
+![](https://k61.kn3.net/B/6/F/8/5/8/414.png)
 
 
 * **Detección automática de ubicación** del usuario utilizando HTML5. Al ingresar el usuario en el sistema mostrará su ubicación en el mapa
 * **CRUD de Empresas**. Permtirá la gestión de Empresas
+	* **Listado de Empresas**
+		![](https://k61.kn3.net/5/9/F/3/B/9/377.png)
+  * **Consulta de Empresas**
+		![](https://k61.kn3.net/6/A/3/1/5/D/918.png)
+  * **Creación de Empresas**
+		![](https://k61.kn3.net/4/8/4/6/6/7/704.png)
+  * **Edición de Empresas**
+		![](https://k61.kn3.net/9/3/B/6/F/5/BA9.png)
+  * **Eliminación de Empresas**
+  	![](https://k61.kn3.net/4/D/7/F/8/9/EB5.png)
 * **CRUD de Categorías**. Permitirá la gestión de Categorías
 * **Servicio de geolocalización**. Luego de crear o modificar un registro de empresas se utilizarán servicios web para obtener las coordenadas de la dirección, de manera de poder mostrarla en el mapa
 * **Información adicional**. Realizará un cruce de información con los servicios web de Google Places para mostrar al usuario información adicional acerca de la Empresa seleccionada
