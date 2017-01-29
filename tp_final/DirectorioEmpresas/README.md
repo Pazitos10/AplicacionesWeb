@@ -24,19 +24,17 @@ Esta aplicación permitirá el registro, geolocalización y búsqueda de empresa
 * **CRUD de Categorías**. Permitirá la gestión de Categorías
 * **Servicio de geolocalización**. Luego de crear o modificar un registro de empresas se utilizarán servicios web para obtener las coordenadas de la dirección, de manera de poder mostrarla en el mapa
 * **Información adicional**. Realizará un cruce de información con los servicios web de Google Places para mostrar al usuario información adicional acerca de la Empresa seleccionada
-* **Búsqueda de empresas**. Permitirá la búsqueda de empresas por categorías y las mostrará en el mapa, junto con la información adicional que se haya obtenido de los servicios web detallados anteriormente
+* **Búsqueda de empresas**. Permitirá la búsqueda de empresas por categorías y radio de distancia. Las mostrará en el mapa, junto con la información adicional que se haya obtenido de los servicios web detallados anteriormente.
 
-![](https://k60.kn3.net/A/F/9/8/A/9/8EE.png)
+![general_con_resultados](https://k61.kn3.net/8/0/7/E/5/5/CD1.png)
 
-![](https://k61.kn3.net/B/8/F/8/7/7/F2E.png)
-
-<!-- ![](https://k61.kn3.net/7/4/1/1/9/A/9C2.png) -->
+![general_con_reviews](https://k61.kn3.net/C/9/7/2/4/6/650.png)
 
 
 ### Diseño responsivo
 
-![](https://k61.kn3.net/5/A/6/8/B/4/9A6.png)
+![responsivo_con_resultados](https://k61.kn3.net/1/9/D/1/7/2/E40.png)
 
-![](https://k60.kn3.net/C/E/0/F/0/3/47A.png)
+![responsivo_con_reviews](https://k61.kn3.net/3/2/6/D/B/F/197.png)
 
-![](https://k61.kn3.net/1/5/D/1/F/8/516.png)
+![responsivo_con_mapa](https://k61.kn3.net/8/C/B/1/3/F/764.png)
