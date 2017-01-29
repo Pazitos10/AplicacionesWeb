@@ -2,6 +2,7 @@
   <div class="page-header">
     <h1>Empresas</h1>
   </div>
+  <span ng-bind="vm.empresas"></span>
   <div class="list-group">
     <a ng-repeat="empresa in vm.empresas"
        ui-sref="empresas.view({ empresaId: empresa._id })"

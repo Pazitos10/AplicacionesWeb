@@ -3,11 +3,23 @@
 /**
  * Module dependencies.
  */
+// [START imports]
+var firebase = require('firebase-admin');
+// [END imports]
+
 var path = require('path'),
   mongoose = require('mongoose'),
   Empresa = mongoose.model('Empresa'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
   _ = require('lodash');
+
+
+var serviceAccount = require(path.resolve('./serviceAccountKey.json'));
+
+firebase.initializeApp({
+    credential: firebase.credential.cert(serviceAccount),
+    databaseURL: 'https://directorioempresas-74f45.firebaseio.com'
+});
 
 /**
  * Create a Empresa
@@ -81,15 +93,31 @@ exports.delete = function (req, res) {
  * List of Empresas
  */
 exports.list = function (req, res) {
+    console.log("PASO POR ACA");
+  console.log("DALE");
+  var empresas = firebase.database().ref('/empresas');
+  empresas.limitToFirst(1).on("value", function(snapshot) {
+      console.log(snapshot.val());
+      res.jsonp(snapshot);
+  }, function (errorObject) {
+      return res.status(400).send({
+          message: errorObject.code
+      });
+
+  });
+  console.log("termine");
+  /*
   Empresa.find().sort('-created').populate('user', 'displayName').exec(function (err, empresas) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
+      console.log(empresas);
       res.jsonp(empresas);
     }
   });
+  */
 };
 
 /**
@@ -114,4 +142,5 @@ exports.empresaByID = function (req, res, next, id) {
     req.empresa = empresa;
     next();
   });
+
 };
