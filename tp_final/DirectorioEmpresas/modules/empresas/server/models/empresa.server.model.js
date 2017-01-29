@@ -49,6 +49,12 @@ var EmpresaSchema = new Schema({
     required: 'Ingrese Teléfono de la Empresa',
     trim: true
   },
+    website: {
+      type: String,
+      default: '',
+      required: 'Ingrese Sitio Web de la Empresa',
+      trim: true
+    },
   created: {
     type: Date,
     default: Date.now
