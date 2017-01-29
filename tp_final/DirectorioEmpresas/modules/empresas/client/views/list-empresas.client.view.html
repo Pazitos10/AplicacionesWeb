@@ -7,7 +7,7 @@
        ui-sref="empresas.view({ empresaId: empresa._id })"
        class="list-group-item">
       <small class="list-group-item-text">
-        Posteado:
+        <span ng-bind="empresa.razonSocial"></span>
         <span ng-bind="empresa.created | date:'mediumDate'"></span>
         por:
         <span ng-if="empresa.user" ng-bind="empresa.user.displayName"></span>
