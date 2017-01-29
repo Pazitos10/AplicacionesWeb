@@ -210,10 +210,12 @@ angular.module('core')
     $scope.getReviews = function(place) {
       var avatar = 'http://fillmurray.com/50/50';
       $scope.reviews = place.details.reviews;
-      $scope.reviews.forEach(function (review) {
-        review.profile_photo_url = review.profile_photo_url || avatar;
-      });
-      $scope.current_review = $scope.reviews[0] || {};
+      if ($scope.reviews){
+        $scope.reviews.forEach(function (review) {
+          review.profile_photo_url = review.profile_photo_url || avatar;
+        });
+        $scope.current_review = $scope.reviews[0] || {};
+      }
     };
 
     /**
