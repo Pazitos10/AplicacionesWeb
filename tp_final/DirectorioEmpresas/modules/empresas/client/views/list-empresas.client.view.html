@@ -2,18 +2,23 @@
   <div class="page-header">
     <h1>Empresas</h1>
   </div>
-  <div class="list-group">
+  <div class="list-group" id="list-empresas">
     <a ng-repeat="empresa in vm.empresas"
        ui-sref="empresas.view({ empresaId: empresa._id })"
-       class="list-group-item">
+       class="list-group-item container">
+      <h4 class="list-group-item-heading"><span ng-bind="empresa.razonSocial"></span></h4>
       <small class="list-group-item-text">
-        <span ng-bind="empresa.razonSocial"></span>
-        <span ng-bind="empresa.created | date:'mediumDate'"></span>
-        por:
-        <span ng-if="empresa.user" ng-bind="empresa.user.displayName"></span>
-        <span ng-if="!empresa.user">Borrar empresa</span>
+        <span ng-bind="empresa.domicilio" class="col-md-4"></span>
+        <span ng-if="empresa.telefono" class="col-md-4">
+          <i class="material-icons md-14">call</i> <span ng-bind="empresa.telefono"></span>
+        </span>
+        <span ng-if="vm.authentication.user" class="col-md-4">
+          creado el
+          <span ng-bind="empresa.created | date:'mediumDate'"></span>
+          por
+          <span ng-if="empresa.user" ng-bind="empresa.user.displayName"></span>
+        </span>
       </small>
-      <h4 class="list-group-item-heading" ng-bind="empresa.name"></h4>
     </a>
   </div>
   <div class="alert alert-warning text-center" ng-if="vm.empresas.$resolved && !vm.empresas.length">
