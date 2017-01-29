@@ -4,9 +4,9 @@ Esta aplicación permitirá el registro, geolocalización y búsqueda de empresa
 ## Features
 * **Gestión de usuarios**. Permitirá registro de usuarios mediante el uso de distintas redes sociales, así como de usuarios propios del sistema
 
-![](https://k61.kn3.net/C/3/1/5/0/1/3A4.png)
+![](https://k61.kn3.net/A/C/8/F/A/6/521.png)
 
-![](https://k60.kn3.net/B/6/2/3/D/0/9D8.png)
+![](https://k61.kn3.net/B/6/F/8/5/8/414.png)
 
 
 * **Detección automática de ubicación** del usuario utilizando HTML5. Al ingresar el usuario en el sistema mostrará su ubicación en el mapa
