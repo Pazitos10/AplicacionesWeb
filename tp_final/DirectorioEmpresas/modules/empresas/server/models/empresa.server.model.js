@@ -78,6 +78,11 @@ var EmpresaSchema = new Schema({
     default: [],
     required: false
   },
+  location: {
+    type: [Number],  // [<lat>, <long>]
+    index: '2d',     // create the geospatial index
+    required: false
+  },
   created: {
     type: Date,
     default: Date.now

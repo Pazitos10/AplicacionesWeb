@@ -26,11 +26,12 @@
         </form>
         <p ng-if="!search_results.length > 0" class="text-center text-muted no-results-msg" ng-bind="no_results_msg"></p>
         <div class="results" ng-if="search_results.length > 0">
-          <div class="result-item" ng-click="itemClicked($index)" ng-repeat="result in search_results">
+          <!--<div class="result-item" ng-click="itemClicked($index)" ng-repeat="result in search_results">-->
+          <div class="result-item" ng-repeat="result in search_results">
 
             <img ng-if="result.img_src" ng-src="{{result.img_src}}" alt="" class="result-img">
             <div class="result-description">
-              <h5>{{result.name}}</h5>
+              <h5><span ng-click="itemClicked($index)">{{result.name}}</span><button class="pull-right" ng-click="saveLocally(result)">guardar</button></h5>
               <span class="text-muted description-labels">
                 <label class="pull-left label label-success label-90" ng-if="result.opening_hours.open_now">Abierto</label>
                 <label class="pull-left label label-default label-90" ng-if="!result.opening_hours.open_now">Cerrado</label>

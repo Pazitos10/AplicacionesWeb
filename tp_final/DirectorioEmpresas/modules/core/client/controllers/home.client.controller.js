@@ -355,5 +355,20 @@ angular.module('core')
 
     $scope.setFilter('all'); //Seteamos el filtro inicial a 'Todos'
     $scope.obtenerUbicacion();
+
+    $scope.saveLocally = function(empresa) {
+      console.log('GUARDO ' + JSON.stringify(empresa));
+
+      $http({
+        method: 'POST',
+        url: '/api/empresas/importar',
+        user: $scope.authentication.user,
+        data: empresa
+      }).then(function successCallback(response) {
+        console.log(response);
+      }, function errorCallback(response) {
+        console.log('saveLocally(): Error al guardar localmente.');
+      });
+    };
   }
 ]);

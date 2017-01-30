@@ -12,6 +12,9 @@ module.exports = function (app) {
     .get(empresas.list)
     .post(empresas.create);
 
+  app.route('/api/empresas/importar').all(empresasPolicy.isAllowed)
+    .post(empresas.importar);
+
   app.route('/api/empresas/:empresaId').all(empresasPolicy.isAllowed)
     .get(empresas.read)
     .put(empresas.update)
