@@ -316,8 +316,8 @@ angular.module('core')
             strokeColor: '#009bc9',
             strokeOpacity: 0.8,
             strokeWeight: 1,
-            fillColor: '#ffffff',
-            fillOpacity: 0.30,
+            fillColor: '#009bc9',
+            fillOpacity: 0.10,
             center: center
           });
           //circle.bindTo('center', 'position');

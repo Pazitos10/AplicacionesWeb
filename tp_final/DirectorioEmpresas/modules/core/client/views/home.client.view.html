@@ -26,8 +26,7 @@
         </form>
         <p ng-if="!search_results.length > 0" class="text-center text-muted no-results-msg" ng-bind="no_results_msg"></p>
         <div class="results" ng-if="search_results.length > 0">
-          <div class="result-item" ng-click="itemClicked($index)" ng-repeat="result in search_results">
-
+          <!-- <div class="result-item" ng-click="itemClicked($index)" ng-repeat="result in search_results">
             <img ng-if="result.img_src" ng-src="{{result.img_src}}" alt="" class="result-img">
             <div class="result-description">
               <h5>{{result.name}}</h5>
@@ -38,6 +37,22 @@
                   {{result.rating}} <i class="material-icons md-75p">star</i>
                 </label>
               </span>
+            </div>
+          </div> -->
+          <div class="result-item-2" ng-click="itemClicked($index)" ng-repeat="result in search_results">
+            <div class="result-img-container">
+              <img ng-if="result.img_src" ng-src="{{result.img_src}}" alt="" class="result-img">
+              <span class="pull-left label label-success label-90 custom-label" ng-if="result.opening_hours.open_now">Abierto</span>
+              <span class="pull-left label label-default label-90 custom-label" ng-if="!result.opening_hours.open_now">Cerrado</span>
+            </div>
+            <div class="result-description">
+              <h5>{{result.name}}</h5>
+              <div class="result-item-2-options">
+                <i class="material-icons md-22 btn-save-place">favorite_border</i>
+                <span class="custom-fav-counter" ng-if="result.rating">
+                  {{result.rating}} <i class="material-icons md-22">star</i>
+                </span>
+              </div>
             </div>
           </div>
         </div>
