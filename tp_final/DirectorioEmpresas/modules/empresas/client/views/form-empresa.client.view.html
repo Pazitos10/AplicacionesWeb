@@ -16,10 +16,7 @@
         <div class="form-group" show-errors>
           <label class="control-label" for="cuit">CUIT</label>
           <input name="cuit" type="text" ng-model="vm.empresa.cuit" id="cuit" class="form-control"
-                 placeholder="CUIT de la Empresa" required>
-          <div ng-messages="vm.form.empresaForm.name.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">Ingrese CUIT</p>
-          </div>
+                 placeholder="CUIT de la Empresa">
         </div>
         <div class="form-group" show-errors>
           <label class="control-label" for="domicilio">Domicilio</label>
@@ -43,9 +40,6 @@
           <label class="control-label" for="domicilio">Teléfono</label>
           <input name="telefono" type="text" ng-model="vm.empresa.telefono" id="telefono" class="form-control"
                  placeholder="Teléfono de la Empresa">
-          <div ng-messages="vm.form.empresaForm.name.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">Ingrese Teléfono</p>
-          </div>
         </div>
         <div class="form-group" show-errors>
           <label class="control-label" for="website">Sitio web</label>

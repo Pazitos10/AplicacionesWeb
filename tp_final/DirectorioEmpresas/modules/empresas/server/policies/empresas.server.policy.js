@@ -27,6 +27,9 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/empresas',
       permissions: ['get', 'post']
     }, {
+      resources: '/api/empresas/importar',
+      permissions: ['post']
+    }, {
       resources: '/api/empresas/:empresaId',
       permissions: ['get']
     }]
