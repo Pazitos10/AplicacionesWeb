@@ -32,7 +32,7 @@ angular.module('core')
           console.log('getImage(): Error al solicitar la imagen.');
         });
       }else{
-        place.img_src = 'https://goo.gl/9ETYB1';
+        place.img_src = 'https://goo.gl/XApjyb';
       }
       return place;
     };
@@ -394,25 +394,26 @@ angular.module('core')
       if ($('#save-'+index)[0].innerHTML === 'favorite'){ //Dislike
         $('#save-'+index)[0].innerHTML = 'favorite_border';
         like = false;
-      };//Like
-      $('#save-'+index)[0].innerHTML = 'favorite';
-      $http({
-        method: 'POST',
-        url: '/api/empresas/vote',
-        user: $scope.authentication.user,
-        data: {'empresa': empresa, 'like': like}
-      }).then(function successCallback(response) {
+      }else { //Like
+        $('#save-'+index)[0].innerHTML = 'favorite';
+      }
+      var data = { 'like': like, 'empresa': empresa, 'user': $scope.authentication.user };
+      $http.post('/api/empresas/vote', data)
+      .then(function successCallback(response) {
         console.log(response);
+        console.log('Empresas Likeadas', $scope.authentication.user.empresasLikeadas);
       }, function errorCallback(response) {
-        console.log('saveLocally(): Error al guardar localmente.');
+        console.log('vote(): Error al guardar localmente.', response);
       });
     };
 
-    // $scope.isLikedByUser = function(author, empresa){
-    //   console.log('en isLikedByUser', $scope.authentication.user, empresa);
-    //   console.log('user.empresasLikeadas', $scope.authentication.user.empresasLikeadas);
-    //   return ($scope.authentication.user === user
-    //     && user.empresasLikeadas.contains(empresa)) ? true :false;
-    // };
+    $scope.userIsLoggedIn = function(){
+      //not fully tested but kinda working (?)
+      return ($scope.authentication.user !== '') ? true : false;
+    };
+
+    $scope.hasUserLiked = function(place_id){
+      return ($scope.authentication.user.empresasLikeadas.includes(place_id)) ? true : false;
+    };
   }
 ]);

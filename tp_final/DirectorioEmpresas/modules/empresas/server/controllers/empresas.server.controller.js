@@ -6,6 +6,7 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Empresa = mongoose.model('Empresa'),
+  User = mongoose.model('User'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
   _ = require('lodash');
 
@@ -71,8 +72,24 @@ exports.importar = function (req, res) {
 
 exports.vote = function (req, res) {
   console.log('Entré en vote');
-  console.log(req);
-  //Hacer update a coleccion user.empresasLikeadas pusheando empresa que viene por params
+  var user = req.body.user;
+  var empresa = req.body.empresa;
+  var isLike = req.body.like;
+  User.findOne({ '_id': user._id }, function(err, user_found){
+    if (err) {
+      console.log(err);
+      res.json({ 'err': err, 'message': 'Hubo un error al actualizar likes del usuario' });
+    }
+
+    if(user_found){
+      if (isLike)
+        user_found.empresasLikeadas.push(empresa.id);
+      else
+        user_found.empresasLikeadas.pop(empresa.id);
+      user_found.save();
+    }
+  });
+  res.json({ 'message': 'done!' });
 };
 
 

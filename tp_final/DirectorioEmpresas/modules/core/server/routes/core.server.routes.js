@@ -19,7 +19,7 @@ module.exports = function (app) {
           aux[index] = result_db;
         }else{
           aux[index] = resultados[index];
-        };
+        }
       });
     });
     return aux; //WIP: aun no funciona - problemas con scope de variables

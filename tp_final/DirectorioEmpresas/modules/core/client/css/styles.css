@@ -392,6 +392,7 @@ a:hover{
 .home .search-container .result-item-2 .result-img-container {
   width:70px;
   height: 70px;
+  margin-left: 5px;
 }
 
 .home .search-container .result-item-2 .result-img-container .result-img{
@@ -445,4 +446,22 @@ a:hover{
 
 .btn-save-place:hover{
   cursor: pointer;
+}
+
+.progress {
+  height: 20px;
+}
+
+.progress-bar {
+  min-width: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.progress-bar span{
+  font-size: 14px;
+  color: white;
+  white-space: nowrap;
 }

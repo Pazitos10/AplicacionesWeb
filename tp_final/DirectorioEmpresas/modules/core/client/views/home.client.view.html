@@ -38,11 +38,11 @@
                 <i class="material-icons md-22 btn-save-place"
                     id="save-{{$index}}"
                     ng-click="vote(result, $index)"
-                    ng-if="isLikedByUser(result.user)">favorite_border</i>
+                    ng-if="userIsLoggedIn() && hasUserLiked(result.id)">favorite</i>
                 <i class="material-icons md-22 btn-save-place"
-                  id="save-{{$index}}"
-                  ng-click="vote(result, $index)"
-                  ng-if="!isLikedByUser(result.user, result)">favorite</i>
+                    id="save-{{$index}}"
+                    ng-click="vote(result, $index)"
+                    ng-if="userIsLoggedIn() && !hasUserLiked(result.id)">favorite_border</i>
                 <span class="custom-fav-counter" ng-if="result.rating">
                   {{result.rating}} <i class="material-icons md-22">star</i>
                 </span>

@@ -8,8 +8,7 @@ var mongoose = require('mongoose'),
   crypto = require('crypto'),
   validator = require('validator'),
   generatePassword = require('generate-password'),
-  owasp = require('owasp-password-strength-test'),
-  Empresa = mongoose.model('Empresa');
+  owasp = require('owasp-password-strength-test');
 
 /**
  * A Validation function for local strategy properties
@@ -100,7 +99,7 @@ var UserSchema = new Schema({
     type: Date
   },
   empresasLikeadas: {
-    type: [Empresa],
+    type: [String], //Solo guardamos el google id o el id de empresas locales.
     default: []
   }
 });
