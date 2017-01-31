@@ -402,12 +402,15 @@ a:hover{
 
 .home .search-container .result-item-2:hover {
   background-color: rgba(0,0,0,.08);
-  cursor: pointer;
 }
 
 .home .search-container .result-item-2:last-child {
   padding-bottom: 0;
   border-bottom: none;
+}
+
+.home .search-container .result-item-2 .result-item-name:hover {
+  cursor:pointer;
 }
 
 .home .search-container .result-item-2 .result-description {

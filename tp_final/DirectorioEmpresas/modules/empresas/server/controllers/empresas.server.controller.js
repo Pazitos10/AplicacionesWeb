@@ -10,6 +10,27 @@ var path = require('path'),
   _ = require('lodash');
 
 /**
+ * convierte el post con data de Google Places en el body en una Empresa del Modelo
+ *
+ * @param req
+ * @return Empresa
+ */
+function empresaProxy(req) {
+  var empresa = new Empresa();
+  // Proxy
+  empresa.razonSocial = req.body.name;
+  empresa.domicilio = req.body.vicinity;
+  empresa.icon = req.body.icon;
+  empresa.place_id = req.body.place_id;
+  empresa.google_id = req.body.id;
+  empresa.categorias = req.body.types;
+  empresa.location = [req.body.geometry.location.lat, req.body.geometry.location.lng];
+  empresa.user = req.user;
+
+  return empresa;
+}
+
+/**
  * Create a Empresa
  */
 exports.create = function (req, res) {
@@ -26,6 +47,34 @@ exports.create = function (req, res) {
     }
   });
 };
+
+/**
+ * Importo una empresa de Google Places y la guardo localmente
+ * No uso import porque es una palabra reservada (y estuve por lo menos 1 hora hasta darme cuenta!!!!)
+ */
+exports.importar = function (req, res) {
+  console.log('Entré en importar');
+  console.log(req);
+
+  var empresa = empresaProxy(req);
+
+  empresa.save(function (err) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.jsonp(empresa);
+    }
+  });
+};
+
+exports.vote = function (req, res) {
+  console.log('Entré en vote');
+  console.log(req);
+  //Hacer update a coleccion user.empresasLikeadas pusheando empresa que viene por params
+};
+
 
 /**
  * Show the current Empresa

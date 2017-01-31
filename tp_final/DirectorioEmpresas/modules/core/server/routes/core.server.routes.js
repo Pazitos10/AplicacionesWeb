@@ -4,11 +4,26 @@ var translate = require('google-translate-api');
 var config = require('../../../../config/env/development.js');
 var googleplaces = new GooglePlaces(config.googlePlaces.apiKey,
                                     config.googlePlaces.outputFormat);
+var mongoose = require('mongoose');
+var Empresa = mongoose.model('Empresa');
 
 module.exports = function (app) {
   // Root routing
   var core = require('../controllers/core.server.controller');
 
+  var procesar_datos_locales = function (resultados, index){
+    var aux = [];
+    resultados.forEach(function (resultado){
+      Empresa.findOne({ 'razonSocial': resultado.name }, function(err, result_db){
+        if (result_db !== null) {
+          aux[index] = result_db;
+        }else{
+          aux[index] = resultados[index];
+        };
+      });
+    });
+    return aux; //WIP: aun no funciona - problemas con scope de variables
+  };
   // Define error pages
   app.route('/server-error').get(core.renderServerError);
 
@@ -24,6 +39,7 @@ module.exports = function (app) {
         console.log('ERROR:', error);
         return res.json({ 'results': [] });
       }
+      //procesar_datos_locales(response.results);
       return res.json({ 'results': response.results });
     });
   });

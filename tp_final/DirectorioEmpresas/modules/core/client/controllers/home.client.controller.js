@@ -3,7 +3,6 @@
 angular.module('core')
 .controller('HomeController', ['$http', '$scope', 'Authentication',
   'uiGmapGoogleMapApi', function ($http, $scope, Authentication, uiGmapApi) {
-
     /** Inicializamos variables */
     $scope.authentication = Authentication; // provee el ctx de Autenticacion.
     $scope.search_term = '';
@@ -355,5 +354,65 @@ angular.module('core')
 
     $scope.setFilter('all'); //Seteamos el filtro inicial a 'Todos'
     $scope.obtenerUbicacion();
+
+    $scope.deleteLocally = function (empresa) {
+      console.log('eliminando empresa', empresa);
+      $http({
+        method: 'DELETE',
+        url: '/api/empresas/'+empresa._id,
+        user: $scope.authentication.user,
+        data: empresa
+      }).then(function successCallback(response) {
+        console.log('exito al eliminar');
+      }, function errorCallback(response) {
+        console.log('saveLocally(): Error al eliminar.');
+      });
+    };
+
+    $scope.saveLocally = function(empresa, index) {
+      console.log('GUARDO ' + JSON.stringify(empresa));
+      if ($('#save-'+index)[0].innerHTML === 'favorite'){ //Elimina de favs
+        $('#save-'+index)[0].innerHTML = 'favorite_border';
+        $scope.deleteLocally(empresa);
+      }else{ //Agrega a favs
+        $('#save-'+index)[0].innerHTML = 'favorite';
+        // $http({
+        //   method: 'POST',
+        //   url: '/api/empresas/importar',
+        //   user: $scope.authentication.user,
+        //   data: empresa
+        // }).then(function successCallback(response) {
+        //   console.log(response);
+        // }, function errorCallback(response) {
+        //   console.log('saveLocally(): Error al guardar localmente.');
+        // });
+      }
+    };
+
+    $scope.vote = function (empresa, index) {
+      var like = true;
+      if ($('#save-'+index)[0].innerHTML === 'favorite'){ //Dislike
+        $('#save-'+index)[0].innerHTML = 'favorite_border';
+        like = false;
+      };//Like
+      $('#save-'+index)[0].innerHTML = 'favorite';
+      $http({
+        method: 'POST',
+        url: '/api/empresas/vote',
+        user: $scope.authentication.user,
+        data: {'empresa': empresa, 'like': like}
+      }).then(function successCallback(response) {
+        console.log(response);
+      }, function errorCallback(response) {
+        console.log('saveLocally(): Error al guardar localmente.');
+      });
+    };
+
+    // $scope.isLikedByUser = function(author, empresa){
+    //   console.log('en isLikedByUser', $scope.authentication.user, empresa);
+    //   console.log('user.empresasLikeadas', $scope.authentication.user.empresasLikeadas);
+    //   return ($scope.authentication.user === user
+    //     && user.empresasLikeadas.contains(empresa)) ? true :false;
+    // };
   }
 ]);
