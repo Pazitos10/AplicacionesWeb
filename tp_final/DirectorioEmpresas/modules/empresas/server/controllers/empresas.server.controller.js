@@ -70,10 +70,16 @@ exports.importar = function (req, res) {
   });
 };
 
+
+/**
+ * Registra el like/dislike de un lugar/empresa
+ * No uso import porque es una palabra reservada (y estuve por lo menos 1 hora hasta darme cuenta!!!!)
+ */
 exports.vote = function (req, res) {
   console.log('Entré en vote');
   var user = req.body.user;
   var empresa = req.body.empresa;
+  var empresa_id = empresa.hasOwnProperty('id') ? empresa.id : empresa._id ; //es google places ("id") o local ("_id")
   var isLike = req.body.like;
   User.findOne({ '_id': user._id }, function(err, user_found){
     if (err) {
@@ -83,9 +89,9 @@ exports.vote = function (req, res) {
 
     if(user_found){
       if (isLike)
-        user_found.empresasLikeadas.push(empresa.id);
+        user_found.empresasLikeadas.push(empresa_id);
       else
-        user_found.empresasLikeadas.pop(empresa.id);
+        user_found.empresasLikeadas.pop(empresa_id);
       user_found.save();
     }
   });

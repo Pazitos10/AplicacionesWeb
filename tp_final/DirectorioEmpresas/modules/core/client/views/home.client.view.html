@@ -33,7 +33,7 @@
               <span class="pull-left label label-default label-90 custom-label" ng-if="!result.opening_hours.open_now">Cerrado</span>
             </div>
             <div class="result-description">
-              <h5 ng-click="itemClicked($index)" class="result-item-name">{{result.name}}</h5>
+              <h5 ng-click="itemClicked($index)" class="result-item-name">{{result.name || result.razonSocial }}</h5>
               <div class="result-item-2-options">
                 <i class="material-icons md-22 btn-save-place"
                     id="save-{{$index}}"

@@ -465,3 +465,11 @@ a:hover{
   color: white;
   white-space: nowrap;
 }
+
+.form-horizontal .control-label {
+  padding-top: 0
+}
+
+.btn-full-width{
+  width: 100%
+}
