@@ -10,10 +10,6 @@ var Empresa = mongoose.model('Empresa');
 module.exports = function (app) {
   // Root routing
   var core = require('../controllers/core.server.controller');
-  var getEmpresas = function(filtro) {
-    var condicion = filtro ? { 'razonSocial': new RegExp(filtro,'i') } : {};
-    return Empresa.find(condicion);
-  };
 
   /*
   * Convierte un numero decimal a radianes
@@ -42,18 +38,21 @@ module.exports = function (app) {
 
   var nearBySearch = function (data){
     //TODO: cuando tengamos categorias, filtrar por categorias en terminos de busqueda tambien.
-    console.log('en nearBySearch');
+    console.log('en nearBySearch', data);
     var name = data.name;
     var lat = data.location.split('\,')[0];
     var lng = data.location.split('\,')[1];
     var radius = data.radius;
     var filtro = (name.length > 0) ? { 'razonSocial': data.name } : {};
-    var promise = getEmpresas().exec().then(function(empresas_db){
+    console.log('filtro de busqueda local', filtro);
+    var promise = Empresa.find(filtro).exec().then(function(empresas_db){
       var results = [];
       if (empresas_db !== null) {
         for (var i = 0; i < empresas_db.length; i++){
+          console.log('empresa local', empresas_db[i]);
           var lat_db = Number(empresas_db[i].location[0]);
           var lng_db = Number(empresas_db[i].location[1]);
+          console.log('empresa local - lat/long', lat_db, lng_db);
           if (distance_haversine(lat_db, lng_db , lat, lng) < radius) { // La empresa esta en el radio adecuado
             results.push(empresas_db[i]);
           }
