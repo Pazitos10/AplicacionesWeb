@@ -20,7 +20,7 @@
 
     // Remove existing Categoria
     function remove() {
-      if ($window.confirm('Are you sure you want to delete?')) {
+      if ($window.confirm('¿Estás seguro que querés eliminar esta Categoría?')) {
         vm.categoria.$remove($state.go('categorias.list'));
       }
     }
