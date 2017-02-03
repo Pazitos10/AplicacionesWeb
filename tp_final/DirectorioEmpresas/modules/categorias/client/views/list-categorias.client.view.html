@@ -1,0 +1,28 @@
+<section>
+  <div class="page-header">
+    <h1>Categorías</h1>
+  </div>
+  <div class="list-group">
+    <a ng-repeat="categoria in vm.categorias | orderBy : '+name'"
+       ui-sref="categorias.view({ categoriaId: categoria._id })"
+       class="list-group-item">
+      <h4 class="list-group-item-heading">
+        <span ng-bind="categoria.name"></span>
+        <span ng-if="categoria.google_equivalent"> >> {{categoria.google_equivalent}}</span>
+      </h4>
+
+      <small class="list-group-item-text">
+        <span ng-if="vm.authentication.user">
+          creado el
+        <span ng-bind="categoria.created | date:'mediumDate'"></span>
+          por
+          <span ng-if="categoria.user" ng-bind="categoria.user.displayName"></span>
+          <span ng-if="!categoria.user">Deleted User</span>
+        </span>
+      </small>
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" ng-if="vm.categorias.$resolved && !vm.categorias.length">
+    No se encontraron Categorías, por qué no <a ui-sref="categorias.create">creas una</a>?
+  </div>
+</section>

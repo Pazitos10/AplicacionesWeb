@@ -1,0 +1,36 @@
+<section>
+  <div class="page-header">
+    <h1>{{vm.categoria._id ? 'Editar Categoría' : 'Nueva Categoría'}}</h1>
+  </div>
+  <div class="col-md-12">
+    <form name="vm.form.categoriaForm" class="form-horizontal" ng-submit="vm.save(vm.form.categoriaForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="name">Nombre</label>
+          <input name="name" type="text" ng-model="vm.categoria.name" id="name" class="form-control"
+            placeholder="Nombre de la Categoría" required>
+          <div ng-messages="vm.form.categoriaForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">El nombre de la Categoría es obligatorio.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="name">Categoría de Google</label>
+           <a class="label label-info pull-right"
+              target="_blank"
+              href="https://developers.google.com/places/supported_types?hl=es-419">más información</a>
+          <input name="name" type="text" ng-model="vm.categoria.google_equivalent" id="google_equivalent" class="form-control"
+                 placeholder="Nombre equivalente de la Categoría de Google Places">
+          <div ng-messages="vm.form.categoriaForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">El nombre equivalente de la Categoría de Google Places es obligatorio.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-default">{{vm.categoria._id ? 'Actualizar' : 'Crear'}}</button>
+        </div>
+        <div ng-show="vm.error" class="text-danger">
+          <strong ng-bind="vm.error"></strong>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>

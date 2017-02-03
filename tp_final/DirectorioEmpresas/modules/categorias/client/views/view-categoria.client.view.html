@@ -1,0 +1,45 @@
+<section>
+  <div class="page-header">
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h1>
+        <span ng-bind="vm.categoria.name"></span>
+        <span class="pull-right"
+              ng-show="vm.categoria.isCurrentUserOwner">
+          <a class="btn btn-primary"
+             ui-sref="categorias.edit({ categoriaId: vm.categoria._id })">
+            <i class="glyphicon glyphicon-edit"></i>
+          </a>
+          <a class="btn btn-primary" ng-click="vm.remove()">
+            <i class="glyphicon glyphicon-trash"></i>
+          </a>
+        </span>
+      </h1>
+    </div>
+    <div class="panel-body">
+      <table class="table">
+        <tbody>
+        <tr>
+          <th>Nombre</th>
+          <td><span ng-bind="vm.categoria.name"></span></td>
+        </tr>
+        <tr>
+          <th>Equivalente Google <a class="label label-info"
+                                    target="_blank"
+                                    href="https://developers.google.com/places/supported_types?hl=es-419">más información</a></th>
+          <td><span ng-bind="vm.categoria.google_equivalent"></span></td>
+        </tr>
+        <tr ng-if="vm.authentication.user">
+          <th>Creado el</th>
+          <td><span ng-bind="vm.categoria.created | date:'mediumDate'"></span></td>
+        </tr>
+        <tr ng-if="vm.authentication.user">
+          <th>Creado por</th>
+          <td><span ng-bind="vm.categoria.user.displayName"></span></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
