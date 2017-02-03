@@ -159,6 +159,9 @@ exports.list = function (req, res) {
         message: errorHandler.getErrorMessage(err)
       });
     } else {
+      empresas.forEach(function (empresa) {
+        empresa.liked = empresaLikeada(empresa, req.user);
+      });
       res.jsonp(empresas);
     }
   });
@@ -187,3 +190,14 @@ exports.empresaByID = function (req, res, next, id) {
     next();
   });
 };
+
+/**
+ * Indica si la empresa tiene un like basándose en el google_id
+ *
+ * @param empresa
+ * @param user
+ * @returns {boolean}
+ */
+function empresaLikeada(empresa, user) {
+  return  user.empresasLikeadas.indexOf(empresa.google_id) >= 0;
+}

@@ -90,7 +90,11 @@ var EmpresaSchema = new Schema({
   user: {
     type: Schema.ObjectId,
     ref: 'User'
-  }
+  },
+  liked: {
+    type: Boolean,
+    default: false
+  } //Usada on the fly para reflection
 });
 
 mongoose.model('Empresa', EmpresaSchema);
