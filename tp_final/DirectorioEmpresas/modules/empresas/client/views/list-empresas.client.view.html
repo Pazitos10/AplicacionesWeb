@@ -2,15 +2,21 @@
   <div class="page-header">
     <h1>Empresas</h1>
     <div class="row">
-      <div class="col-lg-6">
+      <div class="col-md-6">
         <div class="input-group">
         <span class="input-group-addon">
           <input type="checkbox" aria-label="..." ng-model="vm.soloLikeadas">Solo favoritas
         </span>
           <input type="text" class="form-control" aria-label="..." ng-model="vm.filtro">
         </div><!-- /input-group -->
-      </div><!-- /.col-lg-6 -->
-    </div>
+      </div><!-- /.col-md-6 -->
+      <div class="col-md-6" title="Crear empresa">
+          <a class="btn btn-primary  pull-right"
+             ui-sref="empresas.create()">
+            <i class="glyphicon glyphicon-plus"></i>
+          </a>
+      </div><!-- /.col-md-6 -->
+    </div><!-- /.row -->
   </div>
 
   <div class="list-group" id="list-empresas">
