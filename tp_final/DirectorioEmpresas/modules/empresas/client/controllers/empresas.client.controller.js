@@ -111,6 +111,17 @@
       }
     }
 
+    vm.seleccionarCategoria = function (categoriaSeleccionada) {
+      //console.log("seleccionarCategoria()");
+      //console.log(categoriaSeleccionada);
+      vm.empresa.categorias.push(categoriaSeleccionada);
+    };
+
+    vm.quitarCategoria = function (categoria) {
+      console.log("Quito " + categoria.title);
+      vm.empresa.categorias.pull(categoria);
+    };
+
     obtenerUbicacion();
 
   }

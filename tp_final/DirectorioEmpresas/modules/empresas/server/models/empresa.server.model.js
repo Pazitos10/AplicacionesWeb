@@ -76,7 +76,8 @@ var EmpresaSchema = new Schema({
   categorias: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'categorias'
+      ref: 'categorias',
+      required: 'Ingrese al menos una categoría'
     }
   ],
   location: {
