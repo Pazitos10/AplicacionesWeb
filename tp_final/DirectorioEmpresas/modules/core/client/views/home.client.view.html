@@ -51,12 +51,12 @@
           </div>
         </div>
       </div>
-      <div class="result-detail invisible">
+      <div class="result-detail invisible" ng-model="result_detail">
         <button class="pull-left hide-btn" type="button" name="hide_detail" ng-click="hideDetail()">
           <i class="material-icons md-18">arrow_back</i>
         </button>
 
-        <div class="result-detail-img"></div>
+        <div class="result-detail-img-container"><img class="result-detail-img" ng-src="{{result_detail.img}}" alt=""></div>
         <div class="reviews" ng-model="current_review" ng-if="current_review">
           <i class="material-icons reviews-controls" ng-click="getPreviousReview()">keyboard_arrow_left</i>
           <div class="review-container">
@@ -73,22 +73,22 @@
         </div>
         <div class="detail-text">
           <div class="title">
-            <h4 class="pull-left" id="name"></h4>
+            <h4 class="pull-left">{{ result_detail.name }}</h4>
             <label class="pull-right label label-info label-100" id="rating-label">
-               <span id="rating"></span><i class="material-icons md-75p">star</i>
+               <span>{{ result_detail.rating }}</span><i class="material-icons md-75p">star</i>
             </label>
           </div>
           <div class="subtitle">
-            <h5><i class="material-icons md-16">local_offer</i><span id="tipos"></span></h5>
+            <h5><i class="material-icons md-16">local_offer</i><span>{{ result_detail.tipos }}</span></h5>
           </div>
           <div class="place-info">
             <ul>
-              <li><i class="material-icons">room</i><span id="direccion"></span></li>
-              <li><i class="material-icons">explore</i><a id="url" href="">Sitio Web</a></li>
-              <li><i class="material-icons">call</i><span id="telefono"></span></li>
+              <li><i class="material-icons">room</i><span>{{ result_detail.direccion }}</span></li>
+              <li><i class="material-icons">explore</i><a href="{{result_detail.sitio_web.href}}">{{ result_detail.sitio_web.link }}</a></li>
+              <li><i class="material-icons">call</i><span>{{ result_detail.telefono }}</span></li>
               <li>
                 <i class="material-icons">schedule</i>
-                <span id="horarios">Cerrado</span>
+                <span>{{ result_detail.horarios || Cerrado }}</span>
                 <button class="show-horarios-btn" type="button" name="button" ng-click="toggleHorarios()">
                   <i class="material-icons">keyboard_arrow_down</i>
                 </button>
