@@ -10,6 +10,7 @@ angular.module('core')
     $scope.selected_filter = 'all';
     $scope.horarios = [];
     $scope.position = {};
+    $scope.result_detail = {};
     $scope.search_radius = 500;
     $scope.search_radius_text = '500m';
     $scope.no_results_msg = 'Elegí una categoría'+
@@ -85,8 +86,14 @@ angular.module('core')
     */
     $scope.itemClicked = function (item_index) {
       var place = $scope.search_results[item_index];
-      var lat = place.geometry.location.lat;
-      var lng = place.geometry.location.lng;
+      var lat, lng;
+      if (place.geometry) {
+        lat = place.geometry.location.lat;
+        lng = place.geometry.location.lng;
+      } else {
+        lat = place.location[0];
+        lng = place.location[1];
+      }
       var position = { lat: lat, lng: lng };
       uiGmapApi.then(function(maps) {
         $scope.map.setCenter(position);
@@ -163,7 +170,7 @@ angular.module('core')
           }
         }).then(function successCallback(response) {
           place.tipos.push(response.data.result_text);
-          $('#tipos')[0].innerHTML = place.tipos.join(', ');
+          $scope.result_detail.tipos = place.tipos.join(', ');
         }, function errorCallback(response) {
           console.log('translateTypes(): Error al obtener traducciones.');
         });
@@ -174,36 +181,51 @@ angular.module('core')
       Busca informacion detallada de un lugar y la muestra en pantalla.
     */
     $scope.searchDetails = function (place) {
-      $http({
-        method: 'POST',
-        url: '/search_details',
-        data: {
-          reference: place.reference
-        }
-      }).then(function successCallback(response) {
-        place.details = response.data.details.result;
-        $('#name')[0].innerHTML = place.name;
-        $('#direccion')[0].innerHTML = place.formatted_address ||
-                                    place.vicinity || 'Dirección no disponible';
-        $('#url')[0].href = place.website || '#';
-        $('#url')[0].innerHTML = place.website || 'Sitio web no disponible';
-        $('#telefono')[0].innerHTML = place.formatted_phone_number ||
-                                      'No disponible';
-        $('#horarios')[0].innerHTML = $scope.getEstado(place);
-        if(place.rating){
-          $('#rating-label').show();
-          $('#rating')[0].innerHTML = place.rating;
-        }else
-          $('#rating-label').hide();
-        $scope.translateTypes(place);
-        place = $scope.getImage(place);
-        $('.result-detail-img').css('background',
-          'url(' + place.img_src + ') no-repeat center center rgba(0,0,0,.2)');
-        $scope.getReviews(place);
-      }, function errorCallback(response) {
-        console.log('searchDetails(): Error al obtener detalles.');
-      });
+      if (place.geometry){
+        $http({
+          method: 'POST',
+          url: '/search_details',
+          data: {
+            reference: place.reference
+          }
+        }).then(function successCallback(response) {
+          place.details = response.data.details.result;
+          completar_datos_detallados(place);
+        }, function errorCallback(response) {
+          console.log('searchDetails(): Error al obtener detalles.');
+        });
+      }else {
+        completar_datos_detallados(place);
+      }
+
     };
+
+    function completar_datos_detallados(place) {
+      if (place.types){
+          $scope.translateTypes(place);
+      }
+      if (place.details) {
+        $scope.getReviews(place);
+      }
+      $scope.result_detail.horarios = $scope.getEstado(place);
+      $scope.result_detail.name = place.razonSocial || place.name;
+      $scope.result_detail.img = place.img_src; //$scope.getImage(place);
+      $scope.result_detail
+        .direccion = place.formatted_address ||
+                    place.vicinity ||
+                    place.direccion ||
+                    'Dirección no disponible';
+      $scope.result_detail.sitio_web = {};
+      $scope.result_detail.sitio_web.href = place.website || '#';
+      $scope.result_detail.sitio_web.link = place.website || 'Sitio web no disponible';
+      $scope.result_detail.telefono = place.formatted_phone_number || place.telefono || 'No disponible';
+      if(place.rating){
+        $('#rating-label').show();
+        $scope.result_detail.rating = place.rating;
+      }else
+        $('#rating-label').hide();
+    }
+
 
     /**
       Obtiene las reseñas para un lugar y setea la primera.
