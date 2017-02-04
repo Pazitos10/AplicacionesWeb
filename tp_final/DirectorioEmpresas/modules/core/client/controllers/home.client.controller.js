@@ -19,6 +19,8 @@ angular.module('core')
       Devuelve el lugar modificado
     */
     $scope.getImage = function(place){
+      if (place.img_src && place.img_src.length > 0) //ya tenia img - caso: empresas locales
+        return place;
       if (place.photos) {
         $http({
           method: 'POST',

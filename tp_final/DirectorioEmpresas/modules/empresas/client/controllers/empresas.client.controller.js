@@ -3,7 +3,7 @@
 
   // Empresas controller
   angular
-    .module('empresas', ['angucomplete-alt'])
+    .module('empresas')
     .controller('EmpresasController', EmpresasController);
 
   EmpresasController.$inject = ['$scope', '$state', '$window', 'Authentication', 'empresaResolve', 'uiGmapGoogleMapApi',

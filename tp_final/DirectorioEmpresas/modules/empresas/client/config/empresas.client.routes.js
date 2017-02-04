@@ -3,7 +3,7 @@
 
   angular
     .module('empresas')
-    .config(routeConfig);
+    .config(routeConfig, ['angucomplete-alt']);
 
   routeConfig.$inject = ['$stateProvider'];
 
