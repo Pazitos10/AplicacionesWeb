@@ -12,6 +12,9 @@ module.exports = function (app) {
     .get(empresas.list)
     .post(empresas.create);
 
+  app.route('/api/empresas/saveImage').all(empresasPolicy.isAllowed)
+    .post(empresas.saveImage);
+
   app.route('/api/empresas/importar').all(empresasPolicy.isAllowed)
     .post(empresas.importar);
 
@@ -22,6 +25,8 @@ module.exports = function (app) {
     .get(empresas.read)
     .put(empresas.update)
     .delete(empresas.delete);
+
+
 
   // Finish by binding the Empresa middleware
   app.param('empresaId', empresas.empresaByID);

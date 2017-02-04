@@ -1,8 +1,8 @@
 <section>
-  <div class="page-header">
-    <h1>{{vm.empresa._id ? 'Editar Empresa' : 'Nueva Empresa'}}</h1>
-  </div>
-  <div class="col-xs-12 col-md-4">
+  <div class="col-xs-12 col-md-offset-3 col-md-5">
+    <div class="page-header">
+      <h1 class="text-center">{{vm.empresa._id ? 'Editar Empresa' : 'Nueva Empresa'}}</h1>
+    </div>
     <form name="vm.form.empresaForm" class="form-horizontal" ng-submit="vm.save(vm.form.empresaForm.$valid)" novalidate>
       <fieldset>
         <div class="form-group" show-errors>
@@ -22,6 +22,7 @@
           <label class="control-label" for="domicilio">Domicilio</label>
           <input name="domicilio" type="text" ng-model="vm.empresa.domicilio" id="domicilio" class="form-control"
                  placeholder="Domicilio de la Empresa" required ng-change="vm.searchByAddress()">
+          <div id="map" style="width:100%;height:260px;border-radius:4px;margin-top:20px"></div>
           <div ng-messages="vm.form.empresaForm.name.$error" role="alert">
             <p class="help-block error-text" ng-message="required">Ingrese Domicilio</p>
           </div>
@@ -49,6 +50,18 @@
             <p class="help-block error-text" ng-message="url">Formato incorrecto</p>
           </div>
         </div>
+        <div class="form-group" show-errors>
+          <!-- <label class="control-label" for="img_src">Foto</label>
+          <input name="img_src" type="file" ng-model="vm.empresa.img_src" id="img_src" class="form-control"> -->
+          <div class="form-group text-center">
+            <img ng-src="{{vm.empresa.img_src}}" class="img-thumbnail user-profile-picture">
+          </div>
+          <div class="text-center form-group" ng-hide="uploader.queue.length">
+            <span class="btn btn-default btn-file">
+                Select Image <input type="file" name="img_src" nv-file-select uploader="vm.uploader">
+            </span>
+          </div>
+        </div>
         <div class="form-group" style="margin-top:20px">
           <hr style="margin-top:0;width:90%">
           <button ng-click="save" type="submit" class="btn btn-success btn-full-width">
@@ -60,8 +73,5 @@
         </div>
       </fieldset>
     </form>
-  </div>
-  <div class="col-lg-8 col-xs-12">
-    <div id="map" style="width:100%;height:390px;border-radius:4px"></div>
   </div>
 </section>

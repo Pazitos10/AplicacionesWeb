@@ -7,6 +7,8 @@ var path = require('path'),
   mongoose = require('mongoose'),
   Empresa = mongoose.model('Empresa'),
   User = mongoose.model('User'),
+  multer = require('multer'),
+  config = require(path.resolve('./config/config')),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
   _ = require('lodash');
 
@@ -186,4 +188,39 @@ exports.empresaByID = function (req, res, next, id) {
     req.empresa = empresa;
     next();
   });
+};
+
+exports.saveImage = function (req, res) {
+  var user = req.user;
+  var message = null;
+  var upload = multer(config.uploads.empresaUpload).single('newEmpresaImage');
+  var profileUploadFileFilter = require(path.resolve('./config/lib/multer')).profileUploadFileFilter;
+  //Filtering to upload only images
+  upload.fileFilter = profileUploadFileFilter;
+
+  if (user) {
+    upload(req, res, function (uploadError) {
+      if(uploadError) {
+        return res.status(400).send({
+          message: 'Error occurred while uploading image'
+        });
+      } else {
+        var empresa_id = req.body.empresa_id;
+        Empresa.findById(empresa_id, function(err, empresa) {
+          if (err) {
+            console.log('[ERR] en saveImage: ', err);
+            return res.status(400).send({ message : 'Error ocurred while updating empresa.img_src: '+err });
+          }else{
+            empresa.img_src = config.uploads.empresaUpload.dest + req.file.filename;
+            empresa.save();
+            res.json({ message: 'Changes in empresa.img_src done succesfully!' });
+          }
+        });
+      }
+    });
+  } else {
+    res.status(400).send({
+      message: 'User is not signed in'
+    });
+  }
 };

@@ -32,6 +32,9 @@ exports.invokeRolesPolicies = function () {
     },{
       resources: '/api/empresas/vote',
       permissions: ['post']
+    },{
+      resources: '/api/empresas/saveImage',
+      permissions: ['post']
     }, {
       resources: '/api/empresas/:empresaId',
       permissions: ['get']

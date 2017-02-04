@@ -90,6 +90,10 @@ var EmpresaSchema = new Schema({
   user: {
     type: Schema.ObjectId,
     ref: 'User'
+  },
+  img_src: {
+    type: String,
+    required: false
   }
 });
 
