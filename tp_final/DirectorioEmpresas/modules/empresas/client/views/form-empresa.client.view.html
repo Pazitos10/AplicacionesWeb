@@ -49,6 +49,24 @@
             <p class="help-block error-text" ng-message="url">Formato incorrecto</p>
           </div>
         </div>
+        <div class="form-group">
+          <label class="control-label">Categorías</label>
+          <angucomplete-alt id="categoria_search"
+                            placeholder="Search countries"
+                            pause="100"
+                            selected-object="selectedCountry"
+                            local-data="vm.categorias"
+                            search-fields="name"
+                            title-field="name"
+                            minlength="1"
+                            input-class="form-control form-control-small"/>
+        </div>
+        <div id="categorias">
+          <div ng-repeat="categoria in vm.empresa.categorias">
+            <span class="label label-default" ng-bind="categoria.name"></span>
+          </div>
+        </div>
+        <div>{{$log.log(vm.categorias)}}</div>
         <div class="form-group" style="margin-top:20px">
           <hr style="margin-top:0;width:90%">
           <button ng-click="save" type="submit" class="btn btn-success btn-full-width">

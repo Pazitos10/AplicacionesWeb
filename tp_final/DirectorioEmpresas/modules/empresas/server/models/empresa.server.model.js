@@ -73,11 +73,12 @@ var EmpresaSchema = new Schema({
     required: false,
     trim: true,
   }, //Google Id
-  categorias: {
-    type: [String],
-    default: [],
-    required: false
-  },
+  categorias: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'categorias'
+    }
+  ],
   location: {
     type: [Number],  // [<lat>, <long>]
     index: '2d',     // create the geospatial index
@@ -94,7 +95,7 @@ var EmpresaSchema = new Schema({
   liked: {
     type: Boolean,
     default: false
-  } //Usada on the fly para reflection
+  }, //Usada on the fly para reflection
 });
 
 mongoose.model('Empresa', EmpresaSchema);

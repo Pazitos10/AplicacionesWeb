@@ -121,6 +121,9 @@ exports.update = function (req, res) {
 
   empresa = _.extend(empresa, req.body);
 
+  console.log(req);
+  console.log("GUARDO");
+
   empresa.save(function (err) {
     if (err) {
       return res.status(400).send({
@@ -199,5 +202,5 @@ exports.empresaByID = function (req, res, next, id) {
  * @returns {boolean}
  */
 function empresaLikeada(empresa, user) {
-  return  user.empresasLikeadas.indexOf(empresa.google_id) >= 0;
+  return user.empresasLikeadas.indexOf(empresa.google_id) >= 0;
 }

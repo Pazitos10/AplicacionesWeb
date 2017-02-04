@@ -3,12 +3,13 @@
 
   // Empresas controller
   angular
-    .module('empresas')
+    .module('empresas', ['angucomplete-alt'])
     .controller('EmpresasController', EmpresasController);
 
-  EmpresasController.$inject = ['$scope', '$state', '$window', 'Authentication', 'empresaResolve', 'uiGmapGoogleMapApi'];
+  EmpresasController.$inject = ['$scope', '$state', '$window', 'Authentication', 'empresaResolve', 'uiGmapGoogleMapApi',
+    'CategoriasService'];
 
-  function EmpresasController($scope, $state, $window, Authentication, empresa, uiGmapApi) {
+  function EmpresasController($scope, $state, $window, Authentication, empresa, uiGmapApi, CategoriasService) {
     var vm = this;
 
     vm.authentication = Authentication;
@@ -21,6 +22,7 @@
     vm.searchByAddress = searchByAddress;
     vm.markers = [];
     vm.userPosition = {};
+    vm.categorias = CategoriasService.query();
 
     function initMap (position) {
       $scope.position = position;
