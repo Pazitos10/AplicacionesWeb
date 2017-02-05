@@ -6,12 +6,7 @@
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
-
-/**
- * Localidad Schema
- */
-
-var Localidad = mongoose.model('localidades', new Schema());
+var CategoriaSchema = require('mongoose').model('Categoria').schema;
 
 /**
  * Empresa Schema
@@ -36,13 +31,6 @@ var EmpresaSchema = new Schema({
     required: 'Ingrese Domicilio de la Empresa',
     trim: true
   },
-  /*
-  localidad: {
-    type: Schema.ObjectId,
-    ref: Localidad,
-    required: 'Ingrese Localidad de la Empresa',
-  },
-  */
   telefono: {
     type: String,
     default: '',
@@ -74,11 +62,7 @@ var EmpresaSchema = new Schema({
     trim: true,
   }, //Google Id
   categorias: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'categorias',
-      required: 'Ingrese al menos una categoría'
-    }
+    CategoriaSchema
   ],
   location: {
     type: [Number],  // [<lat>, <long>]

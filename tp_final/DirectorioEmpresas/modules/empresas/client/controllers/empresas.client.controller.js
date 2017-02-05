@@ -114,12 +114,16 @@
     vm.seleccionarCategoria = function (categoriaSeleccionada) {
       //console.log("seleccionarCategoria()");
       //console.log(categoriaSeleccionada);
-      vm.empresa.categorias.push(categoriaSeleccionada);
+      vm.empresa.categorias.push(categoriaSeleccionada.description);
     };
 
+    /**
+     * Quita una Categoria
+     * @param categoria
+     */
     vm.quitarCategoria = function (categoria) {
-      console.log("Quito " + categoria.title);
-      vm.empresa.categorias.pull(categoria);
+      var index = vm.empresa.categorias.indexOf(categoria);
+      vm.empresa.categorias.splice(index, 1);
     };
 
     obtenerUbicacion();
