@@ -24,16 +24,19 @@
     | filter:vm.filtro) "
        ui-sref="empresas.view({ empresaId: empresa._id })"
        class="list-group-item container">
+      <img ng-src="{{empresa.img_src?empresa.img_src:'https://goo.gl/XApjyb'}}" class="imagen-listado">
+      <!--<span class="pull-left label label-success label-90 custom-label" ng-if="result.opening_hours.open_now">Abierto</span>-->
+      <!--<span class="pull-left label label-default label-90 custom-label" ng-if="!result.opening_hours.open_now">Cerrado</span>-->
       <h4 class="list-group-item-heading"><span ng-bind="empresa.razonSocial"></span></h4>
       <small class="list-group-item-text">
         <span ng-bind="empresa.domicilio" class="col-md-4"></span>
-        <span ng-if="empresa.telefono.length > 0" class="col-md-4">
+        <span ng-if="empresa.telefono.length > 0" class="col-md-3">
           <i class="material-icons md-14">call</i> <span ng-bind="empresa.telefono"></span>
         </span>
-        <span ng-if="!empresa.telefono.length > 0" class="col-md-4">
+        <span ng-if="!empresa.telefono.length > 0" class="col-md-3">
           <i class="material-icons md-14">call</i> <span> No disponible </span>
         </span>
-        <span ng-if="vm.authentication.user" class="col-md-4">
+        <span ng-if="vm.authentication.user" class="col-md-3">
           creado el
           <span ng-bind="empresa.created | date:'mediumDate'"></span>
           por
