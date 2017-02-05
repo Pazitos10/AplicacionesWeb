@@ -1,9 +1,27 @@
 <section>
   <div class="page-header">
     <h1>Empresas</h1>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+        <span class="input-group-addon">
+          <input type="checkbox" aria-label="..." ng-model="vm.soloLikeadas">Solo favoritas
+        </span>
+          <input type="text" class="form-control" aria-label="..." ng-model="vm.filtro">
+        </div><!-- /input-group -->
+      </div><!-- /.col-md-6 -->
+      <div class="col-md-6" title="Crear empresa">
+          <a class="btn btn-primary  pull-right"
+             ui-sref="empresas.create()">
+            <i class="glyphicon glyphicon-plus"></i>
+          </a>
+      </div><!-- /.col-md-6 -->
+    </div><!-- /.row -->
   </div>
+
   <div class="list-group" id="list-empresas">
-    <a ng-repeat="empresa in vm.empresas"
+    <a ng-repeat="empresa in ((vm.soloLikeadas ? (vm.empresas | filter:{liked:vm.soloLikeadas}) : vm.empresas)
+    | filter:vm.filtro) "
        ui-sref="empresas.view({ empresaId: empresa._id })"
        class="list-group-item container">
       <h4 class="list-group-item-heading"><span ng-bind="empresa.razonSocial"></span></h4>

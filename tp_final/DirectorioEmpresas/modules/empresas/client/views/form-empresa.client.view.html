@@ -53,14 +53,34 @@
         <div class="form-group" show-errors>
           <!-- <label class="control-label" for="img_src">Foto</label>
           <input name="img_src" type="file" ng-model="vm.empresa.img_src" id="img_src" class="form-control"> -->
-          <div class="form-group text-center">
+          <div class="form-group text-center" ng-if="vm.empresa.img_src">
             <img ng-src="{{vm.empresa.img_src}}" class="img-thumbnail user-profile-picture">
           </div>
           <div class="text-center form-group" ng-hide="uploader.queue.length">
             <span class="btn btn-default btn-file">
-                Select Image <input type="file" name="img_src" nv-file-select uploader="vm.uploader">
+                Seleccionar imagen <input type="file" name="img_src" nv-file-select uploader="vm.uploader">
             </span>
           </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Categorías</label>
+          <angucomplete-alt id="categoria_search"
+                            placeholder="Buscar categoría"
+                            pause="100"
+                            selected-object="vm.seleccionarCategoria"
+                            local-data="vm.categorias"
+                            search-fields="name"
+                            title-field="name"
+                            minlength="1"
+                            input-class="form-control form-control-small"
+                            match-class="highlight"
+                            clear-selected="true">
+        </div>
+        <div class="form-group">
+          <span ng-repeat="categoria in vm.empresa.categorias" class="label label-default" >
+            <span class="glyphicon glyphicon-remove" aria-hidden="true" ng-click="vm.quitarCategoria(categoria)"></span>
+             {{categoria.name}}
+          </span>
         </div>
         <div class="form-group" style="margin-top:20px">
           <hr style="margin-top:0;width:90%">

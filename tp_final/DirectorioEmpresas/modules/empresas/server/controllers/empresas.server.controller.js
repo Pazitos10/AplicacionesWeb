@@ -6,6 +6,7 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Empresa = mongoose.model('Empresa'),
+  Categoria = mongoose.model('Categoria'),
   User = mongoose.model('User'),
   multer = require('multer'),
   config = require(path.resolve('./config/config')),
@@ -56,9 +57,6 @@ exports.create = function (req, res) {
  * No uso import porque es una palabra reservada (y estuve por lo menos 1 hora hasta darme cuenta!!!!)
  */
 exports.importar = function (req, res) {
-  console.log('Entré en importar');
-  console.log(req);
-
   var empresa = empresaProxy(req);
 
   empresa.save(function (err) {
@@ -78,7 +76,6 @@ exports.importar = function (req, res) {
  * No uso import porque es una palabra reservada (y estuve por lo menos 1 hora hasta darme cuenta!!!!)
  */
 exports.vote = function (req, res) {
-  console.log('Entré en vote');
   var user = req.body.user;
   var empresa = req.body.empresa;
   var empresa_id = empresa.hasOwnProperty('id') ? empresa.id : empresa._id ; //es google places ("id") o local ("_id")
@@ -161,6 +158,9 @@ exports.list = function (req, res) {
         message: errorHandler.getErrorMessage(err)
       });
     } else {
+      empresas.forEach(function (empresa) {
+        empresa.liked = empresaLikeada(empresa, req.user);
+      });
       res.jsonp(empresas);
     }
   });
@@ -224,3 +224,14 @@ exports.saveImage = function (req, res) {
     });
   }
 };
+
+/**
+ * Indica si la empresa tiene un like basándose en el google_id
+ *
+ * @param empresa
+ * @param user
+ * @returns {boolean}
+ */
+function empresaLikeada(empresa, user) {
+  return user.empresasLikeadas.indexOf(empresa.google_id) >= 0;
+}

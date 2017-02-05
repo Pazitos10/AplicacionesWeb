@@ -6,9 +6,11 @@
     .module('empresas')
     .controller('EmpresasController', EmpresasController);
 
-  EmpresasController.$inject = ['$scope', '$state', '$window', 'Authentication', 'empresaResolve', 'uiGmapGoogleMapApi', 'FileUploader', '$timeout'];
+  EmpresasController.$inject = ['$scope', '$state', '$window', 'Authentication', 'empresaResolve',
+    'uiGmapGoogleMapApi', 'FileUploader', '$timeout', 'CategoriasService'];
 
-  function EmpresasController($scope, $state, $window, Authentication, empresa, uiGmapApi, FileUploader, $timeout) {
+  function EmpresasController($scope, $state, $window, Authentication, empresa,
+                              uiGmapApi, FileUploader, $timeout, CategoriasService) {
     var vm = this;
 
     vm.authentication = Authentication;
@@ -21,6 +23,7 @@
     vm.searchByAddress = searchByAddress;
     vm.markers = [];
     vm.userPosition = {};
+    vm.categorias = CategoriasService.query();
 
     /* Creamos una instancia del uploader */
     vm.uploader = new FileUploader({
@@ -166,6 +169,21 @@
         vm.error = res.data.message;
       }
     }
+
+    vm.seleccionarCategoria = function (categoriaSeleccionada) {
+      //console.log("seleccionarCategoria()");
+      //console.log(categoriaSeleccionada);
+      vm.empresa.categorias.push(categoriaSeleccionada.description);
+    };
+
+    /**
+     * Quita una Categoria
+     * @param categoria
+     */
+    vm.quitarCategoria = function (categoria) {
+      var index = vm.empresa.categorias.indexOf(categoria);
+      vm.empresa.categorias.splice(index, 1);
+    };
 
     obtenerUbicacion();
 
