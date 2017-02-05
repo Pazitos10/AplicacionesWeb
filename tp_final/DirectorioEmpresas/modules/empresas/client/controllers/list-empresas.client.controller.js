@@ -9,7 +9,7 @@
 
   function EmpresasListController(EmpresasService, Authentication) {
     var vm = this;
-    vm.soloLikeadas = true;
+    vm.soloLikeadas = false;
     vm.filtro = '';
     vm.authentication = Authentication;
     vm.empresas = EmpresasService.query();
