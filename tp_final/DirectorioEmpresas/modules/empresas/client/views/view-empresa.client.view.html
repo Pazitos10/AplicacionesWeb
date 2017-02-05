@@ -36,6 +36,13 @@
           <th>Sitio web</th>
           <td><a ng-href="{{vm.empresa.website}}">{{vm.empresa.website}}</a></td>
         </tr>
+        <tr>
+          <th>Categorías</th>
+          <td>
+            <span ng-repeat="categoria in vm.empresa.categorias" class="label label-default" ng-bind="categoria.name">
+            </span>
+          </td>
+        </tr>
         <tr ng-if="vm.authentication.user">
           <th>Creado el</th>
           <td><span ng-bind="vm.empresa.created | date:'mediumDate'"></span></td>

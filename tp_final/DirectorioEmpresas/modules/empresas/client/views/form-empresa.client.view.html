@@ -63,16 +63,11 @@
                             match-class="highlight"
                             clear-selected="true">
         </div>
-        <div class="form-group" show-errors>
-          <span ng-repeat="categoria in vm.empresa.categorias">
-            <span class="label label-default" >
-              <span class="glyphicon glyphicon-remove" aria-hidden="true" ng-click="vm.quitarCategoria(categoria)"></span>
-               {{categoria.title}}
-            </span>
+        <div class="form-group">
+          <span ng-repeat="categoria in vm.empresa.categorias" class="label label-default" >
+            <span class="glyphicon glyphicon-remove" aria-hidden="true" ng-click="vm.quitarCategoria(categoria)"></span>
+             {{categoria.name}}
           </span>
-          <div ng-messages="vm.form.empresaForm.categorias.$error" role="alert">
-            <p class="help-block error-text" ng-message="url">Formato incorrecto</p>
-          </div>
         </div>
         <div class="form-group" style="margin-top:20px">
           <hr style="margin-top:0;width:90%">
