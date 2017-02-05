@@ -202,7 +202,7 @@ angular.module('core')
 
     function completar_datos_detallados(place) {
       if (place.types){
-          $scope.translateTypes(place);
+        $scope.translateTypes(place);
       }
       if (place.details) {
         $scope.getReviews(place);
