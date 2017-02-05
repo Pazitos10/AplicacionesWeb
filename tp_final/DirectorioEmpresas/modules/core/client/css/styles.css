@@ -485,3 +485,7 @@ a:hover{
   width: 50px;
   padding-right: 10px;
 }
+
+.label {
+  margin-right: 3px;
+}
