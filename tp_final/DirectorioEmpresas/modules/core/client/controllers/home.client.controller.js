@@ -523,7 +523,7 @@ angular.module('core')
         if (place.opening_hours)
           return place.opening_hours.open_now;
         else
-          return false;        
+          return false;
       }
       else //es local porque en lugar de name tiene razonSocial
         return $scope.isLocalPlaceOpenNow(place);

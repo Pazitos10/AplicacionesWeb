@@ -22,16 +22,6 @@ Esta aplicación permitirá el registro, geolocalización y búsqueda de empresa
   * **Eliminación de Empresas**
   	![](https://k61.kn3.net/4/D/7/F/8/9/EB5.png)
 * **CRUD de Categorías**. Permitirá la gestión de Categorías
-  * **Listado de Categorías**
-    ![](https://k61.kn3.net/4/1/E/F/5/7/3F3.png)
-  * **Consulta de Categorías**
-	![](https://k61.kn3.net/C/C/2/C/A/1/0A4.png)
-  * **Creación de Categorías**
-	![](https://k61.kn3.net/6/F/1/6/6/A/3D4.png)
-  * **Edición de Categorías**
-	![](https://k61.kn3.net/E/0/3/4/6/7/853.png)
-  * **Eliminación de Categorías**
-	![](https://k61.kn3.net/7/7/5/A/4/B/32A.png)
 * **Servicio de geolocalización**. Luego de crear o modificar un registro de empresas se utilizarán servicios web para obtener las coordenadas de la dirección, de manera de poder mostrarla en el mapa
 * **Información adicional**. Realizará un cruce de información con los servicios web de Google Places para mostrar al usuario información adicional acerca de la Empresa seleccionada
 * **Búsqueda de empresas**. Permitirá la búsqueda de empresas por categorías y radio de distancia. Las mostrará en el mapa, junto con la información adicional que se haya obtenido de los servicios web detallados anteriormente.

@@ -6,7 +6,10 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Empresa = mongoose.model('Empresa'),
+  Categoria = mongoose.model('Categoria'),
   User = mongoose.model('User'),
+  multer = require('multer'),
+  config = require(path.resolve('./config/config')),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
   _ = require('lodash');
 
@@ -55,9 +58,6 @@ exports.create = function (req, res) {
  * No uso import porque es una palabra reservada (y estuve por lo menos 1 hora hasta darme cuenta!!!!)
  */
 exports.importar = function (req, res) {
-  console.log('Entré en importar');
-  console.log(req);
-
   var empresa = empresaProxy(req);
 
   empresa.save(function (err) {
@@ -77,7 +77,6 @@ exports.importar = function (req, res) {
  * No uso import porque es una palabra reservada (y estuve por lo menos 1 hora hasta darme cuenta!!!!)
  */
 exports.vote = function (req, res) {
-  console.log('Entré en vote');
   var user = req.body.user;
   var empresa = req.body.empresa;
   var empresa_id = empresa.hasOwnProperty('id') ? empresa.id : empresa._id ; //es google places ("id") o local ("_id")
@@ -124,7 +123,6 @@ exports.update = function (req, res) {
 
   console.log(req);
   console.log('GUARDO');
-
   empresa.save(function (err) {
     if (err) {
       return res.status(400).send({
@@ -193,6 +191,41 @@ exports.empresaByID = function (req, res, next, id) {
     req.empresa = empresa;
     next();
   });
+};
+
+exports.saveImage = function (req, res) {
+  var user = req.user;
+  var message = null;
+  var upload = multer(config.uploads.empresaUpload).single('newEmpresaImage');
+  var profileUploadFileFilter = require(path.resolve('./config/lib/multer')).profileUploadFileFilter;
+  //Filtering to upload only images
+  upload.fileFilter = profileUploadFileFilter;
+
+  if (user) {
+    upload(req, res, function (uploadError) {
+      if(uploadError) {
+        return res.status(400).send({
+          message: 'Error occurred while uploading image'
+        });
+      } else {
+        var empresa_id = req.body.empresa_id;
+        Empresa.findById(empresa_id, function(err, empresa) {
+          if (err) {
+            console.log('[ERR] en saveImage: ', err);
+            return res.status(400).send({ message : 'Error ocurred while updating empresa.img_src: '+err });
+          }else{
+            empresa.img_src = config.uploads.empresaUpload.dest + req.file.filename;
+            empresa.save();
+            res.json({ message: 'Changes in empresa.img_src done succesfully!' });
+          }
+        });
+      }
+    });
+  } else {
+    res.status(400).send({
+      message: 'User is not signed in'
+    });
+  }
 };
 
 /**

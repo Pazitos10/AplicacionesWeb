@@ -35,6 +35,13 @@ module.exports = {
       limits: {
         fileSize: 1*1024*1024 // Max file size in bytes (1 MB)
       }
+    },
+    empresaUpload: {
+      dest: './modules/empresas/client/img/uploads/', // Profile upload destination path
+      limits: {
+        fieldNameSize: 100,
+        fileSize: 5*1024*1024 // Max file size in bytes (5 MB)
+      }
     }
   }
 };

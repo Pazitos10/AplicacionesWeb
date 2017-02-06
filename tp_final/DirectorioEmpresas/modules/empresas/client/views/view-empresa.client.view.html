@@ -18,34 +18,48 @@
       </h1>
     </div>
     <div class="panel-body">
-      <table class="table">
-        <tbody>
-        <tr ng-if="vm.authentication.user">
-          <th>CUIT</th>
-          <td><span ng-bind="vm.empresa.cuit"></span></td>
-        </tr>
-        <tr>
-          <th>Domicilio</th>
-          <td><span ng-bind="vm.empresa.domicilio"></span></td>
-        </tr>
-        <tr>
-          <th>Teléfono</th>
-          <td><span ng-bind="vm.empresa.telefono"></span></td>
-        </tr>
-        <tr>
-          <th>Sitio web</th>
-          <td><a ng-href="{{vm.empresa.website}}">{{vm.empresa.website}}</a></td>
-        </tr>
-        <tr ng-if="vm.authentication.user">
-          <th>Creado el</th>
-          <td><span ng-bind="vm.empresa.created | date:'mediumDate'"></span></td>
-        </tr>
-        <tr ng-if="vm.authentication.user">
-          <th>Creado por</th>
-          <td><span ng-bind="vm.empresa.user.displayName"></span></td>
-        </tr>
-        </tbody>
-      </table>
+      <div class="row">
+        <div class="col-md-6">
+          <table class="table">
+            <tbody>
+            <tr ng-if="vm.authentication.user">
+              <th>CUIT</th>
+              <td><span ng-bind="vm.empresa.cuit"></span></td>
+            </tr>
+            <tr>
+              <th>Domicilio</th>
+              <td><span ng-bind="vm.empresa.domicilio"></span></td>
+            </tr>
+            <tr>
+              <th>Teléfono</th>
+              <td><span ng-bind="vm.empresa.telefono"></span></td>
+            </tr>
+            <tr>
+              <th>Sitio web</th>
+              <td><a ng-href="{{vm.empresa.website}}">{{vm.empresa.website}}</a></td>
+            </tr>
+            <tr>
+              <th>Categorías</th>
+              <td>
+              <span ng-repeat="categoria in vm.empresa.categorias" class="label label-default" ng-bind="categoria.name">
+              </span>
+              </td>
+            </tr>
+            <tr ng-if="vm.authentication.user">
+              <th>Creado el</th>
+              <td><span ng-bind="vm.empresa.created | date:'mediumDate'"></span></td>
+            </tr>
+            <tr ng-if="vm.authentication.user">
+              <th>Creado por</th>
+              <td><span ng-bind="vm.empresa.user.displayName"></span></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <div id="map" style="width:100%;height:260px;border-radius:4px;margin-top:20px"></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
