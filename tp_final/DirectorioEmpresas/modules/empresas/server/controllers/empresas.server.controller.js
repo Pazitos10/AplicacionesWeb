@@ -40,6 +40,7 @@ function empresaProxy(req) {
  */
 exports.create = function (req, res) {
   var empresa = new Empresa(req.body);
+  empresa.categorias = [];
   empresa.user = req.user;
 
   empresa.save(function (err) {

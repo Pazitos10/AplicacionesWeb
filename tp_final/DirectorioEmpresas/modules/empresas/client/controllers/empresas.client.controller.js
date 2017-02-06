@@ -237,9 +237,11 @@
     // obtenerUbicacion();
 
     vm.seleccionarCategoria = function (categoriaSeleccionada) {
-      //console.log("seleccionarCategoria()");
-      //console.log(categoriaSeleccionada);
-      vm.empresa.categorias.push(categoriaSeleccionada.description);
+      console.log(categoriaSeleccionada);
+      if (vm.empresa.categorias === undefined) {
+        vm.empresa.categorias = [];
+      }
+      vm.empresa.categorias.push(categoriaSeleccionada.originalObject);
     };
 
     /**
