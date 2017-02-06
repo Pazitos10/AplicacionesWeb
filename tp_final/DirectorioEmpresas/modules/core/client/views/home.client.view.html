@@ -29,8 +29,8 @@
           <div class="result-item-2" ng-repeat="result in search_results">
             <div class="result-img-container">
               <img ng-if="result.img_src" ng-src="{{result.img_src}}" alt="" class="result-img">
-              <span class="pull-left label label-success label-90 custom-label" ng-if="result.opening_hours.open_now">Abierto</span>
-              <span class="pull-left label label-default label-90 custom-label" ng-if="!result.opening_hours.open_now">Cerrado</span>
+              <span class="pull-left label label-success label-90 custom-label" ng-if="isPlaceOpen(result)">Abierto</span>
+              <span class="pull-left label label-default label-90 custom-label" ng-if="!isPlaceOpen(result)">Cerrado</span>
             </div>
             <div class="result-description">
               <h5 ng-click="itemClicked($index)" class="result-item-name">{{result.name || result.razonSocial }}</h5>
@@ -94,11 +94,8 @@
                 </button>
               </li>
             </ul>
-            <div class="horarios-info invisible">
-              <table class="horarios-table">
-                <tbody class="horarios-body">
-                </tbody>
-              </table>
+            <div class="horarios-info invisible" ng-repeat="horario in horarios">
+              <span>{{horario}}</span>
             </div>
           </div>
         </div>

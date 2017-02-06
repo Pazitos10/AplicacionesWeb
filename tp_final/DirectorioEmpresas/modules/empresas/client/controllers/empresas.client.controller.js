@@ -13,17 +13,30 @@
                               uiGmapApi, FileUploader, $timeout, CategoriasService) {
     var vm = this;
 
+    vm.getPreviousDayData = getPreviousDayData;
+    vm.getNextDayData = getNextDayData;
+    vm.remove = remove;
+    vm.save = save;
+    vm.searchByAddress = searchByAddress;
+    vm.categorias = CategoriasService.query();
     vm.authentication = Authentication;
     vm.empresa = empresa;
     vm.error = null;
     vm.form = {};
     vm.map = {};
-    vm.remove = remove;
-    vm.save = save;
-    vm.searchByAddress = searchByAddress;
     vm.markers = [];
     vm.userPosition = {};
-    vm.categorias = CategoriasService.query();
+    vm.weekdays_names = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+    var BlankDayTemplate = function () {
+      this.day = vm.weekdays_names[0];
+      this.periods = [{ 'from': '', 'to': '' }, { 'from': '', 'to': '' }];
+    };
+    vm.initOpeningHours = initOpeningHours;
+
+
+
+    vm.initOpeningHours();
+    vm.current_day = vm.empresa.opening_hours[0];
 
     /* Creamos una instancia del uploader */
     vm.uploader = new FileUploader({
@@ -170,10 +183,65 @@
       }
     }
 
+    /**
+      Slider: obtiene los datos del siguiente dia
+    */
+    function getNextDayData(){
+      var current_day_name = vm.current_day.day;
+      var current_day_name_index = vm.weekdays_names.indexOf(current_day_name);
+      updateOpeningHoursForCurrentDay(current_day_name, current_day_name_index);
+      if (current_day_name_index < vm.weekdays_names.length - 1)
+        updateCurrentDay(current_day_name_index + 1);
+      if (current_day_name_index === vm.weekdays_names.length - 1)
+        updateCurrentDay(0);
+    }
+
+    /**
+      Slider: obtiene los datos del dia anterior
+    */
+    function getPreviousDayData(){
+      var current_day_name = vm.current_day.day;
+      var current_day_name_index = vm.weekdays_names.indexOf(current_day_name);
+      updateOpeningHoursForCurrentDay(current_day_name, current_day_name_index);
+      if (current_day_name_index === 0)
+        updateCurrentDay(vm.weekdays_names.length - 1);
+      if (current_day_name_index > 0)
+        updateCurrentDay(current_day_name_index - 1);
+    }
+
+    function updateCurrentDay(index){
+      vm.current_day = Object.assign({}, vm.empresa.opening_hours[index]);
+    }
+
+
+    /* Actualiza los datos de horarios en la estructura de la empresa */
+    function updateOpeningHoursForCurrentDay(new_day_name, index){
+      var current_day_copy = Object.assign({}, vm.current_day);
+      if (vm.empresa.opening_hours[index]) {
+        vm.empresa.opening_hours[index] = current_day_copy; //actualizo
+      }
+    }
+
+    /* Inicializa la estructura de datos para la empresa, si ya no la tenia creada */
+    function initOpeningHours() {
+      if (!vm.empresa.opening_hours){
+        vm.empresa.opening_hours = [];
+        for (var i = 0; i < vm.weekdays_names.length; i++){
+          var opening_hour = new BlankDayTemplate();
+          opening_hour.day = vm.weekdays_names[i];
+          vm.empresa.opening_hours.push(opening_hour);
+        }
+      }
+    }
+
+    // obtenerUbicacion();
+
     vm.seleccionarCategoria = function (categoriaSeleccionada) {
-      //console.log("seleccionarCategoria()");
-      //console.log(categoriaSeleccionada);
-      vm.empresa.categorias.push(categoriaSeleccionada.description);
+      console.log(categoriaSeleccionada);
+      if (vm.empresa.categorias === undefined) {
+        vm.empresa.categorias = [];
+      }
+      vm.empresa.categorias.push(categoriaSeleccionada.originalObject);
     };
 
     /**
@@ -185,13 +253,14 @@
       vm.empresa.categorias.splice(index, 1);
     };
 
-    //;
-    if (vm.empresa === null) {
-      obtenerUbicacion();
-    } else {
+
+    if(vm.empresa.location){
       var position = { coords: { latitude: vm.empresa.location[0], longitude: vm.empresa.location[1] } };
       initMap(position);
       createMarker({ lat: vm.empresa.location[0], lng:  vm.empresa.location[1] });
+    }else{
+      obtenerUbicacion();
     }
+
   }
 }());

@@ -11,7 +11,6 @@ var CategoriaSchema = require('mongoose').model('Categoria').schema;
 /**
  * Empresa Schema
  */
-
 var EmpresaSchema = new Schema({
   razonSocial: {
     type: String,
@@ -84,7 +83,10 @@ var EmpresaSchema = new Schema({
   liked: {
     type: Boolean,
     default: false
-  } //Usada on the fly para reflection
+  }, //Usada on the fly para reflection
+  opening_hours: {
+    type: [Schema.Types.Mixed]
+  }
 });
 
 mongoose.model('Empresa', EmpresaSchema);

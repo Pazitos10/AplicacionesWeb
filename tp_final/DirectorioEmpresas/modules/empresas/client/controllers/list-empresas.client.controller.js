@@ -16,7 +16,6 @@
 
     function filtrar() {
       console.log('Filtro');
-
     }
 
   }

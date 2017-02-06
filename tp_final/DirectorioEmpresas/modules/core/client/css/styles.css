@@ -59,6 +59,7 @@ a:hover{
 .material-icons.md-18 { font-size: 18px; width: 18px}
 .material-icons.md-18 { font-size: 22px; width: 22px}
 .material-icons.md-24 { font-size: 24px; width: 24px}
+.material-icons.md-28 { font-size: 28px; width: 28px}
 .material-icons.md-36 { font-size: 36px; width: 36px}
 .material-icons.md-48 { font-size: 48px; width: 48px}
 .material-icons.md-75p {font-size: 75% }
@@ -488,4 +489,34 @@ a:hover{
 
 .label {
   margin-right: 3px;
+}
+
+
+.week-days {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.opening-hours {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.opening-hours input {
+  width: 120px;
+  margin-bottom: 5px
+}
+
+.opening-hours-controls {
+  display:flex;
+  justify-content: space-around;
+  align-items: center;
+  cursor: pointer;
+}
+
+
+#dias .title {
+  margin-bottom: 5px;
 }

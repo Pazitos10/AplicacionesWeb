@@ -29,6 +29,7 @@ function empresaProxy(req) {
   empresa.google_id = req.body.id;
   empresa.categorias = req.body.types;
   empresa.location = [req.body.geometry.location.lat, req.body.geometry.location.lng];
+  empresa.opening_hours = req.body.opening_hours;
   empresa.user = req.user;
 
   return empresa;
@@ -39,6 +40,7 @@ function empresaProxy(req) {
  */
 exports.create = function (req, res) {
   var empresa = new Empresa(req.body);
+  empresa.categorias = [];
   empresa.user = req.user;
 
   empresa.save(function (err) {
@@ -120,6 +122,8 @@ exports.update = function (req, res) {
 
   empresa = _.extend(empresa, req.body);
 
+  console.log(req);
+  console.log('GUARDO');
   empresa.save(function (err) {
     if (err) {
       return res.status(400).send({
