@@ -299,8 +299,8 @@ angular.module('core')
       en el momento de la consulta.
     */
     $scope.isLocalPlaceOpenNow = function (place){
-      moment.locale("es");
-      var today = moment(new Date()).format("dddd"); //dia de la semana actual, en español
+      moment.locale('es');
+      var today = moment(new Date()).format('dddd'); //dia de la semana actual, en español
       var openInPeriods = [];
       for(var i = 0; i < place.opening_hours.length; i++){
         if (place.opening_hours[i].day.toLowerCase() === today){ //solo evaluamos si es el dia de hoy
@@ -351,14 +351,14 @@ angular.module('core')
         for(var j = 0; j< place.opening_hours[i].periods.length; j++){
           dia = place.opening_hours[i].day;
           periodo = place.opening_hours[i].periods[j];
-          if (periodo.from != null && periodo.from != ''){
+          if (periodo.from !== null && periodo.from !== ''){
             horarios = new Date(periodo.from).toTimeString().split(' ')[0] +
             ' a ' + new Date(periodo.to).toTimeString().split(' ')[0];
             $scope.horarios.push((dia+' '+horarios));
           }
         }
       }
-    }
+    };
 
 
     /**
