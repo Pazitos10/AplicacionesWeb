@@ -26,6 +26,7 @@ function empresaProxy(req) {
   empresa.google_id = req.body.id;
   empresa.categorias = req.body.types;
   empresa.location = [req.body.geometry.location.lat, req.body.geometry.location.lng];
+  empresa.opening_hours = req.body.opening_hours;
   empresa.user = req.user;
 
   return empresa;
@@ -122,7 +123,7 @@ exports.update = function (req, res) {
   empresa = _.extend(empresa, req.body);
 
   console.log(req);
-  console.log("GUARDO");
+  console.log('GUARDO');
 
   empresa.save(function (err) {
     if (err) {

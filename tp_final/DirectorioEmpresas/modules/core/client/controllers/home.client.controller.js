@@ -2,7 +2,7 @@
 
 angular.module('core')
 .controller('HomeController', ['$http', '$scope', 'Authentication',
-  'uiGmapGoogleMapApi', function ($http, $scope, Authentication, uiGmapApi) {
+  'uiGmapGoogleMapApi', 'moment', function ($http, $scope, Authentication, uiGmapApi, moment) {
     /** Inicializamos variables */
     $scope.authentication = Authentication; // provee el ctx de Autenticacion.
     $scope.search_term = '';
@@ -63,7 +63,9 @@ angular.module('core')
       });
     };
 
-
+    /**
+      Actualiza el placeholder del buscador segun las opciones de busqueda elegidas
+    */
     $scope.update_search_placeholder = function() {
       var placeholder = 'Buscar en ';
       placeholder += $scope.categoria+' a '+$scope.search_radius_text;
@@ -156,6 +158,7 @@ angular.module('core')
       var lng = $scope.position.coords.longitude;
       var center = { lat: lat, lng: lng };
       $scope.map.setCenter(center);
+      $scope.horarios = [];
     };
 
     /** Traduce los tipos/categorias a los cuales esta asociado un lugar. */
@@ -200,20 +203,28 @@ angular.module('core')
 
     };
 
+
+    /**
+      Completa los datos detallados del lugar indicado por parametros
+    */
     function completar_datos_detallados(place) {
-      if (place.types){
-          $scope.translateTypes(place);
+      if (place.types){ //si tiene types -> es de google places -> hay que traducirlos
+        $scope.translateTypes(place);
+      }else{
+        $scope.result_detail.tipos = ''; //si no, se vacian los tipos anteriores
+        //TODO: obtener tipos/categorias de empresa local como string unido con ,.
       }
-      if (place.details) {
+
+      if (place.details)
         $scope.getReviews(place);
-      }
+
       $scope.result_detail.horarios = $scope.getEstado(place);
       $scope.result_detail.name = place.razonSocial || place.name;
       $scope.result_detail.img = place.img_src; //$scope.getImage(place);
       $scope.result_detail
         .direccion = place.formatted_address ||
                     place.vicinity ||
-                    place.direccion ||
+                    place.domicilio ||
                     'Dirección no disponible';
       $scope.result_detail.sitio_web = {};
       $scope.result_detail.sitio_web.href = place.website || '#';
@@ -267,20 +278,53 @@ angular.module('core')
       Obtiene el estado de un lugar: Abierto, Cerrado o No disponible.
     */
     $scope.getEstado = function (place) {
-      if (place.opening_hours){
+      console.log(place);
+      if (place.details){ //es de google places
         $('.show-horarios-btn').show();
-        $scope.setDiasYHorarios(place.details.opening_hours.weekday_text);
+        $scope.setDiasYHorariosGPlaces(place.details.opening_hours.weekday_text);
         return (place.opening_hours.open_now) ? 'Abierto': 'Cerrado';
       }else{
-        $('.show-horarios-btn').hide();
-        return 'No disponible';
+        if (place.opening_hours){ //es local
+          $scope.setDiasYHorariosLocal(place);
+          return $scope.isLocalPlaceOpenNow(place) ? 'Abierto': 'Cerrado';
+        }else{
+          $('.show-horarios-btn').hide();
+          return 'No disponible';
+        }
       }
     };
 
     /**
-      Setea los dias y horarios de atencion de un lugar y lo muestra en pantalla.
+      Retorna true si el lugar (empresa local), se encuentra abierto
+      en el momento de la consulta.
     */
-    $scope.setDiasYHorarios = function (weekday_text) {
+    $scope.isLocalPlaceOpenNow = function (place){
+      moment.locale("es");
+      var today = moment(new Date()).format("dddd"); //dia de la semana actual, en español
+      var openInPeriods = [];
+      for(var i = 0; i < place.opening_hours.length; i++){
+        if (place.opening_hours[i].day.toLowerCase() === today){ //solo evaluamos si es el dia de hoy
+          for(var j = 0; j< place.opening_hours[i].periods.length; j++){
+            var period = place.opening_hours[i].periods[j];
+            var from_date = new Date(period.from).toTimeString().split(' ')[0]; //nos da hh:mm:ss
+            var to_date = new Date(period.to).toTimeString().split(' ')[0];
+            var from_moment = moment(from_date, 'hh:mm:ss');
+            var to_moment = moment(to_date, 'hh:mm:ss');
+            var now = moment(new Date(), 'hh:mm:ss');
+            // usando moment.js podemos hacer la comparacion hora_apertura >= hora_actual <= hora_cierre
+            openInPeriods.push(now.isSameOrAfter(from_moment) && now.isSameOrBefore(to_moment));
+          }
+          return openInPeriods[0] || openInPeriods[1];
+        }
+      }
+
+    };
+
+    /**
+      Setea los dias y horarios de atencion de un lugar (Google Places)
+      y lo muestra en pantalla.
+    */
+    $scope.setDiasYHorariosGPlaces = function (weekday_text) {
       $('.horarios-body').empty();
       weekday_text.map(function (value){
         $http({
@@ -290,13 +334,32 @@ angular.module('core')
             term: value
           }
         }).then(function successCallback(response) {
-          var horario = response.data.result_text;
-          $('.horarios-body').append('<tr><td>'+horario+'</td></tr>');
+          $scope.horarios.push(response.data.result_text);
         }, function errorCallback(response) {
           console.log('setDiasYHorarios(): Error al obtener traducciones.');
         });
       });
     };
+
+    /**
+      Setea los dias y horarios de atencion de un lugar (Empresa local)
+      y lo muestra en pantalla.
+    */
+    $scope.setDiasYHorariosLocal = function(place) {
+      var dia, periodo, horarios;
+      for(var i = 0; i < place.opening_hours.length; i++) {
+        for(var j = 0; j< place.opening_hours[i].periods.length; j++){
+          dia = place.opening_hours[i].day;
+          periodo = place.opening_hours[i].periods[j];
+          if (periodo.from != null && periodo.from != ''){
+            horarios = new Date(periodo.from).toTimeString().split(' ')[0] +
+            ' a ' + new Date(periodo.to).toTimeString().split(' ')[0];
+            $scope.horarios.push((dia+' '+horarios));
+          }
+        }
+      }
+    }
+
 
     /**
       Muestra/Oculta detalles de horarios semanales en la informacion del lugar.
@@ -352,7 +415,9 @@ angular.module('core')
       }
     };
 
-    /** Obtiene la ubicacion del usuario */
+    /**
+      Obtiene la ubicacion del usuario
+    */
     $scope.obtenerUbicacion = function () {
       var geo = navigator.geolocation;
       if (geo)
@@ -361,12 +426,18 @@ angular.module('core')
         $('#map').innerHTML = 'Geolocation is not supported by this browser.';
     };
 
+    /**
+      Actualiza el nivel de zoom segun la opcion de radio de busqueda elegida
+    */
     $scope.update_map_zoom = function () {
       var zoom_levels = { '500m': 15, '1km': 14, '5km': 12, '10km': 11, '20km': 10 };
       $scope.map.setZoom(zoom_levels[$scope.search_radius_text]);
       $scope.circle.setRadius($scope.search_radius);
     };
 
+    /**
+      Setea el parametro search_radius para futuras busquedas
+    */
     $scope.setSearchRadius = function (radius, radius_text){
       $scope.search_radius = radius;
       $scope.search_radius_text = radius_text;
@@ -375,9 +446,6 @@ angular.module('core')
       $scope.update_search_placeholder();
       $scope.update_map_zoom();
     };
-
-    $scope.setFilter('all'); //Seteamos el filtro inicial a 'Todos'
-    $scope.obtenerUbicacion();
 
     $scope.deleteLocally = function (empresa) {
       console.log('eliminando empresa', empresa);
@@ -413,6 +481,9 @@ angular.module('core')
       }
     };
 
+    /**
+      Registra el voto (like/dislike) de la empresa indicada por parametros
+    */
     $scope.vote = function (empresa, index) {
       var like = true;
       if ($('#save-'+index)[0].innerHTML === 'favorite'){ //Dislike
@@ -431,13 +502,37 @@ angular.module('core')
       });
     };
 
+    /**
+      Retorna true si el usuario esta logueado. Caso contrario retorna false.
+    */
     $scope.userIsLoggedIn = function(){
-      //not fully tested but kinda working (?)
       return ($scope.authentication.user !== '') ? true : false;
     };
 
+    /**
+      Retorna true si el usuario ha likeado el lugar con id indicado por
+      parametros.
+    */
     $scope.hasUserLiked = function(place_id){
       return ($scope.authentication.user.empresasLikeadas.includes(place_id)) ? true : false;
     };
+
+
+    $scope.isPlaceOpen = function(place){
+      if (place.name){ //es google place
+        if (place.opening_hours)
+          return place.opening_hours.open_now;
+        else
+          return false;        
+      }
+      else //es local porque en lugar de name tiene razonSocial
+        return $scope.isLocalPlaceOpenNow(place);
+
+    };
+
+
+    $scope.setFilter('all'); //Seteamos el filtro inicial a 'Todos'
+    $scope.obtenerUbicacion();
+
   }
 ]);

@@ -67,6 +67,22 @@
           </div>
         </div>
         <div>{{$log.log(vm.categorias)}}</div>
+
+        <div class="form-group">
+          <label for="dias">Horarios</label>
+          <div id="dias" ng-model="vm.current_day">
+            <div class="week-days">
+                <i class="material-icons md-28 opening-hours-controls" ng-click="vm.getPreviousDayData()">keyboard_arrow_left</i>
+                <span>{{vm.current_day.day}}</span>
+                <i class="material-icons md-28 opening-hours-controls" ng-click="vm.getNextDayData()">keyboard_arrow_right</i>
+            </div>
+            <div class="opening-hours" ng-repeat="period in vm.current_day.periods">
+              <input date-input class="form-control" type="time" name="desde" ng-model="period.from" value="{{period.from | date:'HH:mm'}}">
+              <i class="material-icons">remove</i>
+              <input date-input class="form-control" type="time" name="hasta" ng-model="period.to" value="{{period.to | date:'HH:mm'}}">
+            </div>
+          </div>
+        </div>
         <div class="form-group" style="margin-top:20px">
           <hr style="margin-top:0;width:90%">
           <button ng-click="save" type="submit" class="btn btn-success btn-full-width">

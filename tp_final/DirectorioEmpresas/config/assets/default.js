@@ -21,7 +21,10 @@ module.exports = {
         'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
         'public/lib/angular-file-upload/angular-file-upload.js',
         'public/lib/owasp-password-strength-test/owasp-password-strength-test.js',
-        'public/lib/angucomplete-alt/dist/angucomplete-alt.min.js'
+        'public/lib/angucomplete-alt/dist/angucomplete-alt.min.js',
+        'public/lib/moment/min/moment.min.js',
+        'public/lib/moment/locale/es.js',
+        'public/lib/angular-moment/angular-moment.min.js'
       ],
       tests: ['public/lib/angular-mocks/angular-mocks.js']
     },

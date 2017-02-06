@@ -16,7 +16,6 @@ var Localidad = mongoose.model('localidades', new Schema());
 /**
  * Empresa Schema
  */
-
 var EmpresaSchema = new Schema({
   razonSocial: {
     type: String,
@@ -96,6 +95,9 @@ var EmpresaSchema = new Schema({
     type: Boolean,
     default: false
   }, //Usada on the fly para reflection
+  opening_hours: {
+    type: [Schema.Types.Mixed]
+  }
 });
 
 mongoose.model('Empresa', EmpresaSchema);
