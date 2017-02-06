@@ -251,11 +251,13 @@
       vm.empresa.categorias.splice(index, 1);
     };
 
-    obtenerUbicacion();
+
     if(vm.empresa.location){
       var position = { coords: { latitude: vm.empresa.location[0], longitude: vm.empresa.location[1] } };
       initMap(position);
       createMarker({ lat: vm.empresa.location[0], lng:  vm.empresa.location[1] });
+    }else{
+      obtenerUbicacion();
     }
 
   }
