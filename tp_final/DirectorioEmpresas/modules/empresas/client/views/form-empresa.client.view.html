@@ -53,12 +53,16 @@
         <div class="form-group" show-errors>
           <!-- <label class="control-label" for="img_src">Foto</label>
           <input name="img_src" type="file" ng-model="vm.empresa.img_src" id="img_src" class="form-control"> -->
-          <div class="form-group text-center" ng-if="vm.empresa.img_src">
-            <img ng-src="{{vm.empresa.img_src}}" class="img-thumbnail user-profile-picture">
+          <div class="form-group text-center">
+            <img ng-if="vm.img_src" ng-src="{{vm.img_src}}" class="img-thumbnail user-profile-picture">
+            <img ng-if="!vm.img_src" ng-src="modules/empresas/client/img/default/empresa-default-thumbnail.png" class="img-thumbnail user-profile-picture">
           </div>
           <div class="text-center form-group" ng-hide="uploader.queue.length">
             <span class="btn btn-default btn-file">
-                Seleccionar imagen <input type="file" name="img_src" nv-file-select uploader="vm.uploader">
+                Seleccionar imagen <input type="file" name="img_src" nv-file-select uploader="vm.uploader" value="{{vm.img_src}}">
+            </span>
+            <span class="btn btn-danger" ng-click="vm.resetImageField()">
+                Borrar imagen
             </span>
           </div>
         </div>
@@ -99,6 +103,7 @@
             </div>
           </div>
         </div>
+        <input type="hidden" name="eliminar_img" value="{{vm.eliminar_img}}">
         <div class="form-group" style="margin-top:20px">
           <hr style="margin-top:0;width:90%">
           <button ng-click="save" type="submit" class="btn btn-success btn-full-width">
