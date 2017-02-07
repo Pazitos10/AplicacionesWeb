@@ -37,7 +37,9 @@
           <i class="material-icons md-14">call</i> <span> No disponible </span>
         </span>
         <span class="col-md-3">
-          <label ng-repeat="categoria in empresa.categorias" class="label label-default">{{categoria.name}}</label>
+          <label ng-repeat="categoria in empresa.categorias" class="label label-default">
+            {{ $index >= empresa.categorias.length - 1 ? '+' : categoria.name}}
+          </label>
         </span>
         <span ng-if="vm.authentication.user" class="col-md-3">
           creado el

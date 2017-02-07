@@ -212,7 +212,9 @@ angular.module('core')
         $scope.translateTypes(place);
       }else{
         $scope.result_detail.tipos = ''; //si no, se vacian los tipos anteriores
-        //TODO: obtener tipos/categorias de empresa local como string unido con ,.
+        $scope.result_detail.tipos = place.categorias.map(function(categoria){
+          return categoria.name;
+        }).join(',');
       }
 
       if (place.details)
