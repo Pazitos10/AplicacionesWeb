@@ -15,12 +15,14 @@
 
     vm.getPreviousDayData = getPreviousDayData;
     vm.getNextDayData = getNextDayData;
+    vm.resetImageField = resetImageField;
     vm.remove = remove;
     vm.save = save;
     vm.searchByAddress = searchByAddress;
     vm.categorias = CategoriasService.query();
     vm.authentication = Authentication;
     vm.empresa = empresa;
+    vm.img_src = vm.empresa.img_src;
     vm.error = null;
     vm.form = {};
     vm.map = {};
@@ -32,7 +34,7 @@
       this.periods = [{ 'from': '', 'to': '' }, { 'from': '', 'to': '' }];
     };
     vm.initOpeningHours = initOpeningHours;
-
+    vm.eliminar_img = false;
 
 
     vm.initOpeningHours();
@@ -60,7 +62,8 @@
         fileReader.readAsDataURL(fileItem._file);
         fileReader.onload = function (fileReaderEvent) {
           $timeout(function () {
-            vm.empresa.img_src = fileReaderEvent.target.result;
+            vm.img_src = fileReaderEvent.target.result;
+            vm.eliminar_img = false;
           }, 0);
         };
       }
@@ -69,7 +72,7 @@
     // Se llama antes de subir la img al servidor
     vm.uploader.onBeforeUploadItem = function(item) {
       //inyectamos id de empresa para poder asociar la img a la empresa indicada
-      item.formData.push({ empresa_id: vm.empresa._id });
+      item.formData.push({ empresa_id: vm.empresa._id, eliminar_img: vm.eliminar_img });
     };
 
     // Callback despues que el usuario subio con exito una img al servidor
@@ -87,6 +90,11 @@
     vm.cancelUpload = function () {
       vm.uploader.clearQueue();
     };
+
+    function resetImageField() {
+      vm.img_src='modules/empresas/client/img/default/empresa-default-thumbnail.png';
+      vm.eliminar_img = true;
+    }
 
     /* Inicializa y muestra el mapa en pantalla */
     function initMap (position) {
@@ -162,9 +170,9 @@
       }
 
       if (vm.empresa._id) {
-        vm.empresa.$update(successCallback, errorCallback);
+        vm.empresa.$update({ eliminar_img: vm.eliminar_img }, successCallback, errorCallback);
       } else {
-        vm.empresa.$save(successCallback, errorCallback);
+        vm.empresa.$save({ eliminar_img: vm.eliminar_img }, successCallback, errorCallback);
       }
 
       /* Luego de guardar exitosamente, subimos las img al servidor */

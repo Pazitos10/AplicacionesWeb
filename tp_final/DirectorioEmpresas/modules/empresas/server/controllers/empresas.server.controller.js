@@ -4,6 +4,9 @@
  * Module dependencies.
  */
 var path = require('path'),
+  fs = require('fs'),
+  crypto = require('crypto'),
+  mime = require('mime'), //remover para rollback: npm uninstall mime --save
   mongoose = require('mongoose'),
   Empresa = mongoose.model('Empresa'),
   Categoria = mongoose.model('Categoria'),
@@ -42,6 +45,14 @@ exports.create = function (req, res) {
   var empresa = new Empresa(req.body);
   empresa.categorias = [];
   empresa.user = req.user;
+
+  // if (req.params.eliminar_img === 'true'){
+  //   if (errorDeletingOldImg(empresa.img_src)){
+  //     return res.status(400).send({
+  //       message: 'Error reseting image'
+  //     });
+  //   }
+  // }
 
   empresa.save(function (err) {
     if (err) {
@@ -119,10 +130,21 @@ exports.read = function (req, res) {
  */
 exports.update = function (req, res) {
   var empresa = req.empresa;
-
   empresa = _.extend(empresa, req.body);
 
-  console.log(req);
+  console.log('req.query.eliminar_img', req.query.eliminar_img);
+  if (req.query.eliminar_img === 'true'){
+    console.log('si lees esto, el usuario pidio eliminar la img');
+    if (errorDeletingOldImg(empresa.img_src)){
+      return res.status(400).send({
+        message: 'Error reseting image'
+      });
+    }else{
+      empresa.img_src = Empresa.schema.path('img_src').defaultValue; // reseteamos
+    }
+  }
+
+  //console.log(req);
   console.log('GUARDO');
   empresa.save(function (err) {
     if (err) {
@@ -140,7 +162,7 @@ exports.update = function (req, res) {
  */
 exports.delete = function (req, res) {
   var empresa = req.empresa;
-
+  errorDeletingOldImg(empresa.img_src);
   empresa.remove(function (err) {
     if (err) {
       return res.status(400).send({
@@ -197,7 +219,20 @@ exports.empresaByID = function (req, res, next, id) {
 exports.saveImage = function (req, res) {
   var user = req.user;
   var message = null;
-  var upload = multer(config.uploads.empresaUpload).single('newEmpresaImage');
+  var existingImg = '';
+  var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, config.uploads.empresaUpload.dest);
+    },
+    filename: function (req, file, cb) {
+      crypto.pseudoRandomBytes(16, function (err, raw) {
+        cb(null, raw.toString('hex') + Date.now() + '.' + mime.extension(file.mimetype));
+      });
+    }
+  });
+  var upload = multer({ storage: storage,
+                        limits: config.uploads.empresaUpload.limits })
+                        .single('newEmpresaImage');
   var profileUploadFileFilter = require(path.resolve('./config/lib/multer')).profileUploadFileFilter;
   //Filtering to upload only images
   upload.fileFilter = profileUploadFileFilter;
@@ -215,9 +250,16 @@ exports.saveImage = function (req, res) {
             console.log('[ERR] en saveImage: ', err);
             return res.status(400).send({ message : 'Error ocurred while updating empresa.img_src: '+err });
           }else{
-            empresa.img_src = config.uploads.empresaUpload.dest + req.file.filename;
-            empresa.save();
-            res.json({ message: 'Changes in empresa.img_src done succesfully!' });
+            //console.log(req.file);
+            if (!errorDeletingOldImg(empresa.img_src)) { //si no hubieron errores, guardo
+              empresa.img_src = req.file.path;
+              empresa.save();
+              res.json({ message: 'Changes in empresa.img_src done succesfully!' });
+            }else{
+              res.status(400).send({
+                message: 'Error updating empresa.img_src'
+              });
+            }
           }
         });
       }
@@ -238,4 +280,26 @@ exports.saveImage = function (req, res) {
  */
 function empresaLikeada(empresa, user) {
   return user.empresasLikeadas.indexOf(empresa.google_id) >= 0;
+}
+
+
+/**
+* Intenta eliminar la imagen anterior asociada a la empresa.
+* Retorna true si hubieron errores o false, si todo salio bien.
+*
+* @param existingImg
+* @returns {boolean}
+*/
+function errorDeletingOldImg(existingImg) {
+  console.log('in errorDeletingOldImg: ', existingImg);
+  if (existingImg !== Empresa.schema.path('img_src').defaultValue) { //Solo eliminamos anterior si no es la default
+    fs.unlink(existingImg, function (unlinkError) {
+      if (unlinkError) { // si hubo error al eliminar img
+        //console.log('in errorDeletingOldImg -> unlinkError');
+        return true;
+      } else { // pudimos eliminar img anterior, asociamos la nueva
+        return false;
+      }
+    });
+  }
 }

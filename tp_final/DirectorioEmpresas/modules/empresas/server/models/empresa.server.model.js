@@ -77,8 +77,9 @@ var EmpresaSchema = new Schema({
     ref: 'User'
   },
   img_src: {
-    type: String,
-    required: false
+    type: Schema.Types.Mixed, //    type: String,
+    required: false,
+    default: 'modules/empresas/client/img/default/empresa-default-thumbnail.png'
   },
   liked: {
     type: Boolean,
