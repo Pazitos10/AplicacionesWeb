@@ -279,7 +279,10 @@ exports.saveImage = function (req, res) {
  * @returns {boolean}
  */
 function empresaLikeada(empresa, user) {
-  return user.empresasLikeadas.indexOf(empresa.google_id) >= 0;
+  if (user)
+    return user.empresasLikeadas.indexOf(empresa.google_id) >= 0;
+  else
+    return false; //TODO: test cases when user is logged out
 }
 
 

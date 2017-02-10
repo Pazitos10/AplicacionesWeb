@@ -1,56 +1,74 @@
 <section>
-  <div class="page-header">
-    <h1>Empresas</h1>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="input-group">
-        <span class="input-group-addon">
-          <input type="checkbox" aria-label="..." ng-model="vm.soloLikeadas">Solo favoritas
-        </span>
-          <input type="text" class="form-control" aria-label="..." ng-model="vm.filtro">
-        </div><!-- /input-group -->
-      </div><!-- /.col-md-6 -->
-      <div class="col-md-6" title="Crear empresa">
-          <a class="btn btn-primary  pull-right"
-             ui-sref="empresas.create()">
-            <i class="glyphicon glyphicon-plus"></i>
-          </a>
-      </div><!-- /.col-md-6 -->
-    </div><!-- /.row -->
-  </div>
-
-  <div class="list-group" id="list-empresas">
-    <a ng-repeat="empresa in ((vm.soloLikeadas ? (vm.empresas | filter:{liked:vm.soloLikeadas}) : vm.empresas)
-    | filter:vm.filtro) "
-       ui-sref="empresas.view({ empresaId: empresa._id })"
-       class="list-group-item container">
-      <img ng-src="{{empresa.img_src?empresa.img_src:'https://goo.gl/XApjyb'}}" class="imagen-listado">
-      <!--<span class="pull-left label label-success label-90 custom-label" ng-if="result.opening_hours.open_now">Abierto</span>-->
-      <!--<span class="pull-left label label-default label-90 custom-label" ng-if="!result.opening_hours.open_now">Cerrado</span>-->
-      <h4 class="list-group-item-heading"><span ng-bind="empresa.razonSocial"></span></h4>
-      <small class="list-group-item-text">
-        <span ng-bind="empresa.domicilio" class="col-md-3"></span>
-        <span ng-if="empresa.telefono.length > 0" class="col-md-2">
-          <i class="material-icons md-14">call</i> <span ng-bind="empresa.telefono"></span>
-        </span>
-        <span ng-if="!empresa.telefono.length > 0" class="col-md-2">
-          <i class="material-icons md-14">call</i> <span> No disponible </span>
-        </span>
-        <span class="col-md-3">
-          <label ng-repeat="categoria in empresa.categorias" class="label label-default">
-            {{ $index >= empresa.categorias.length - 1 ? '+' : categoria.name}}
-          </label>
-        </span>
-        <span ng-if="vm.authentication.user" class="col-md-3">
-          creado el
-          <span ng-bind="empresa.created | date:'mediumDate'"></span>
-          por
-          <span ng-if="empresa.user" ng-bind="empresa.user.displayName"></span>
-        </span>
-      </small>
-    </a>
-  </div>
-  <div class="alert alert-warning text-center" ng-if="vm.empresas.$resolved && !vm.empresas.length">
-    No hay Empresas aún, ¿Por qué no <a ui-sref="empresas.create">creas una</a>?
-  </div>
+  <div class="row">
+    <div class="page-header col-sm-11 col-lg-12 col-xs-12">
+      <h1>Empresas</h1>
+        <div>
+          <div class="input-group hidden-xs col-lg-10 col-md-11 col-sm-10 pull-left">
+            <span class="input-group-addon">
+              <input type="checkbox" aria-label="..." ng-model="vm.soloLikeadas">Solo favoritas
+            </span>
+            <input type="text" class="form-control" aria-label="..." ng-model="vm.filtro">
+          </div>
+          <div class="input-group visible-xs" >
+            <span class="input-group-addon" style="border-bottom-right-radius: 3px; border-top-right-radius: 3px;border: 1px solid #dce4ec; border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
+              <input type="checkbox" aria-label="..." ng-model="vm.soloLikeadas">Solo favoritas
+            </span>
+            <input type="text" class="form-control" aria-label="..." ng-model="vm.filtro" style="margin-bottom:15px">
+          </div>
+          <div title="Crear empresa" class="pull-right col-xs-12 col-sm-1">
+              <a class="btn btn-primary hidden-xs"
+                ui-sref="empresas.create()">
+                <span><i class="glyphicon glyphicon-plus"></i></span>
+              </a>
+              <a class="btn btn-primary btn-full-width visible-xs"
+              ui-sref="empresas.create()">
+              <span><i class="glyphicon glyphicon-plus"></i> Crear empresa</span>
+            </a>
+          </div>
+        </div>
+    </div>
+    <div class="list-group col-xs-12" id="list-empresas">
+      <a ng-repeat="empresa in ((vm.soloLikeadas ? (vm.empresas | filter:{liked:vm.soloLikeadas}) : vm.empresas)
+      | filter:vm.filtro) "
+         ui-sref="empresas.view({ empresaId: empresa._id })"
+         class="list-group-item container">
+        <div class="imagen-listado-container">
+          <img ng-src="{{empresa.img_src?empresa.img_src:'https://goo.gl/XApjyb'}}" class="imagen-listado">
+        </div>
+        <!--<span class="pull-left label label-success label-90 custom-label" ng-if="result.opening_hours.open_now">Abierto</span>-->
+        <!--<span class="pull-left label label-default label-90 custom-label" ng-if="!result.opening_hours.open_now">Cerrado</span>-->
+        <div class="" style="margin-left:50px">
+          <h4 class="list-group-item-heading"><span ng-bind="empresa.razonSocial"></span></h4>
+          <small class="list-group-item-text hidden-xs">
+            <span ng-bind="empresa.domicilio" class="col-md-3"></span>
+            <span ng-if="empresa.telefono.length > 0" class="col-md-2">
+              <i class="material-icons md-14">call</i> <span ng-bind="empresa.telefono"></span>
+            </span>
+            <span ng-if="!empresa.telefono.length > 0" class="col-md-2">
+              <i class="material-icons md-14">call</i> <span> No disponible </span>
+            </span>
+            <span class="col-md-3" ng-if="empresa.categorias.length >= 3">
+              <label ng-repeat="categoria in empresa.categorias" class="label label-default">
+                {{ $index >= empresa.categorias.length - 1 ? '...' : categoria.name}}
+              </label>
+            </span>
+            <span class="col-md-3" ng-if="empresa.categorias.length < 3">
+              <label ng-repeat="categoria in empresa.categorias" class="label label-default">
+                {{categoria.name}}
+              </label>
+            </span>
+            <span ng-if="vm.authentication.user" class="col-md-3 hidden-sm">
+              creado el
+              <span ng-bind="empresa.created | date:'mediumDate'"></span>
+              por
+              <span ng-if="empresa.user" ng-bind="empresa.user.displayName"></span>
+            </span>
+          </small>
+        </div>
+      </a>
+    </div>
+    <div class="alert alert-warning text-center" ng-if="vm.empresas.$resolved && !vm.empresas.length">
+      No hay Empresas aún, ¿Por qué no <a ui-sref="empresas.create">creas una</a>?
+    </div>
+  </div><!-- /.row -->
 </section>
