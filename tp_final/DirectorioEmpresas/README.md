@@ -27,7 +27,9 @@ Esta aplicación permitirá el registro, geolocalización y búsqueda de empresa
 
 **Edición de Empresas**
 
-![](https://k61.kn3.net/1/0/D/1/0/5/D57.png)    ![](https://k61.kn3.net/A/6/4/8/2/2/98E.png)
+![](https://k61.kn3.net/1/0/D/1/0/5/D57.png)    
+
+![](https://k61.kn3.net/A/6/4/8/2/2/98E.png)
 <!-- ![](https://k61.kn3.net/9/3/B/6/F/5/BA9.png) -->
 
 **Eliminación de Empresas**
