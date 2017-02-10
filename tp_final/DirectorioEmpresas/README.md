@@ -14,22 +14,22 @@ Esta aplicación permitirá el registro, geolocalización y búsqueda de empresa
 
 **Listado de Empresas**
 ![listado_empresas](https://k61.kn3.net/5/F/6/F/5/B/B8B.png)
-    <!-- ![](https://k61.kn3.net/5/9/F/3/B/9/377.png) -->
+<!-- ![](https://k61.kn3.net/5/9/F/3/B/9/377.png) -->
 
 **Consulta de Empresas**
 ![ver_empresa](https://k61.kn3.net/4/9/1/2/9/D/88B.png)
-		<!-- ![](https://k61.kn3.net/6/A/3/1/5/D/918.png)-->
+<!-- ![](https://k61.kn3.net/6/A/3/1/5/D/918.png)-->
 
 **Creación de Empresas**
 
 ![nueva_empresa](https://k61.kn3.net/1/F/1/5/2/D/369.png)
+<!-- ![](https://k61.kn3.net/4/8/4/6/6/7/704.png) -->
 
-    <!-- ![](https://k61.kn3.net/4/8/4/6/6/7/704.png) -->
 **Edición de Empresas**
 
 ![](https://k61.kn3.net/1/0/D/1/0/5/D57.png)    ![](https://k61.kn3.net/A/6/4/8/2/2/98E.png)
-
 <!-- ![](https://k61.kn3.net/9/3/B/6/F/5/BA9.png) -->
+
 **Eliminación de Empresas**
 
 ![](https://k61.kn3.net/E/E/8/8/6/F/801.png)
